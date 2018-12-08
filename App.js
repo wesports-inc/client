@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import './app.css';
-import ReactImage from './react.png';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+// should be scss import './app.css';
 
 export default class App extends Component {
-  // state = { username: null };
-
   /*
   componentDidMount() {
     fetch('/api/getUsername')
@@ -14,11 +12,12 @@ export default class App extends Component {
   */
 
   render() {
-    const fuse = this.state;
-    console.log(fuse);
     return (
       <div>
-        <img src={ReactImage} alt="react" />
+        <h1>Hello World</h1>
+        <Link to="/welcome">Welcome</Link>
+        <br />
+        <Link to="/test">Test Pages</Link>
       </div>
     );
   }
