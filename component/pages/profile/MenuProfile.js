@@ -28,7 +28,7 @@ export default class MenuProfile extends Component {
           <Icon name='clock outline' size="large"/>
         </Menu.Item>
 
-        <Menu.Item name='search' active={isMenu === 'search'} onClick={ () => this.handleMenu('search')}>
+        <Menu.Item name='chat' active={isMenu === 'chat'} onClick={ () => this.handleMenu('chat')}>
           <Icon name='comment alternate outline' size="large"/>
         </Menu.Item>
 
