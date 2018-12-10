@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// should be scss import './app.css';
 
 export default class App extends Component {
   /*
@@ -15,7 +14,7 @@ export default class App extends Component {
     return (
       <div>
         <h1>Hello World</h1>
-        <Link to="/welcome">Welcome</Link>
+        <Link to="/profile">My Profile</Link>
         <br />
         <Link to="/test">Test Pages</Link>
       </div>
