@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
-import MyPost from "./MyPost";
-
-import {Grid, Container, Segment, Divider, Image, Icon, GridColumn, List, Menu} from 'semantic-ui-react';
-
+import MyPost from './MyPost';
+import MoreCategory from './MoreCategory';
 
 export default class Index extends Component {
 
@@ -12,6 +10,7 @@ export default class Index extends Component {
         return (
         <div>
             <HeaderProfile />
+            <MoreCategory />
             <MyPost />
             <MenuProfile />
         </div>

@@ -5,7 +5,7 @@ export default class MenuProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        isMenu: null
+        isMenu: 'profile'
     };
     this.handleMenu = this.handleMenu.bind(this);
   }
@@ -40,8 +40,8 @@ export default class MenuProfile extends Component {
           <Icon name='bell outline' size="large" />
         </Menu.Item>
 
-        <Menu.Item name='setting' active={isMenu === 'setting'} onClick={ () => this.handleMenu('setting')}>
-          <Icon name='sun outline' size="large"/>
+        <Menu.Item name='profile' active={isMenu === 'profile'} onClick={ () => this.handleMenu('profile')}>
+          <Icon name='user circle outline' size="large"/>
         </Menu.Item>
       </Menu>
       </GridColumn>

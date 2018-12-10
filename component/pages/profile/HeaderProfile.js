@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 // import Logo from "../../../assets/images/logo/apple-logo.png";
 // import { Link } from "react-router-dom";
+import Background from '../../../assets/images/background/bg-profile.jpg';
 
 import {Grid, Container, Segment, Divider, Image, Icon, GridColumn, List, Menu} from 'semantic-ui-react';
 
@@ -24,14 +25,14 @@ export default class HeaderProfile extends Component {
     }
     return ( 
       <Container>
-      <Grid columns={2} style={{background: "#f5f5f5"}}>
+      <Grid columns={2} style={{backgroundImage: `url(${Background})`}}>
       <Divider hidden />
         <Grid.Row stretched>
           <Grid.Column>
               <Image src='https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png' />
-              <p style={{textAlign: "center", marginTop: 15}}>Petunia234</p>
+              <p style={{textAlign: "center", marginTop: 15, color: "white"}}>Petunia234</p>
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column style={{opacity: 0.9}}>
             <Segment>
               <p style={{textAlign: "center"}}><span><Icon name='chess queen' size="large" color='red' /><Icon name='chess queen' size="large" color='red' /></span></p>
               <Divider />
