@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import { Button, Form, Container, Grid, Divider,Label, Header, Icon, Message, Segment } from 'semantic-ui-react'
+// import axios from 'axios'
 
 export default class Login extends Component {
     constructor(props) {
@@ -10,14 +11,18 @@ export default class Login extends Component {
             isLogin: false,
             token: ''
         };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentWillMount() {
+        /*
+        axios.get('/api/status').then(response => this.setState({isLogin: response.auth, token: response.token}), () => console.log('set isLogin new State from backend status: ', this,state))
+        */
         fetch('/api/status')
         .then(res => res.json())
         .then(status => this.setState({ isLogin: status.auth, token: status.token }), () =>  console.log('set isLogin new State from backend status: ', this,state));
+        
     }
 
     componentDidMount() {
