@@ -16,6 +16,8 @@ export default class App extends Component {
         <h1>Hello World</h1>
         <Link to="/profile">My Profile</Link>
         <br />
+        <Link to="/login">Login</Link>
+        <br />
         <Link to="/test">Test Pages</Link>
       </div>
     );
