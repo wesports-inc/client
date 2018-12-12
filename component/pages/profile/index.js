@@ -6,21 +6,16 @@ import MoreCategory from './MoreCategory';
 
 export default class Index extends Component {
 
-    //check login auth & token from back end, if there is any user login then state of isLogin returning true
-    //default isLogin value is false
-
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: false, //bypass login, make the value true throught this state
-            token: ''
+            isLogin: false,
+            email: ''
         };
     }
 
     componentWillMount() {
-        fetch('/api/status')
-        .then(res => res.json())
-        .then(status => this.setState({ isLogin: status.auth, token: status.token }), () =>  console.log('set isLogin new State from backend status: ', this,state));
+        console.log('>>>>>>>>>>>><<<<<<<<<<<<<<', localStorage.getItem('userdata'))
     }
 
     shouldComponentUpdate(newProps, newState){

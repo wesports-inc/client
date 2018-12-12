@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Button, Form, Container, Grid, Divider,Label, Header, Icon, Message, Segment } from 'semantic-ui-react'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default class Login extends Component {
     constructor(props) {
@@ -16,13 +16,12 @@ export default class Login extends Component {
     }
 
     componentWillMount() {
-        /*
-        axios.get('/api/status').then(response => this.setState({isLogin: response.auth, token: response.token}), () => console.log('set isLogin new State from backend status: ', this,state))
-        */
-        fetch('/api/status')
-        .then(res => res.json())
-        .then(status => this.setState({ isLogin: status.auth, token: status.token }), () =>  console.log('set isLogin new State from backend status: ', this,state));
-        
+        const email = this.state.email
+        console.log('willmounting...', email)
+        axios.get('/api/user')
+        .then(db => {
+            console.log('data:::: ', db.data)
+        })
     }
 
     componentDidMount() {
@@ -46,7 +45,10 @@ export default class Login extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         const {isLogin} = this.state;
-        isLogin === true && this.state.email === 'admin' && this.state.password === '123' ? window.location = '#/profile' : console.log('data not matching...');
+        if(isLogin === true){ 
+            localStorage.setItem('userdata', JSON.stringify(this.state))
+            window.location = '#/profile'
+        }
         console.log('Lookup previous isLogin State change into: ', isLogin + ' from: ', prevState.isLogin);
     }
 
@@ -61,9 +63,21 @@ export default class Login extends Component {
     }
 
     handleSubmit(event) {
-        const { email, password, isLogin } = this.state;
         event.preventDefault();
-        console.log('data after submit: ', this.state);
+        var data = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        console.log(data)
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+        .then(status => this.setState({ isLogin: status.auth, token: status.token }));
     }
 
     render() {
@@ -94,12 +108,10 @@ export default class Login extends Component {
                             type='password'
                             name="password"
                             onChange={this.handleChange}
-                        />
-                        {/*        
+                        />      
                         <Button color='blue' fluid size='large'>
                         Masuk
                         </Button>
-                        */}
                     </Segment>
                     </Form>
                 </Grid.Column>
