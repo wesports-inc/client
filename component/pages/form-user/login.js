@@ -1,20 +1,23 @@
 import React, { Component } from "react";
 import { Button, Form, Container, Grid, Divider,Label, Header, Icon, Message, Segment } from 'semantic-ui-react'
 
-export default class MenuProfile extends Component {
+export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
             password: '',
-            isLogin: false
+            isLogin: false,
+            token: ''
         };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount() {
-      console.log('before render:', this.state.isLogin);
+        fetch('/api/status')
+        .then(res => res.json())
+        .then(status => this.setState({ isLogin: status.auth, token: status.token }), () =>  console.log('set isLogin new State from backend status: ', this,state));
     }
 
     componentDidMount() {
@@ -22,30 +25,45 @@ export default class MenuProfile extends Component {
         console.log('after render, isLogin become: ', isLogin);
     }
 
+    shouldComponentUpdate(newProps, newState){
+        if(newState.isLogin){
+            console.log('oucchh.. there is New State here: ', newState.isLogin);
+            return true;
+        }else{
+            console.log('HMMM... there is NO New State for any variable');
+            return false;
+        }
+    }
+
     componentWillUpdate(nextProps, nextState) {
-        console.log('component will update: ');
+        console.log('then i will Updating new State : ', nextState);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const {isLogin} = this.state;
+        isLogin === true && this.state.email === 'admin' && this.state.password === '123' ? window.location = '#/profile' : console.log('data not matching...');
+        console.log('Lookup previous isLogin State change into: ', isLogin + ' from: ', prevState.isLogin);
     }
 
 
     handleChange(event) {
         let target = event.target;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
+        let value = target.value;
         let name = target.name;
         this.setState({
             [name]: value 
-        }, () => console.log('user typing ... ', this.state))
+        })
     }
 
     handleSubmit(event) {
         const { email, password, isLogin } = this.state;
         event.preventDefault();
         console.log('data after submit: ', this.state);
-        email === 'admin' && password === '123' && isLogin === true ? window.location = '#/profile' : alert('something went wrong ...');
     }
 
     render() {
         return (
-            <Container>
+            <Container statedata={this.state.isLogin.toString()}>
             <Divider hidden />
                 <Grid textAlign='center' style={{ height: '100%' }} columns={1} verticalAlign='middle'>
                 <Grid.Column style={{ maxWidth: 450}}>
@@ -72,11 +90,11 @@ export default class MenuProfile extends Component {
                             name="password"
                             onChange={this.handleChange}
                         />
-                        <Form.Input name="isLogin" type="checkbox" value={this.state.isLogin} onChange={this.handleChange}/> 
-                        
+                        {/*        
                         <Button color='blue' fluid size='large'>
                         Masuk
                         </Button>
+                        */}
                     </Segment>
                     </Form>
                 </Grid.Column>

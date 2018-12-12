@@ -2,13 +2,18 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class App extends Component {
-  /*
-  componentDidMount() {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
+
+  constructor(props){
+    super(props);
+    this.state = {
+      isLogin: false
+    }
   }
-  */
+
+  componentWillMount() {
+    const {isLogin} = this.state;
+    isLogin === true ? window.location = '#/profile' : window.location = '#/login'; 
+  }
 
   render() {
     return (

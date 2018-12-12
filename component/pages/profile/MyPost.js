@@ -41,7 +41,6 @@ export default class MyPost extends Component {
                   </List.Description>
                 </List.Content>
               </List.Item>
-
             </List>
           </Segment>
         </GridColumn>

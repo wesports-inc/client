@@ -32,7 +32,12 @@ export default class MoreCategory extends Component {
   }
 
   render() {
-    const {isMenu} = this.state;
+    // bypass logout user
+    if(this.state.isCategory === 'setting'){
+        window.location='#/login';
+    }else{
+        console.log('will mounting...');
+    }
     return (
         <Container>
             <Divider hidden />
