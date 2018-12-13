@@ -14,6 +14,10 @@ export default class MoreCategory extends Component {
     this.handleMenu = this.handleMenu.bind(this);
   }
 
+  componentWillMount() {
+
+  }
+
   handleMenu(category) {
       this.setState({
         isCategory: category
@@ -34,6 +38,8 @@ export default class MoreCategory extends Component {
   render() {
     // bypass logout user
     if(this.state.isCategory === 'setting'){
+        localStorage.removeItem('email')
+        localStorage.removeItem('auth')
         window.location='#/login';
     }else{
         console.log('will mounting...');

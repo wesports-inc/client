@@ -46,7 +46,8 @@ export default class Login extends Component {
     componentDidUpdate(prevProps, prevState) {
         const {isLogin} = this.state;
         if(isLogin === true){ 
-            localStorage.setItem('userdata', JSON.stringify(this.state))
+            localStorage.setItem('email', JSON.stringify(this.state.email))
+            localStorage.setItem('auth', JSON.stringify(this.state.isLogin))
             window.location = '#/profile'
         }
         console.log('Lookup previous isLogin State change into: ', isLogin + ' from: ', prevState.isLogin);
