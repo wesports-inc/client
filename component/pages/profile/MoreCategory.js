@@ -41,8 +41,6 @@ export default class MoreCategory extends Component {
         localStorage.removeItem('email')
         localStorage.removeItem('auth')
         window.location='#/login';
-    }else{
-        console.log('will mounting...');
     }
     return (
         <Container>

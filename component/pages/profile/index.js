@@ -9,7 +9,7 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: false,
+            isLogin: '',
             email: ''
         };
     }
@@ -20,11 +20,11 @@ export default class Index extends Component {
         this.setState({
             email,
             isLogin: auth
-        })
+        }, () => console.log('data user: ', this.state))
     }
 
     componentDidMount() {
-        if(this.state.isLogin === false){
+        if(this.state.isLogin != true){
             window.location='#/login';
         }
     }
