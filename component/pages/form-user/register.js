@@ -7,6 +7,9 @@ export default class Login extends Component {
         super(props);
         this.state = {
             email: '',
+            username: '',
+            first_name: '',
+            last_name: '',
             password: '',
             isLogin: '',
             token: ''
@@ -35,7 +38,7 @@ export default class Login extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-
+        
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -61,9 +64,12 @@ export default class Login extends Component {
         event.preventDefault();
         var data = {
             email: this.state.email,
-            password: this.state.password
+            username: this.state.username,
+            first_name: this.state.first_name,
+            last_name: this.state.last_name,
+            password: this.state.password,
         }
-        fetch('/api/login', {
+        fetch('/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -83,15 +89,37 @@ export default class Login extends Component {
                 <Divider hidden />
                 <Divider hidden />
                     <Header as="h3">
-                    <Icon name='user circle' size="large" />Login Account
+                    <Icon name='file alternate outline' size="large" />Registrasi Akun Baru
                     </Header>
                     <Form size='large' onSubmit={this.handleSubmit}>
                     <Segment stacked>
                         <Form.Input 
-                            fluid icon='user'
+                            fluid icon='mail'
                             iconPosition='left'
                             placeholder='Alamat e-mail'
                             name="email"
+                            type="email"
+                            onChange={this.handleChange}
+                        />
+                        <Form.Input 
+                            fluid icon='user circle outline'
+                            iconPosition='left'
+                            placeholder='Username'
+                            name="username"
+                            onChange={this.handleChange}
+                        />
+                        <Form.Input 
+                            fluid icon='pencil alternate'
+                            iconPosition='left'
+                            placeholder='First name'
+                            name="first_name"
+                            onChange={this.handleChange}
+                        />
+                        <Form.Input 
+                            fluid icon='pencil alternate'
+                            iconPosition='left'
+                            placeholder='Last name'
+                            name="last_name"
                             onChange={this.handleChange}
                         />
                         <Form.Input
@@ -104,20 +132,17 @@ export default class Login extends Component {
                             onChange={this.handleChange}
                         />      
                         <Button color='blue' fluid size='large'>
-                        Masuk
+                        Daftar
                         </Button>
                     </Segment>
                     </Form>
                 </Grid.Column>
                 <Grid.Column verticalAlign="middle">
-                    <Button content='Sign in with Google' color="google plus" icon='google' size='mini' />
-                    <Button content='Sign in with Facebook' icon='facebook' color="facebook" size='mini' />
+                    <Button content='Register with Google' color="google plus" icon='google' size='mini' />
+                    <Button content='Register with Facebook' icon='facebook' color="facebook" size='mini' />
                 </Grid.Column>
                 </Grid>
                 <Divider />
-                <Message>
-                    Belum punya akun? <a href='#/register'>Daftar Disini</a>
-                </Message>
             </Container>
         );
     }

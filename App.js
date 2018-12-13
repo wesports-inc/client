@@ -23,6 +23,8 @@ export default class App extends Component {
         <br />
         <Link to="/login">Login</Link>
         <br />
+        <Link to="/register">Register</Link>
+        <br />
         <Link to="/test">Test Pages</Link>
       </div>
     );
