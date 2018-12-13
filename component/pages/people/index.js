@@ -8,6 +8,7 @@ export default class Login extends Component {
         super(props);
         this.state = {
             email: '',
+            datas: [],
             password: '',
             isLogin: '',
             token: ''
@@ -16,21 +17,23 @@ export default class Login extends Component {
 
     componentWillMount() {
         this.setState({
-            isLogin: localStorage.getItem('auth'),
-            email: localStorage.getItem('email')
+            isLogin: localStorage.getItem('auth').slice(1, -1),
+            email: localStorage.getItem('email').slice(1,-1)
         }, () =>
-        fetch('/api/people', {
+        console.log('my email:', this.state.email),
+        fetch('/api/search/people', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(this.state.email.slice(1, -1))
-        }).then(console.log('data sended: ', this.state.email.slice(1, -1))))
+            body: this.state.email
+        }).then(res => res.json())
+        .then(datas => this.setState({datas})))
     }
 
     componentDidMount() {
-        console.log('email============', this.state.email.slice(1, -1))
+        console.log('DATA BARU: ', this.state.datas)
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
     }
@@ -55,6 +58,7 @@ export default class Login extends Component {
     }
 
     render() {
+        const {datas} = this.state;
         return (
             <div>
             <Container>
@@ -63,17 +67,20 @@ export default class Login extends Component {
                     Add People, More Circle
                 </Header>
                 <Divider/>
-                <Grid style={{ height: '100%' }} columns={2}>
+                {datas.map(data => {  
+                    return (
+                <Grid style={{ height: '100%' }} columns={2} key={data._id}>
                     <Grid.Column style={{ maxWidth: 450}}>
-                    <List verticalAlign="middle" selection>
+                    <List verticalAlign="middle" selection >
                             <List.Item>
                             <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                             <List.Content>
-                                <List.Header>Tom</List.Header>
-                                Top Contributor
+                                <List.Header>{ data.first_name } {data.last_name}</List.Header>
+                                 @{ data.username }
                             </List.Content>
                             </List.Item>
                         </List>
+                    
                     </Grid.Column>
                     <Grid.Column verticalAlign="middle">
                     <Button animated='vertical' primary size="mini" style={{width: "80px"}} floated="right">
@@ -84,6 +91,7 @@ export default class Login extends Component {
                     </Button>
                     </Grid.Column>
                 </Grid>
+                ); })}
             </Container>
             <BottomMenu />
             </div>
