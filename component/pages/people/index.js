@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Container, Grid, Divider, Image, List, Header, Button, Icon, GridColumn, Form } from 'semantic-ui-react';
 import BottomMenu from '../profile/MenuProfile';
+import Skeleton from 'react-skeleton-loader';
 import axios from 'axios';
 
 export default class Login extends Component {
@@ -13,11 +14,19 @@ export default class Login extends Component {
             isLogin: '',
             token: '',
             friend_email: '',
-            friend_status: ''
+            friend_status: '',
+            isLoading: true
         };
+        this.generateSkeleton = this.generateSkeleton.bind(this)
     }
 
     componentWillMount() {
+        if(this.state.datas){
+            setTimeout(() => {
+                this.setState({isLoading: false})
+            }, 3000);
+            
+        }
         axios({
             method: 'post',
             url: '/api/search/people',
@@ -29,34 +38,29 @@ export default class Login extends Component {
               email: this.state.email, // This is the body part
             }
           }).then(result => this.setState({datas: result.data}));
+
         this.setState({
             isLogin: localStorage.getItem('auth').slice(1, -1)
-        }, () =>
-        console.log('my email:', this.state.email))
+        })
     }
 
     componentDidMount() {
-        console.log('DATA BARU: ', this.state.datas)
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
     }
 
     shouldComponentUpdate(newProps, newState){
         if(newState){
-            console.log('ada yg berubah:' + newState.friend_email)
             return true;
         }else{
-            console.log('tidak ada berubah')
             return false;
         }
     }
 
     componentWillUpdate(nextProps, nextState) {
-        console.log('akan berubah jadi: ' + nextState.friend_email)
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('sebelumnya:', prevState.friend_email)
         const {isLogin} = this.state;
         if(isLogin === false){ 
             window.location = '#/login'
@@ -67,10 +71,47 @@ export default class Login extends Component {
        this.setState({friend_email: value})
     }
 
+    generateSkeleton() {
+        const {datas} = this.state;
+        return <div style={{marginBottom: 45}}>
+        <Container>
+        <Divider hidden />
+            <Header as="h2" textAlign="center">
+                <Skeleton/>
+            </Header>
+            <Divider/>
+            {datas.map(data => {  
+                return (
+            <Grid columns={2} key={data._id}>
+                <Grid.Column>
+                <List verticalAlign="middle">
+                    <List.Item>
+                        <List.Content>
+                            <List.Header><Skeleton/></List.Header>
+                            <p><Skeleton/></p>
+                        </List.Content>
+                    </List.Item>
+                </List>
+            </Grid.Column>
+
+                <Grid.Column verticalAlign="middle">
+                <Button onClick={() => this.handleClick(data.email)} animated='vertical' size="mini" style={{width: "80px"}} floated="right">
+                    <Skeleton/>
+                </Button>
+                </Grid.Column>
+            </Grid>
+            ); })}
+        </Container>
+        <Skeleton/>
+        </div>
+    }
+
     render() {
         const {datas} = this.state;
+        const {isLoading} = this.state;
         return (
-            <div>
+            <div style={{marginBottom: 45}}>
+            {isLoading ? this.generateSkeleton() :
             <Container>
             <Divider hidden />
                 <Header as="h2" textAlign="center">
@@ -79,19 +120,19 @@ export default class Login extends Component {
                 <Divider/>
                 {datas.map(data => {  
                     return (
-                <Grid style={{ height: '100%' }} columns={2} key={data._id}>
-                    <Grid.Column style={{ maxWidth: 450}}>
-                    <List verticalAlign="middle" selection >
-                            <List.Item>
+                <Grid columns={2} key={data._id}>
+                    <Grid.Column>
+                    <List verticalAlign="middle">
+                        <List.Item>
                             <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                             <List.Content>
                                 <List.Header>{ data.first_name } {data.last_name}</List.Header>
-                                 @{ data.username }
+                                <p>@{ data.username }</p>
                             </List.Content>
-                            </List.Item>
-                        </List>
-                    
-                    </Grid.Column>
+                        </List.Item>
+                    </List>
+                </Grid.Column>
+
                     <Grid.Column verticalAlign="middle">
                     <Button onClick={() => this.handleClick(data.email)} animated='vertical' primary size="mini" style={{width: "80px"}} floated="right">
                         <Button.Content hidden>Waiting...</Button.Content>
@@ -103,6 +144,7 @@ export default class Login extends Component {
                 </Grid>
                 ); })}
             </Container>
+            }
             <BottomMenu />
             </div>
         );

@@ -14,7 +14,7 @@ export default class HeaderProfile extends Component {
   }
 
   componentWillMount() {
-    const email = localStorage.getItem('email')
+    const email = localStorage.getItem('email').slice(1, -1)
     this.setState({
       email
     })

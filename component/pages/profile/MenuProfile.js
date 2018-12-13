@@ -5,10 +5,15 @@ export default class MenuProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        isMenu: 'profile'
+        isMenu: ''
     };
     this.handleMenu = this.handleMenu.bind(this);
   }
+
+  componentDidMount() {
+
+  }
+
   handleMenu(category) {
       this.setState({
         isMenu: category
@@ -17,8 +22,12 @@ export default class MenuProfile extends Component {
 
   render() {
     const {isMenu} = this.state;
+    if(isMenu === 'profile'){
+      window.location = '#/profile'
+    }
     return (
         <Grid columns={1} style={{
+            zIndex: 2,
             position: "fixed",
             bottom: 0
             }}>
