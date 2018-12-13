@@ -1,35 +1,38 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon, GridColumn } from 'semantic-ui-react';
+import { Container, Grid, Divider, Image, List, Header, Button, Icon, GridColumn, Form } from 'semantic-ui-react';
 import BottomMenu from '../profile/MenuProfile';
-import axios from 'axios'
+import axios from 'axios';
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            email: localStorage.getItem('email').slice(1, -1),
             datas: [],
             password: '',
             isLogin: '',
-            token: ''
+            token: '',
+            friend_email: '',
+            friend_status: ''
         };
     }
 
     componentWillMount() {
-        this.setState({
-            isLogin: localStorage.getItem('auth').slice(1, -1),
-            email: localStorage.getItem('email').slice(1,-1)
-        }, () =>
-        console.log('my email:', this.state.email),
-        fetch('/api/search/people', {
-            method: 'POST',
-            headers: {
+        axios({
+            method: 'post',
+            url: '/api/search/people',
+            headers: { 
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: this.state.email
-        }).then(res => res.json())
-        .then(datas => this.setState({datas})))
+            data: {
+              email: this.state.email, // This is the body part
+            }
+          }).then(result => this.setState({datas: result.data}));
+        this.setState({
+            isLogin: localStorage.getItem('auth').slice(1, -1)
+        }, () =>
+        console.log('my email:', this.state.email))
     }
 
     componentDidMount() {
@@ -39,22 +42,29 @@ export default class Login extends Component {
     }
 
     shouldComponentUpdate(newProps, newState){
-        if(newState.isLogin){
+        if(newState){
+            console.log('ada yg berubah:' + newState.friend_email)
             return true;
         }else{
+            console.log('tidak ada berubah')
             return false;
         }
     }
 
     componentWillUpdate(nextProps, nextState) {
-
+        console.log('akan berubah jadi: ' + nextState.friend_email)
     }
 
     componentDidUpdate(prevProps, prevState) {
+        console.log('sebelumnya:', prevState.friend_email)
         const {isLogin} = this.state;
         if(isLogin === false){ 
             window.location = '#/login'
         }
+    }
+
+    handleClick(value) {
+       this.setState({friend_email: value})
     }
 
     render() {
@@ -83,7 +93,7 @@ export default class Login extends Component {
                     
                     </Grid.Column>
                     <Grid.Column verticalAlign="middle">
-                    <Button animated='vertical' primary size="mini" style={{width: "80px"}} floated="right">
+                    <Button onClick={() => this.handleClick(data.email)} animated='vertical' primary size="mini" style={{width: "80px"}} floated="right">
                         <Button.Content hidden>Waiting...</Button.Content>
                         <Button.Content visible>
                             <Icon name='add circle' />

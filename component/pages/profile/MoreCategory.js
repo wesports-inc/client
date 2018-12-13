@@ -15,7 +15,6 @@ export default class MoreCategory extends Component {
   }
 
   componentWillMount() {
-
   }
 
   handleMenu(category) {
@@ -43,7 +42,7 @@ export default class MoreCategory extends Component {
         window.location='#/login';
     }
     if(this.state.isCategory === 'group'){
-        window.location='#/people';
+        window.location='#/people'
     }
     return (
         <Container>
