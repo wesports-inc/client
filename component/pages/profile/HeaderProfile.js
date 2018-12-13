@@ -9,9 +9,17 @@ export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
+      email: null
     };
   }
+
+  componentWillMount() {
+    const email = localStorage.getItem('email')
+    this.setState({
+      email
+    })
+  }
+
   componentDidMount() {
 
   }
@@ -30,7 +38,7 @@ export default class HeaderProfile extends Component {
         <Grid.Row stretched>
           <Grid.Column>
               <Image src='https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png' />
-              <p style={{textAlign: "center", marginTop: 15, color: "white"}}>Petunia234</p>
+              <p style={{textAlign: "center", marginTop: 15, color: "white"}}>{this.state.email}</p>
           </Grid.Column>
           <Grid.Column style={{opacity: 0.9}}>
             <Segment>

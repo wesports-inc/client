@@ -20,7 +20,7 @@ export default class Index extends Component {
         this.setState({
             email,
             isLogin: auth
-        }, () => console.log('data user: ', this.state))
+        })
     }
 
     componentDidMount() {
@@ -31,21 +31,18 @@ export default class Index extends Component {
 
     shouldComponentUpdate(newProps, newState){
         if(newState.isLogin){
-            console.log('oucchh.. there is New State here: ', newState.isLogin);
             return true;
         }else{
-            console.log('HMMM... there is NO New State for any variable');
             return false;
         }
     }
 
     componentWillUpdate(nextProps, nextState) {
-        nextState.isLogin === false ? window.location = '#/login' : '';
-        console.log('then i will Updating new State : ', nextState);
+        nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('Lookup previous isLogin State: ', prevState);
+        
     }
 
     render () {

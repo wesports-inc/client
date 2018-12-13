@@ -8,7 +8,7 @@ export default class Login extends Component {
         this.state = {
             email: '',
             password: '',
-            isLogin: false,
+            isLogin: '',
             token: ''
         };
     this.handleChange = this.handleChange.bind(this)
@@ -16,31 +16,26 @@ export default class Login extends Component {
     }
 
     componentWillMount() {
-        const email = this.state.email
-        console.log('willmounting...', email)
-        axios.get('/api/user')
-        .then(db => {
-            console.log('data:::: ', db.data)
+        this.setState({
+            isLogin: localStorage.getItem('auth')
         })
     }
 
     componentDidMount() {
         const {isLogin} = this.state
-        console.log('after render, isLogin become: ', isLogin);
+        isLogin === "true" ? window.location = '#/profile' : ''
     }
 
     shouldComponentUpdate(newProps, newState){
         if(newState.isLogin){
-            console.log('oucchh.. there is New State here: ', newState.isLogin);
             return true;
         }else{
-            console.log('HMMM... there is NO New State for any variable');
             return false;
         }
     }
 
     componentWillUpdate(nextProps, nextState) {
-        console.log('then i will Updating new State : ', nextState);
+        
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -50,7 +45,6 @@ export default class Login extends Component {
             localStorage.setItem('auth', JSON.stringify(this.state.isLogin))
             window.location = '#/profile'
         }
-        console.log('Lookup previous isLogin State change into: ', isLogin + ' from: ', prevState.isLogin);
     }
 
 
@@ -69,7 +63,6 @@ export default class Login extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        console.log(data)
         fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -83,7 +76,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <Container statedata={this.state.isLogin.toString()}>
+            <Container>
             <Divider hidden />
                 <Grid textAlign='center' style={{ height: '100%' }} columns={1} verticalAlign='middle'>
                 <Grid.Column style={{ maxWidth: 450}}>
