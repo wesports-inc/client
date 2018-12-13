@@ -6,6 +6,7 @@ import Profile from "./component/pages/profile/";
 import Login from "./component/pages/form-user/login";
 import Test from "./component/functions/Test";
 import Register from "./component/pages/form-user/register";
+import Group from "./component/pages/people/index";
 
 ReactDOM.render(
   <HashRouter>
@@ -14,7 +15,7 @@ ReactDOM.render(
       <Route path="/profile" component={Profile} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/test" component={Test} />
+      <Route path="/people" component={Group} />
     </div>
   </HashRouter>,
   document.getElementById("root")

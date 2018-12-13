@@ -42,6 +42,9 @@ export default class MoreCategory extends Component {
         localStorage.removeItem('auth')
         window.location='#/login';
     }
+    if(this.state.isCategory === 'group'){
+        window.location='#/people';
+    }
     return (
         <Container>
             <Divider hidden />
