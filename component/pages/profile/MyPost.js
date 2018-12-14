@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Grid, Container, Segment, Divider, Image, Icon, GridColumn, List, Menu} from 'semantic-ui-react';
+import Skeleton from 'react-skeleton-loader';
 
 export default class MyPost extends Component {
   constructor(props) {
@@ -7,10 +8,62 @@ export default class MyPost extends Component {
     this.state = {
       isLoading: true
     };
+    this.generateSkeleton = this.generateSkeleton.bind(this)
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.setState({isLoading: false})
+    }, 500);
+  }
+
+  generateSkeleton() {
+    return (
+      <div>
+      <Container>
+        <Grid>
+        <GridColumn>
+          <Segment basic>
+            <List>
+              <List.Item>
+                <List.Content>
+                  <List.Header as='a'><Skeleton width="10px" height="10px" /></List.Header>
+                  <List.Description>
+                  <Skeleton />
+                    <a>
+                      <b><Skeleton /></b>
+                    </a>{' '}
+                    <small><i><Skeleton /></i></small>.
+                  </List.Description>
+                </List.Content>
+              </List.Item>
+              <Divider clearing/>
+              <List.Item>
+                <List.Content>
+                  <List.Header as='a'><Skeleton width="10px" height="10px" /></List.Header>
+                  <List.Description>
+                  <Skeleton />
+                    <a>
+                      <b><Skeleton /></b>
+                    </a>{' '}
+                    <small><i><Skeleton /></i></small>.
+                  </List.Description>
+                </List.Content>
+              </List.Item>
+            </List>
+          </Segment>
+        </GridColumn>
+      </Grid>
+      </Container>
+      </div>
+        ); 
   }
 
   render() {
+    const { isLoading } = this.state;
     return (
+      <div>
+      {isLoading ? this.generateSkeleton() :
       <Container>
         <Grid>
         <GridColumn>
@@ -46,6 +99,8 @@ export default class MyPost extends Component {
         </GridColumn>
       </Grid>
       </Container>
+      }
+      </div>
         ); 
     }
 }

@@ -4,23 +4,55 @@ import settingIcon from '../../../assets/images/icon/setting.png';
 import groupIcon from '../../../assets/images/icon/group.png';
 import galleryIcon from '../../../assets/images/icon/gallery.png';
 import statisticIcon from '../../../assets/images/icon/Statistic.png';
+import Skeleton from 'react-skeleton-loader';
 
 export default class MoreCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        isCategory: ''
+        isCategory: '',
+        isLoading: true
     };
     this.handleMenu = this.handleMenu.bind(this);
+    this.generateSkeleton = this.generateSkeleton.bind(this)
   }
 
   componentWillMount() {
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+        this.setState({isLoading: false})
+      }, 500);
   }
 
   handleMenu(category) {
       this.setState({
         isCategory: category
       }, () => console.log('handle more category: ', this.state.isCategory));
+  }
+
+  generateSkeleton() {
+   
+    return <div>
+    <Container>
+        <Divider hidden />
+        <Grid columns={4}>
+            <GridColumn>
+            <p><Skeleton height= "30px" width="30px"/></p>
+            </GridColumn>
+            <GridColumn>
+            <p><Skeleton height= "30px" width="30px"/></p>
+            </GridColumn>
+            <GridColumn>
+            <p><Skeleton height= "30px" width="30px"/></p>
+            </GridColumn>
+            <GridColumn>
+            <p><Skeleton height= "30px" width="30px"/></p>
+            </GridColumn>
+        </Grid>
+    </Container>
+    </div>
   }
 
   noSpacing = {
@@ -35,6 +67,7 @@ export default class MoreCategory extends Component {
   }
 
   render() {
+    const { isLoading } = this.state;
     // bypass logout user
     if(this.state.isCategory === 'setting'){
         localStorage.removeItem('email')
@@ -49,6 +82,8 @@ export default class MoreCategory extends Component {
         window.location = '#/statistic'
     }
     return (
+        <div>
+            {isLoading ? this.generateSkeleton() :
         <Container>
             <Divider hidden />
             <Grid columns={4}>
@@ -70,6 +105,8 @@ export default class MoreCategory extends Component {
                 </GridColumn>
             </Grid>
         </Container>
+            }
+        </div>
     );
   }
 }   

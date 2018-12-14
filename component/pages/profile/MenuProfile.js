@@ -16,7 +16,7 @@ export default class MenuProfile extends Component {
   componentDidMount() {
       setTimeout(() => {
           this.setState({isLoading: false})
-      }, 1000);
+      }, 400);
   }
 
   handleMenu(category) {

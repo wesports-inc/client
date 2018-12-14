@@ -1,56 +1,41 @@
-import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon, GridColumn, Form } from 'semantic-ui-react';
+import React, { Component } from "react";
+import { Header } from 'semantic-ui-react';
 import BottomMenu from '../profile/MenuProfile';
 import Skeleton from 'react-skeleton-loader';
-import axios from 'axios';
+import Filter from './filter';
 
-export default class Login extends Component {
+export default class Index extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
-            email: localStorage.getItem('email').slice(1, -1),
-            datas: [],
-            password: '',
             isLogin: '',
-            token: '',
-            friend_email: '',
-            friend_status: '',
-            isLoading: true,
-            friend_send: {}
+            email: '',
+            isLoading: true
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
     }
 
     componentWillMount() {
-        axios({
-            method: 'post',
-            url: '/api/search/people',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: {
-              email: this.state.email, // This is the body part
-            }
-          }).then(result => this.setState({datas: result.data}));
-
+        const email = JSON.parse(localStorage.getItem('email'))
+        const auth = JSON.parse(localStorage.getItem('auth'))
         this.setState({
-            isLogin: localStorage.getItem('auth')
+            email,
+            isLogin: auth
         })
     }
 
     componentDidMount() {
-        if(this.state.datas){
-            setTimeout(() => {
-                this.setState({isLoading: false})
-            }, 500);
+        if(this.state.isLogin != true){
+            window.location='#/login';
         }
-        const {isLogin} = this.state
-        isLogin === "false" ? window.location = '#/login' : ''
+        setTimeout(() => {
+            this.setState({isLoading: false})
+        }, 500);
     }
 
     shouldComponentUpdate(newProps, newState){
-        if(newState){
+        if(newState.isLogin){
             return true;
         }else{
             return false;
@@ -58,109 +43,33 @@ export default class Login extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if(nextState.friendRequest){
-            console.log('ada teman baru nih: ' + nextState.friendRequest)
-        }
+        nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const {isLogin} = this.state;
-        if(isLogin === false){ 
-            window.location = '#/login'
-        }
-    }
-
-    handleClick(value) {
-       this.setState({friend_email: value, friend_send: {email: this.state.email,
-        email_add: value}}, () => 
-        axios({
-            method: 'post',
-            url: '/api/addfriend',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: JSON.stringify(this.state.friend_send),
-          }).then(result => this.setState({friend_status: result.data.status}, () => console.log('status teman: ', this.state.friend_status)))
-        )
         
     }
 
     generateSkeleton() {
-        const {datas} = this.state;
-        return <div style={{marginBottom: 45}}>
-        <Container>
-        <Divider hidden />
-            <Skeleton width="100%">
-                <Header as="h2" textAlign="center">
-            </Header>
-            </Skeleton>
-            <Divider/>
-            {datas.map(data => {  
-                return (
-            <Grid columns={2} key={data._id}>
-                <Grid.Column>
-                <List verticalAlign="middle">
-                    <List.Item>
-                        <List.Content>
-                            <List.Header><Skeleton/></List.Header>
-                            <p><Skeleton/></p>
-                        </List.Content>
-                    </List.Item>
-                </List>
-            </Grid.Column>
-
-                <Grid.Column verticalAlign="middle">
-                <Skeleton />
-                </Grid.Column>
-            </Grid>
-            ); })}
-        </Container>
-        </div>
+        return <Header textAlign="center"><Skeleton/></Header>
     }
 
-    render() {
-        const {datas} = this.state;
+    render () {
         const {isLoading} = this.state;
-        const {friend_status} = this.state;
         return (
-            <div style={{marginBottom: 45}}>
+        <div>
             {isLoading ? this.generateSkeleton() :
-            <Container>
-            <Divider hidden />
-                <Header as="h2" textAlign="center">
-                    Add People, More Circle
-                </Header>
-                <Divider/>
-                {datas.map(data => {  
-                    return (
-                <Grid columns={2} key={data._id}>
-                    <Grid.Column>
-                        <List verticalAlign="middle">
-                            <List.Item>
-                                <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
-                                <List.Content>
-                                    <List.Header>{ data.first_name } {data.last_name}</List.Header>
-                                    <p>@{ data.username }</p>
-                                </List.Content>
-                            </List.Item>
-                        </List>
-                    </Grid.Column>
-                    <Grid.Column verticalAlign="middle">
-                    <Button onClick={() => this.handleClick(data.email)} animated='vertical' primary size="mini" style={{width: "80px"}} floated="right">
-                        {friend_status === 'pending' ? <Button.Content>Waiting</Button.Content> : 
-                        <Button.Content>
-                            <Icon name='add circle' />
-                        </Button.Content>
-                        }
-                    </Button>
-                    </Grid.Column>
-                </Grid>
-                ); })}
-            </Container>
+            <Header as="h2" textAlign="center" style={{marginTop: 25}}>
+                Add People, More Circle
+            </Header>
+            }
+            {isLoading ? this.generateSkeleton() :
+            <Filter />
             }
             <BottomMenu />
-            </div>
+        </div>
         );
     }
+
+
 }

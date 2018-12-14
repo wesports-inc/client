@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-// import Logo from "../../../assets/images/logo/apple-logo.png";
-// import { Link } from "react-router-dom";
+import Skeleton from 'react-skeleton-loader';
 import Background from '../../../assets/images/background/bg-profile.jpg';
 
 import {Grid, Container, Segment, Divider, Image, Icon, GridColumn, List, Menu} from 'semantic-ui-react';
@@ -9,8 +8,10 @@ export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null
+      email: null,
+      isLoading: true
     };
+    this.generateSkeleton = this.generateSkeleton.bind(this)
   }
 
   componentWillMount() {
@@ -21,8 +22,35 @@ export default class HeaderProfile extends Component {
   }
 
   componentDidMount() {
-
+    setTimeout(() => {
+      this.setState({isLoading: false})
+    }, 500);
   }
+
+  generateSkeleton() {
+    return <div>
+      <Container>
+      <Grid columns={2}>
+      <Divider hidden />
+        <Grid.Row stretched>
+          <Grid.Column>
+              <Skeleton borderRadius="100%" height="75px" />
+              <Divider hidden />
+              <Skeleton />
+          </Grid.Column>
+          <Grid.Column>
+            <Skeleton height="150px"/>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+      <Divider hidden />
+      <Divider hidden />
+      <Divider hidden />
+      <Divider hidden />
+      </Container>
+      </div>
+  }
+
   render() {
     const { isLoading } = this.state;
     const smallFont = {
@@ -31,7 +59,9 @@ export default class HeaderProfile extends Component {
     const toRight = {
       float: "right"
     }
-    return ( 
+    return (
+      <div>
+      {isLoading ? this.generateSkeleton() :
       <Container>
       <Grid columns={2} style={{backgroundImage: `url(${Background})`}}>
       <Divider hidden />
@@ -54,6 +84,8 @@ export default class HeaderProfile extends Component {
         </Grid.Row>
       </Grid>
       </Container>
+      }
+      </div>
     );
   }
 }
