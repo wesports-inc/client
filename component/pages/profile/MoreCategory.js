@@ -43,6 +43,10 @@ export default class MoreCategory extends Component {
     }
     if(this.state.isCategory === 'group'){
         window.location='#/people'
+    }else if(this.state.isCategory === 'gallery'){
+        window.location = '#/gallery'
+    }else if(this.state.isCategory === 'statistic'){
+        window.location = '#/statistic'
     }
     return (
         <Container>

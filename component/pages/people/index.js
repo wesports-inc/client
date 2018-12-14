@@ -42,7 +42,7 @@ export default class Login extends Component {
         if(this.state.datas){
             setTimeout(() => {
                 this.setState({isLoading: false})
-            }, 1500);
+            }, 500);
         }
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
@@ -75,9 +75,10 @@ export default class Login extends Component {
         return <div style={{marginBottom: 45}}>
         <Container>
         <Divider hidden />
-            <Header as="h2" textAlign="center">
-                <Skeleton/>
+            <Skeleton width="100%">
+                <Header as="h2" textAlign="center">
             </Header>
+            </Skeleton>
             <Divider/>
             {datas.map(data => {  
                 return (
