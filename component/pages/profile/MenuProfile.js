@@ -26,13 +26,11 @@ export default class MenuProfile extends Component {
       window.location = '#/profile'
     }
     return (
-        <Grid columns={1} style={{
-            zIndex: 2,
-            position: "fixed",
-            bottom: 0
-            }}>
-            <GridColumn>
-        <Menu fluid style={{margin: 0, padding: 0}}>
+      <Menu fluid widths={5} style={{
+        zIndex: 2,
+        position: "fixed",
+        bottom: 0
+        }}>
         <Menu.Item name='home' active={isMenu === 'home'} onClick={ () => this.handleMenu('home')}>
           <Icon name='clock outline' size="large"/>
         </Menu.Item>
@@ -53,8 +51,6 @@ export default class MenuProfile extends Component {
           <Icon name='user circle outline' size="large"/>
         </Menu.Item>
       </Menu>
-      </GridColumn>
-      </Grid>
     );
   }
 }   

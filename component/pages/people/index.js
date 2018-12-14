@@ -21,12 +21,6 @@ export default class Login extends Component {
     }
 
     componentWillMount() {
-        if(this.state.datas){
-            setTimeout(() => {
-                this.setState({isLoading: false})
-            }, 3000);
-            
-        }
         axios({
             method: 'post',
             url: '/api/search/people',
@@ -45,6 +39,11 @@ export default class Login extends Component {
     }
 
     componentDidMount() {
+        if(this.state.datas){
+            setTimeout(() => {
+                this.setState({isLoading: false})
+            }, 1500);
+        }
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
     }
@@ -95,14 +94,11 @@ export default class Login extends Component {
             </Grid.Column>
 
                 <Grid.Column verticalAlign="middle">
-                <Button onClick={() => this.handleClick(data.email)} animated='vertical' size="mini" style={{width: "80px"}} floated="right">
-                    <Skeleton/>
-                </Button>
+                <Skeleton />
                 </Grid.Column>
             </Grid>
             ); })}
         </Container>
-        <Skeleton/>
         </div>
     }
 
