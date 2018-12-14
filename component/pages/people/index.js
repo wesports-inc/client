@@ -15,7 +15,8 @@ export default class Login extends Component {
             token: '',
             friend_email: '',
             friend_status: '',
-            isLoading: true
+            isLoading: true,
+            friend_send: {}
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
     }
@@ -34,7 +35,7 @@ export default class Login extends Component {
           }).then(result => this.setState({datas: result.data}));
 
         this.setState({
-            isLogin: localStorage.getItem('auth').slice(1, -1)
+            isLogin: localStorage.getItem('auth')
         })
     }
 
@@ -57,6 +58,9 @@ export default class Login extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
+        if(nextState.friendRequest){
+            console.log('ada teman baru nih: ' + nextState.friendRequest)
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -67,7 +71,19 @@ export default class Login extends Component {
     }
 
     handleClick(value) {
-       this.setState({friend_email: value})
+       this.setState({friend_email: value, friend_send: {email: this.state.email,
+        email_add: value}}, () => 
+        axios({
+            method: 'post',
+            url: '/api/addfriend',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: JSON.stringify(this.state.friend_send),
+          }).then(result => this.setState({friend_status: result.data.status}, () => console.log('status teman: ', this.state.friend_status)))
+        )
+        
     }
 
     generateSkeleton() {
@@ -106,6 +122,7 @@ export default class Login extends Component {
     render() {
         const {datas} = this.state;
         const {isLoading} = this.state;
+        const {friend_status} = this.state;
         return (
             <div style={{marginBottom: 45}}>
             {isLoading ? this.generateSkeleton() :
@@ -119,23 +136,23 @@ export default class Login extends Component {
                     return (
                 <Grid columns={2} key={data._id}>
                     <Grid.Column>
-                    <List verticalAlign="middle">
-                        <List.Item>
-                            <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
-                            <List.Content>
-                                <List.Header>{ data.first_name } {data.last_name}</List.Header>
-                                <p>@{ data.username }</p>
-                            </List.Content>
-                        </List.Item>
-                    </List>
-                </Grid.Column>
-
+                        <List verticalAlign="middle">
+                            <List.Item>
+                                <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
+                                <List.Content>
+                                    <List.Header>{ data.first_name } {data.last_name}</List.Header>
+                                    <p>@{ data.username }</p>
+                                </List.Content>
+                            </List.Item>
+                        </List>
+                    </Grid.Column>
                     <Grid.Column verticalAlign="middle">
                     <Button onClick={() => this.handleClick(data.email)} animated='vertical' primary size="mini" style={{width: "80px"}} floated="right">
-                        <Button.Content hidden>Waiting...</Button.Content>
-                        <Button.Content visible>
+                        {friend_status === 'pending' ? <Button.Content>Waiting</Button.Content> : 
+                        <Button.Content>
                             <Icon name='add circle' />
                         </Button.Content>
+                        }
                     </Button>
                     </Grid.Column>
                 </Grid>
