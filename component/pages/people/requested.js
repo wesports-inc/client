@@ -133,6 +133,7 @@ export default class Requested extends Component {
                             <List.Item>
                                 <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                                 <List.Content>
+                                    {/* hapus text email sementara selama backend blm ada username*/}
                                     <List.Header>@{ data.email_friend.slice(0, -10) }</List.Header>
                                     <i>{data.status}</i>
                                 </List.Content>

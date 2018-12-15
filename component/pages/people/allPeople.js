@@ -31,18 +31,6 @@ export default class allPeople extends Component {
               email: this.state.email, // This is the body part
             }
           }).then(result => this.setState({datas: result.data}));
-          axios({
-            method: 'post',
-            url: '/api/addfriend/status',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: {
-              email: this.state.email, // This is the body part
-            }
-          }).then(result => this.setState({friend_status: result.data.status, friend_status_email: result.data.email_friend}));
-
         this.setState({
             isLogin: localStorage.getItem('auth')
         })

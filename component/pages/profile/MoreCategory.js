@@ -74,7 +74,7 @@ export default class MoreCategory extends Component {
         localStorage.removeItem('auth')
         window.location='#/login';
     }
-    if(this.state.isCategory === 'group'){
+    if(this.state.isCategory === 'people'){
         window.location='#/people'
     }else if(this.state.isCategory === 'gallery'){
         window.location = '#/gallery'
@@ -96,8 +96,8 @@ export default class MoreCategory extends Component {
                     <p style={this.smallFontCenter}>Gallery</p>
                 </GridColumn>
                 <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('group')}><Image src={groupIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Group</p>
+                    <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={groupIcon} avatar /></p>
+                    <p style={this.smallFontCenter}>People</p>
                 </GridColumn>
                 <GridColumn>
                     <p style={this.noSpacing} onClick={() => this.handleMenu('setting')}><Image src={settingIcon} avatar /></p>
