@@ -4,9 +4,9 @@ import { HashRouter, Route } from "react-router-dom";
 import App from "./App";
 import Profile from "./component/pages/profile/";
 import Login from "./component/pages/form-user/login";
-import Test from "./component/functions/Test";
+import Setting from "./component/pages/profile/setting/";
 import Register from "./component/pages/form-user/register";
-import Group from "./component/pages/people/index";
+import People from "./component/pages/people/index";
 
 ReactDOM.render(
   <HashRouter>
@@ -15,7 +15,8 @@ ReactDOM.render(
       <Route path="/profile" component={Profile} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/people" component={Group} />
+      <Route path="/people" component={People} />
+      <Route path="/setting" component={Setting} />
     </div>
   </HashRouter>,
   document.getElementById("root")

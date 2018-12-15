@@ -1,0 +1,46 @@
+.input-file-container {
+	position: relative;
+	width:100%;
+  } 
+.input-file-trigger {
+	border-radius: 50px;
+	display: block;
+	padding: 8px 25px;
+	background: #f2f2f2;
+	color: #3b5998;
+	font-size: 1.2em;
+	transition: all .4s;
+	cursor: pointer;
+  }
+.input-file {
+	position: absolute;
+	top: 0; left: 0;
+	width: 200px;
+	opacity: 0;
+	padding: 14px 0;
+	cursor: pointer;
+  }
+ .input-file:hover + .input-file-trigger,
+ .input-file:focus + .input-file-trigger,
+  .input-file-trigger:hover,
+ .input-file-trigger:focus {
+	background: #8b9dc3;
+	color: black;
+  }
+  
+  .file-return {
+	margin: 0;
+  }
+  .file-return:not(:empty) {
+	margin: 1em 0;
+  }
+ .file-return {
+	font-style: italic;
+	font-size: .9em;
+	font-weight: bold;
+  }
+ .file-return:not(:empty):before {
+	content: "Selected file: ";
+	font-style: normal;
+	font-weight: normal;
+  }

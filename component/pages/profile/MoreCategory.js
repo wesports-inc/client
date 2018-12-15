@@ -70,9 +70,7 @@ export default class MoreCategory extends Component {
     const { isLoading } = this.state;
     // bypass logout user
     if(this.state.isCategory === 'setting'){
-        localStorage.removeItem('email')
-        localStorage.removeItem('auth')
-        window.location='#/login';
+        window.location='#/setting'
     }
     if(this.state.isCategory === 'people'){
         window.location='#/people'
