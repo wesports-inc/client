@@ -1,16 +1,18 @@
 import React, { Component } from "react"
 import { Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
+import HeaderNotification from './HeaderNotification';
+import MenuProfile from '../MenuProfile';
 import axios from 'axios';
 
-export default class allPeople extends Component {
+export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: localStorage.getItem('email').slice(1, -1),
+            email: '',
             datas: [],
             isLogin: '',
-            friend_email: '',
+            friend_email: localStorage.getItem('email').slice(1, -1),
             friend_status: '',
             friend_status_email: '',
             isLoading: true,
@@ -22,13 +24,13 @@ export default class allPeople extends Component {
     componentWillMount() {
         axios({
             method: 'post',
-            url: '/api/friend',
+            url: '/api/friend/notif',
             headers: { 
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
             data: {
-              email: this.state.email, // This is the body part
+              email: this.state.friend_email, // This is the body part
             }
           }).then(result => this.setState({datas: result.data}));
         this.setState({
@@ -37,6 +39,7 @@ export default class allPeople extends Component {
     }
 
     componentDidMount() {
+        console.log('menu: ', localStorage.getItem('menu'))
         if(this.state.datas){
             setTimeout(() => {
                 this.setState({isLoading: false})
@@ -68,19 +71,18 @@ export default class allPeople extends Component {
     }
 
     handleClick(value) {
-       this.setState({friend_send: {email: this.state.email,
-        email_friend: value}}, () => 
-        axios({
-            method: 'post',
-            url: '/api/addfriend',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: JSON.stringify(this.state.friend_send),
-          }).then(result => this.setState({friend_status: result.data.status}, () => console.log('status teman: ', this.state.friend_status)))
-        )
-        
+        this.setState({friend_send: {email: value,
+            email_friend: localStorage.getItem('email').slice(1, -1)}}, () => 
+            axios({
+                method: 'put',
+                url: '/api/friend/confirm',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify(this.state.friend_send),
+              }).then(result => console.log('CONFIRM ------------> : ', result))
+            )
     }
 
     generateSkeleton() {
@@ -121,6 +123,7 @@ export default class allPeople extends Component {
         const {isLoading} = this.state;
         return (
             <div style={{marginBottom: 45}}>
+            <HeaderNotification/>
             {isLoading ? this.generateSkeleton() :
             <Container>
                 {datas.map(data => {  
@@ -131,21 +134,21 @@ export default class allPeople extends Component {
                             <List.Item>
                                 <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                                 <List.Content>
-                                    <List.Header>{ data.first_name } {data.last_name}</List.Header>
-                                    <p>@{ data.username }</p>
+                                    <List.Header>{ data.email.slice(0, -10) }</List.Header>
                                 </List.Content>
                             </List.Item>
                         </List>
                     </Grid.Column>
                     <Grid.Column verticalAlign="middle">
                     <Button icon onClick={() => this.handleClick(data.email)} primary style={{width: "75px"}} size="mini" floated="right">
-                        <Icon name='add circle' />
+                        <Icon name='check circle outline' />
                     </Button>
                     </Grid.Column>
                 </Grid>
                 ); })}
             </Container>
             }
+            <MenuProfile/>
             </div>
         );
     }

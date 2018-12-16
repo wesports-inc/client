@@ -7,6 +7,7 @@ import Login from "./component/pages/form-user/login";
 import Setting from "./component/pages/profile/setting/";
 import Register from "./component/pages/form-user/register";
 import People from "./component/pages/people/index";
+import Notification from "./component/pages/profile/notification/"
 
 ReactDOM.render(
   <HashRouter>
@@ -17,6 +18,7 @@ ReactDOM.render(
       <Route path="/register" component={Register} />
       <Route path="/people" component={People} />
       <Route path="/setting" component={Setting} />
+      <Route path="/notification" component={Notification} />
     </div>
   </HashRouter>,
   document.getElementById("root")

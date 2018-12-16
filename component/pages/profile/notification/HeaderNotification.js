@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import {Icon, Menu} from 'semantic-ui-react';
+import {Icon, Menu, Header} from 'semantic-ui-react';
 
-export default class HeaderMenu extends Component {
+export default class HeaderNotification extends Component {
 
     logout() {
         localStorage.removeItem('email')
         localStorage.removeItem('auth')
-        localStorage.removeItem('menu')
         window.location='#/login';
     }
     back() {
@@ -22,7 +21,7 @@ export default class HeaderMenu extends Component {
             </Menu.Item>
             <Menu.Menu position='right'>
               <Menu.Item name='help'>
-                <a onClick={this.logout.bind(this)}>Logout</a>
+                <Header as="h5">Notification</Header>
               </Menu.Item>
             </Menu.Menu>
           </Menu>

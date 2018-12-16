@@ -71,13 +71,16 @@ export default class MoreCategory extends Component {
     // bypass logout user
     if(this.state.isCategory === 'setting'){
         window.location='#/setting'
-    }
-    if(this.state.isCategory === 'people'){
+        localStorage.setItem('menu', '');
+    }else if(this.state.isCategory === 'people'){
         window.location='#/people'
+        localStorage.setItem('menu', '');
     }else if(this.state.isCategory === 'gallery'){
         window.location = '#/gallery'
+        localStorage.setItem('menu', '');
     }else if(this.state.isCategory === 'statistic'){
         window.location = '#/statistic'
+        localStorage.setItem('menu', '');
     }
     return (
         <div>

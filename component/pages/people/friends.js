@@ -157,8 +157,8 @@ export default class Friends extends Component {
                             <List.Item>
                                 <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                                 <List.Content>
-                                    <List.Header>{ data.first_name } {data.last_name}</List.Header>
-                                    <p>@{ data.username }</p>
+                                    <List.Header>{ data.email_friend}</List.Header>
+                                    <p>{ data.status }</p>
                                 </List.Content>
                             </List.Item>
                         </List>

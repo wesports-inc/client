@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header } from 'semantic-ui-react';
+import { Header, Divider } from 'semantic-ui-react';
 import BottomMenu from '../profile/MenuProfile';
 import Skeleton from 'react-skeleton-loader';
 import Filter from './filter';
@@ -60,9 +60,10 @@ export default class Index extends Component {
         <div>
             {isLoading ? this.generateSkeleton() :
             <Header as="h2" textAlign="center" style={{marginTop: 25}}>
-                Add People, More Circle
+                <i>Add People, More Circle</i>
             </Header>
             }
+            <Divider />
             {isLoading ? this.generateSkeleton() :
             <Filter />
             }
