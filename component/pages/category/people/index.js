@@ -1,10 +1,8 @@
-import React, { Component } from "react"
-import {Container, Divider, Grid, GridColumn, Menu} from 'semantic-ui-react';
-import HeaderMenu from './header-menu-setting'
-import MenuProfile from '../MenuProfile'
-
-import AccountSetting from './account-setting'
-import ProfileSetting from './profile-setting'
+import React, { Component } from "react";
+import { Header, Divider } from 'semantic-ui-react';
+import BottomMenu from '../../profile/MenuProfile';
+import Skeleton from 'react-skeleton-loader';
+import Filter from './filter';
 
 export default class Index extends Component {
 
@@ -12,8 +10,10 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: ''
+            email: '',
+            isLoading: true
         };
+        this.generateSkeleton = this.generateSkeleton.bind(this)
     }
 
     componentWillMount() {
@@ -29,6 +29,9 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
+        setTimeout(() => {
+            this.setState({isLoading: false})
+        }, 500);
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -47,27 +50,25 @@ export default class Index extends Component {
         
     }
 
-    logout() {
-        localStorage.removeItem('email')
-        localStorage.removeItem('auth')
-        window.location='#/login';
+    generateSkeleton() {
+        return <Header textAlign="center"><Skeleton/></Header>
     }
 
     render () {
+        const {isLoading} = this.state;
         return (
-            <div>
-            <HeaderMenu/>
-            <Container>
-            <Divider hidden />
-                <Grid columns={1}>
-                    <GridColumn>
-                        <AccountSetting/>
-                        <ProfileSetting/>
-                    </GridColumn>
-                </Grid>
-            </Container>
-            <MenuProfile/>
-            </div>
+        <div>
+            {isLoading ? this.generateSkeleton() :
+            <Header as="h2" textAlign="center" style={{marginTop: 25}}>
+                <i>Add People, More Circle</i>
+            </Header>
+            }
+            <Divider />
+            {isLoading ? this.generateSkeleton() :
+            <Filter />
+            }
+            <BottomMenu />
+        </div>
         );
     }
 

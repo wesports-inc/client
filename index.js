@@ -2,12 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, Route } from "react-router-dom";
 import App from "./App";
-import Profile from "./component/pages/profile/";
+
+//user personality
 import Login from "./component/pages/form-user/login";
-import Setting from "./component/pages/profile/setting/";
 import Register from "./component/pages/form-user/register";
-import People from "./component/pages/people/index";
-import Notification from "./component/pages/profile/notification/"
+import Profile from "./component/pages/profile/";
+
+//categories
+import Setting from "./component/pages/category/setting/";
+import People from "./component/pages/category/people/";
+import Notifications from "./component/pages/category/notification/"
+import Gallery from "./component/pages/category/gallery/"
+import Statistic from "./component/pages/category/statistic/"
 
 ReactDOM.render(
   <HashRouter>
@@ -18,7 +24,9 @@ ReactDOM.render(
       <Route path="/register" component={Register} />
       <Route path="/people" component={People} />
       <Route path="/setting" component={Setting} />
-      <Route path="/notification" component={Notification} />
+      <Route path="/notification" component={Notifications} />
+      <Route path="/gallery" component={Gallery} />
+      <Route path="/statistic" component={Statistic} />
     </div>
   </HashRouter>,
   document.getElementById("root")

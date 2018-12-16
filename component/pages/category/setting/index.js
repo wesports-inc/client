@@ -1,8 +1,10 @@
-import React, { Component } from "react";
-import { Header, Divider } from 'semantic-ui-react';
-import BottomMenu from '../profile/MenuProfile';
-import Skeleton from 'react-skeleton-loader';
-import Filter from './filter';
+import React, { Component } from "react"
+import {Container, Divider, Grid, GridColumn, Menu} from 'semantic-ui-react';
+import HeaderMenu from './header-menu-setting'
+import MenuProfile from '../../profile/MenuProfile';
+
+import AccountSetting from './account-setting'
+import ProfileSetting from './profile-setting'
 
 export default class Index extends Component {
 
@@ -10,10 +12,8 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: '',
-            isLoading: true
+            email: ''
         };
-        this.generateSkeleton = this.generateSkeleton.bind(this)
     }
 
     componentWillMount() {
@@ -29,9 +29,6 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
-        setTimeout(() => {
-            this.setState({isLoading: false})
-        }, 500);
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -50,25 +47,27 @@ export default class Index extends Component {
         
     }
 
-    generateSkeleton() {
-        return <Header textAlign="center"><Skeleton/></Header>
+    logout() {
+        localStorage.removeItem('email')
+        localStorage.removeItem('auth')
+        window.location='#/login';
     }
 
     render () {
-        const {isLoading} = this.state;
         return (
-        <div>
-            {isLoading ? this.generateSkeleton() :
-            <Header as="h2" textAlign="center" style={{marginTop: 25}}>
-                <i>Add People, More Circle</i>
-            </Header>
-            }
-            <Divider />
-            {isLoading ? this.generateSkeleton() :
-            <Filter />
-            }
-            <BottomMenu />
-        </div>
+            <div>
+            <HeaderMenu/>
+            <Container>
+            <Divider hidden />
+                <Grid columns={1}>
+                    <GridColumn>
+                        <AccountSetting/>
+                        <ProfileSetting/>
+                    </GridColumn>
+                </Grid>
+            </Container>
+            <MenuProfile/>
+            </div>
         );
     }
 

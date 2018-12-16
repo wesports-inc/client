@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Menu, Icon, Label} from 'semantic-ui-react';
+import {Menu, Icon, Label, Modal, Header, Form,TextArea, Button} from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import axios from 'axios'
 
@@ -7,6 +7,7 @@ export default class MenuProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        open: false,
         isMenu: '',
         menu: localStorage.getItem('menu'),
         datas: [],
@@ -75,8 +76,11 @@ export default class MenuProfile extends Component {
     );
   }
 
+  show = dimmer => () => this.setState({ dimmer, open: true })
+  close = () => this.setState({ open: false })
+
   render() {
-    console.log('data: ', this.state.datas)
+    const { open, dimmer } = this.state
     const {isLoading} = this.state;
     const {isMenu} = this.state;
     const {menu} = this.state;
@@ -85,8 +89,6 @@ export default class MenuProfile extends Component {
       window.location = '#/profile'
     }else if(isMenu === 'notification'){
       window.location = '#/notification'
-    }else if(isMenu === 'chat'){
-      window.location = '#/messages'
     }else if(isMenu === 'home'){
       window.location = '#/home'
     }else{
@@ -107,7 +109,7 @@ export default class MenuProfile extends Component {
           {menu === 'chat' ? <Icon name='comment alternate' size="large"/> : <Icon name='comment alternate outline' size="large"/>}
         </Menu.Item>
 
-        <Menu.Item name='post' active={menu === 'post'} onClick={ () => this.handleMenu('post')}>
+        <Menu.Item name='post' active={menu === 'post'} onClick={this.show('blurring')}>
           {menu === 'post' ? <Icon name='plus square' size="large"/> : <Icon name='plus square outline' size="large"/>}
         </Menu.Item>
 
@@ -123,6 +125,26 @@ export default class MenuProfile extends Component {
         </Menu.Item>
       </Menu>
       }
+          <Modal dimmer={dimmer} size="mini" open={open} onClose={this.close}>
+              <Modal.Header>Post Your Activity <Icon name="share"></Icon></Modal.Header>
+              <Modal.Content>
+                <Modal.Description>
+                  <Header as="h5">this will be great for your followers</Header>
+                  <Form>
+                    <TextArea autoHeight placeholder='What happen...' />
+                  </Form>
+                </Modal.Description>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button
+                  primary
+                  icon='checkmark'
+                  labelPosition='right'
+                  content="Yep, Publish!"
+                  onClick={this.close}
+                />
+              </Modal.Actions>
+            </Modal>
       </div>
     );
   }
