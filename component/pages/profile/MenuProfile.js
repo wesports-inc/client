@@ -114,9 +114,11 @@ export default class MenuProfile extends Component {
         </Menu.Item>
 
         <Menu.Item name='Notification' active={menu === 'notification'} onClick={ () => this.handleMenu('notification')}>
+          {datas.length === 0 ? '' :
           <Label circular size="tiny" floating color="red" key="red">
           {datas.length}
           </Label>
+          }
           {menu === 'notification' ? <Icon name='bell' size="large" /> : <Icon name='bell outline' size="large" />}
         </Menu.Item>
 

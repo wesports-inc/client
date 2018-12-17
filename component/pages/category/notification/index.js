@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
+import { Container, Grid, Divider, Image, List, Header, Button, Icon, Statistic } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import HeaderNotification from './HeaderNotification';
 import MenuProfile from '../../profile/MenuProfile';
@@ -19,6 +19,7 @@ export default class Index extends Component {
             friend_send: {}
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
+        this.generateZeroData = this.generateZeroData.bind(this)
     }
 
     componentWillMount() {
@@ -118,13 +119,32 @@ export default class Index extends Component {
         </div>
     }
 
+    generateZeroData() {
+        return <div>  
+        <Header as='h2' icon textAlign='center'>
+        <Image centered size='large' src='https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png' />
+        <Header.Content>
+            <Statistic>
+                <Statistic.Value text>
+                    Hell Yeah,
+                </Statistic.Value>
+                <Statistic.Label><i>0 Million</i></Statistic.Label>
+                <Statistic.Label>Notification</Statistic.Label>
+            </Statistic>
+        </Header.Content>
+      </Header>
+      </div>
+    }
+
     render() {
         const {datas} = this.state;
+        console.log('banyaknya data:', datas.length)
         const {isLoading} = this.state;
         return (
             <div style={{marginBottom: 45}}>
             <HeaderNotification/>
-            {isLoading ? this.generateSkeleton() :
+            {datas.length === 0 ? this.generateZeroData() :
+            isLoading ? this.generateSkeleton() :
             <Container>
                 {datas.map(data => {  
                     return (

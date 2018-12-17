@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Skeleton from 'react-skeleton-loader';
+import {Grid, Container, Segment, Divider, Image, Icon} from 'semantic-ui-react';
 import Background from '../../../assets/images/background/bg-profile.jpg';
 
 import axios from 'axios'
-import {Grid, Container, Segment, Divider, Image, Icon, GridColumn, List, Menu} from 'semantic-ui-react';
 
 export default class HeaderProfile extends Component {
   constructor(props) {
@@ -73,14 +73,21 @@ export default class HeaderProfile extends Component {
 
   render() {
     const {username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date} = this.state;
-
     const { isLoading } = this.state;
+
+    //set user data caching
+    localStorage.setItem('username', username)
+    localStorage.setItem('first_name', first_name)
+    localStorage.setItem('last_name', last_name)
+
+    //simple css styling
     const smallFont = {
       fontSize: 10
     }
     const toRight = {
       float: "right"
     }
+
     return (
       <div>
       {isLoading ? this.generateSkeleton() :

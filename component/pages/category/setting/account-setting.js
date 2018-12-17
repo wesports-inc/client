@@ -5,7 +5,8 @@ export default class AccountSetting extends Component {
     constructor(props){
         super(props);
         this.state = {
-            yourEmail: ''
+            email: localStorage.getItem('email').slice(1, -1),
+            username: localStorage.getItem('username')
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -24,7 +25,11 @@ export default class AccountSetting extends Component {
             <Form>
                 <Form.Field>
                     <label>Your Email</label>
-                    <input placeholder='email...' onChange={this.handleChange()}/>
+                    <input defaultValue={this.state.email} disabled/>
+                </Form.Field>
+                <Form.Field>
+                    <label>Username</label>
+                    <input defaultValue={this.state.username} disabled/>
                 </Form.Field>
             </Form>
             <br />
