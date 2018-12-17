@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Menu, Icon, Label, Modal, Header, Form,TextArea, Button} from 'semantic-ui-react';
+import {Menu, Icon, Label, Modal, Header, Form,TextArea, Button, Dropdown} from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import axios from 'axios'
 
@@ -80,6 +80,54 @@ export default class MenuProfile extends Component {
   close = () => this.setState({ open: false })
 
   render() {
+    const friendOptions = [
+      {
+        text: 'Pilih Kategori',
+        value: 'null',
+        image: { avatar: true, src: 'https://pamperthecamper.com/wp-content/uploads/2016/04/SEO-PamperTheCamper-icon-choose.png' },
+      },
+      {
+        text: 'Komputer & Gadget',
+        value: 'computer-gadget',
+        image: { avatar: true, src: 'http://www.iconsweets2.com/assets/images/macbook@2x.png' },
+      },
+      {
+        text: 'Keluarga & Asmara',
+        value: 'family-love',
+        image: { avatar: true, src: 'https://png.pngtree.com/element_our/md/20180626/md_5b321ca7a1ca4.png' },
+      },
+      {
+        text: 'Fakta & Rumor',
+        value: 'fact-rumour',
+        image: { avatar: true, src: 'https://img.icons8.com/color/180/light-on.png' },
+      },
+      {
+        text: 'Bisnis & Pekerjaan',
+        value: 'business-work',
+        image: { avatar: true, src: 'https://img.icons8.com/color/1600/hard-working.png' },
+      },
+      {
+        text: 'Fashion & Gaya Hidup',
+        value: 'fashion-lifestyle',
+        image: { avatar: true, src: 'https://img.icons8.com/color/1600/fashion-trend.png' },
+      },
+      {
+        text: 'Quotes',
+        value: 'quotes',
+        image: { avatar: true, src: 'https://png.pngtree.com/svg/20170608/quotes_727798.png' },
+      },
+      {
+        text: 'Riddles',
+        value: 'riddles',
+        image: { avatar: true, src: 'https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Adventure_Map-512.png' },
+      },
+      {
+        text: 'Lainnya',
+        value: 'other',
+        image: { avatar: true, src: 'https://img.icons8.com/metro/1600/more.png' },
+      },
+    ]
+
     const { open, dimmer } = this.state
     const {isLoading} = this.state;
     const {isMenu} = this.state;
@@ -127,7 +175,7 @@ export default class MenuProfile extends Component {
         </Menu.Item>
       </Menu>
       }
-          <Modal dimmer={dimmer} size="mini" open={open} onClose={this.close}>
+          <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
               <Modal.Header>Post Your Activity <Icon name="share"></Icon></Modal.Header>
               <Modal.Content>
                 <Modal.Description>
@@ -137,7 +185,11 @@ export default class MenuProfile extends Component {
                   </Form>
                 </Modal.Description>
               </Modal.Content>
+              
               <Modal.Actions>
+              <span style={{float: 'left'}}>
+              <Dropdown inline options={friendOptions} defaultValue={friendOptions[0].value} />
+              </span>
                 <Button
                   primary
                   icon='checkmark'
