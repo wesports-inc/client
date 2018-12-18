@@ -1,9 +1,8 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
-import Skeleton from 'react-skeleton-loader';
-import HeaderGallery from './HeaderGallery';
-import MenuProfile from '../../profile/MenuProfile';
-import axios from 'axios';
+import { Container, Grid } from 'semantic-ui-react'
+import HeaderPhoto from './HeaderPhoto'
+import Content from './Content'
+import MenuProfile from '../../profile/MenuProfile'
 
 export default class Index extends Component {
     constructor(props) {
@@ -49,20 +48,11 @@ export default class Index extends Component {
     }
 
     render() {
-        const {datas} = this.state;
-        const {isLoading} = this.state;
         return (
             <div style={{marginBottom: 45}}>
-            <HeaderGallery/>
+            <HeaderPhoto/>
             <Container>
-                <Grid columns={2}>
-                    <Grid.Column>
-                        
-                    </Grid.Column>
-                    <Grid.Column verticalAlign="middle">
-                   
-                    </Grid.Column>
-                </Grid>
+                <Content/>
             </Container>
             <MenuProfile/>
             </div>
