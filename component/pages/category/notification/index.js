@@ -119,9 +119,16 @@ export default class Index extends Component {
         </div>
     }
 
+  
+
     generateZeroData() {
-        return <div>  
-        <Header as='h2' icon textAlign='center'>
+        const divNotif = {
+            marginTop: '40%',
+            marginBottom: '60%'
+              
+        }
+        return <div style={divNotif}>
+        <Header as='h2' icon textAlign='center' >
         <Image centered size='large' src='https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png' />
         <Header.Content>
             <Statistic>
@@ -135,6 +142,9 @@ export default class Index extends Component {
       </Header>
       </div>
     }
+
+      
+    
 
     render() {
         const {datas} = this.state;
