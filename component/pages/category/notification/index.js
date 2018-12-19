@@ -122,12 +122,11 @@ export default class Index extends Component {
   
 
     generateZeroData() {
-        const divNotif = {
+        const divConten = {
             marginTop: '40%',
-            marginBottom: '60%'
-              
+            marginBottom: '60%'     
         }
-        return <div style={divNotif}>
+        return <div style={divConten}>
         <Header as='h2' icon textAlign='center' >
         <Image centered size='large' src='https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png' />
         <Header.Content>

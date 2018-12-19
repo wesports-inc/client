@@ -37,7 +37,7 @@ export default class Register extends Component {
         }
     }
 
-    // eslint-disable-next-line react/no-deprecated
+
     componentWillUpdate(nextProps, nextState) {
         
     }
