@@ -1,6 +1,5 @@
 import React, { Component } from "react"
-import { Button, Form, Container, Grid, Divider,Label, Header, Icon, Message, Segment } from 'semantic-ui-react'
-import axios from 'axios'
+import { Button, Form, Container, Grid, Divider,Header, Icon, Message, Segment } from 'semantic-ui-react'
 
 export default class Login extends Component {
     constructor(props) {
@@ -15,6 +14,7 @@ export default class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    // eslint-disable-next-line react/no-deprecated
     componentWillMount() {
         this.setState({
             isLogin: localStorage.getItem('auth')
@@ -34,6 +34,7 @@ export default class Login extends Component {
         }
     }
 
+    // eslint-disable-next-line react/no-deprecated
     componentWillUpdate(nextProps, nextState) {
 
     }
@@ -119,7 +120,7 @@ export default class Login extends Component {
                 </Grid>
                 <Divider />
                 <Message>
-                    Belum punya akun? <a href='#/register'>Daftar Disini</a>
+                    Belum punya akun? <a href='#/register'>Daftar Disini </a>
                 </Message>
             </Container>
         );

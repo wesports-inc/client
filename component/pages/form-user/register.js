@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, Form, Container, Grid, Divider,Label, Header, Icon, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Container, Grid, Divider,Header, Icon, Segment } from 'semantic-ui-react'
 
 export default class Register extends Component {
     constructor(props) {
@@ -17,6 +17,7 @@ export default class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    // eslint-disable-next-line react/no-deprecated
     componentWillMount() {
         this.setState({
             isLogin: localStorage.getItem('auth')
@@ -35,6 +36,7 @@ export default class Register extends Component {
             return false;
         }
     }
+
 
     componentWillUpdate(nextProps, nextState) {
         
