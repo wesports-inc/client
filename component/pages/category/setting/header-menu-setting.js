@@ -16,7 +16,7 @@ export default class HeaderMenu extends Component {
 
     render () {
         return (
-            <Menu borderless size="huge">
+            <Menu borderless size="huge" fixed="top">
             <Menu.Item name='back'>
               <Icon onClick={this.back.bind(this)} name="arrow left"/>
             </Menu.Item>

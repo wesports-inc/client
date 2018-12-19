@@ -12,7 +12,7 @@ import Profile from "./component/pages/profile/";
 import Setting from "./component/pages/category/setting/";
 import People from "./component/pages/category/people/";
 import Notifications from "./component/pages/category/notification/"
-import Gallery from "./component/pages/category/gallery/"
+import Photo from "./component/pages/category/photo/"
 import Statistic from "./component/pages/category/statistic/"
 
 ReactDOM.render(
@@ -25,7 +25,7 @@ ReactDOM.render(
       <Route path="/people" component={People} />
       <Route path="/setting" component={Setting} />
       <Route path="/notification" component={Notifications} />
-      <Route path="/gallery" component={Gallery} />
+      <Route path="/photo" component={Photo} />
       <Route path="/statistic" component={Statistic} />
     </div>
   </HashRouter>,

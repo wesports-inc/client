@@ -75,8 +75,8 @@ export default class MoreCategory extends Component {
     }else if(this.state.isCategory === 'people'){
         window.location='#/people'
         localStorage.setItem('menu', '');
-    }else if(this.state.isCategory === 'gallery'){
-        window.location = '#/gallery'
+    }else if(this.state.isCategory === 'photo'){
+        window.location = '#/photo'
         localStorage.setItem('menu', '');
     }else if(this.state.isCategory === 'statistic'){
         window.location = '#/statistic'
@@ -93,8 +93,8 @@ export default class MoreCategory extends Component {
                     <p style={this.smallFontCenter}>Statistic</p>
                 </GridColumn>
                 <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('gallery')}><Image src={galleryIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Gallery</p>
+                    <p style={this.noSpacing} onClick={() => this.handleMenu('photo')}><Image src={galleryIcon} avatar /></p>
+                    <p style={this.smallFontCenter}>Photo</p>
                 </GridColumn>
                 <GridColumn>
                     <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={groupIcon} avatar /></p>

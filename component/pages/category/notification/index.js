@@ -143,6 +143,10 @@ export default class Index extends Component {
         return (
             <div style={{marginBottom: 45}}>
             <HeaderNotification/>
+            <Divider hidden/>
+            <Divider hidden/>
+            <Divider hidden/>
+            <Divider hidden/>
             {datas.length === 0 ? this.generateZeroData() :
             isLoading ? this.generateSkeleton() :
             <Container>
