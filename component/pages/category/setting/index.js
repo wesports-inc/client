@@ -57,6 +57,9 @@ export default class Index extends Component {
         return (
             <div>
             <HeaderMenu/>
+            <Divider hidden/>
+            <Divider hidden/>
+            <Divider hidden/>
             <Container>
             <Divider hidden />
                 <Grid columns={1}>
