@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Header, Divider } from 'semantic-ui-react';
+import { Header, Divider, Container } from 'semantic-ui-react';
 import BottomMenu from '../../profile/MenuProfile';
 import Skeleton from 'react-skeleton-loader';
 import Filter from './filter';
+import HeaderPeople from './HeaderPeople';
 
 export default class Index extends Component {
 
@@ -54,16 +55,21 @@ export default class Index extends Component {
         return <Header textAlign="center"><Skeleton/></Header>
     }
 
-    render () {
+    render () {        
         const {isLoading} = this.state;
         return (
-        <div>
+        <div style={{marginBottom: 45}}>
+            <HeaderPeople />
+            <Divider hidden/>
+            <Divider hidden/>
+            <Divider hidden/>
             {isLoading ? this.generateSkeleton() :
-            <Header as="h2" textAlign="center" style={{marginTop: 25}}>
-                <i>Add People, More Circle</i>
-            </Header>
+            <Container>
+                <Header as="h2" textAlign="center" style={{marginTop: 25}}>
+                    <i>Add People, More Circle</i>            
+                </Header>
+            </Container>
             }
-            <Divider />
             {isLoading ? this.generateSkeleton() :
             <Filter />
             }
