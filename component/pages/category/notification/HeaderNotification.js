@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Icon, Menu, Header} from 'semantic-ui-react';
+import {Icon, Menu, Header, Divider} from 'semantic-ui-react';
 
 export default class HeaderNotification extends Component {
 
