@@ -95,8 +95,8 @@ export default class HeaderProfile extends Component {
       <Grid columns={2} style={{backgroundImage: `url(${Background})`}}>
       <Divider hidden />
         <Grid.Row stretched>
-          <Grid.Column>
-              <Image src='https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png' />
+          <Grid.Column name="ImageExampleCircular">
+              <Image src='https://artsy-media-uploads.s3.amazonaws.com/2P6t_Yt6dF0TNN76dlp-_Q%2F3417757448_4a6bdf36ce_o.jpg' circular/>
               <p style={{textAlign: "center", marginTop: 15, color: "white"}}>@{username}<br/>{first_name} {last_name}</p>
           </Grid.Column>
           <Grid.Column style={{opacity: 0.9}}>
