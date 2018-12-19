@@ -80,6 +80,12 @@ export default class Register extends Component {
     }
 
     render() {
+        const registButton = {
+            padding: '1%',
+        };
+        const rButton = {
+            width: '47%',
+        };
         return (
             <Container>
             <Divider hidden />
@@ -136,9 +142,9 @@ export default class Register extends Component {
                     </Segment>
                     </Form>
                 </Grid.Column>
-                <Grid.Column verticalAlign="middle">
-                    <Button content='Register with Google' color="google plus" icon='google' size='mini' />
-                    <Button content='Register with Facebook' icon='facebook' color="facebook" size='mini' />
+                <Grid.Column verticalAlign="middle" style={registButton}>
+                    <Button content='Register with Google' icon='google' color="google plus" size='mini'  style={rButton} />
+                    <Button content='Register with Facebook' icon='facebook' color="facebook" size='mini' style={rButton} />
                 </Grid.Column>
                 </Grid>
                 <Divider />

@@ -75,6 +75,9 @@ export default class Login extends Component {
     }
 
     render() {
+        const registButton = {
+            padding: '1%',
+        };
         return (
             <Container>
             <Divider hidden />
@@ -109,7 +112,7 @@ export default class Login extends Component {
                     </Segment>
                     </Form>
                 </Grid.Column>
-                <Grid.Column verticalAlign="middle">
+                <Grid.Column verticalAlign="middle" style={registButton}>
                     <Button content='Sign in with Google' color="google plus" icon='google' size='mini' />
                     <Button content='Sign in with Facebook' icon='facebook' color="facebook" size='mini' />
                 </Grid.Column>
