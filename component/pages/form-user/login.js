@@ -117,7 +117,7 @@ export default class Login extends Component {
                 </Grid>
                 <Divider />
                 <Message>
-                    Belum punya akun? <a href='#/register'>Daftar Disini OY</a>
+                    Belum punya akun? <a href='#/register'>Daftar Disini </a>
                 </Message>
             </Container>
         );
