@@ -12,10 +12,16 @@ export default class MenuProfile extends Component {
         menu: localStorage.getItem('menu'),
         datas: [],
         isLoading: true,
-        email: localStorage.getItem('email').slice(1,-1)
+        email: localStorage.getItem('email').slice(1,-1),
+        content: '',
+        tags: '',
+        options: [],
+        value: '?',
     };
-    this.handleMenu = this.handleMenu.bind(this);
+    this.handleMenu = this.handleMenu.bind(this)
     this.generateSkeleton = this.generateSkeleton.bind(this)
+    this.handlePost = this.handlePost.bind(this)
+    this.handleTags = this.handleTags.bind(this)
   }
 
   componentWillMount() {
@@ -30,6 +36,16 @@ export default class MenuProfile extends Component {
         email: this.state.email, // This is the body part
       }
     }).then(result => this.setState({datas: result.data}));
+
+    axios({
+      method: 'get',
+      url: '/api/tags',
+      headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      }
+    }).then(result => this.setState({options: result.data}));
+
   }
 
   componentDidMount() {
@@ -76,63 +92,45 @@ export default class MenuProfile extends Component {
     );
   }
 
+  handlePost(event) {
+    let target = event.target;
+    let value = target.value;
+    let name = target.name;
+    this.setState({
+        [name]: value 
+    })
+    console.log('data berubah: ', value)
+  }
+
+  handleTags = (event) => {
+    this.setState({ value: event.target.value });
+  };
+
+  publish() {
+    event.preventDefault();
+        var data = {
+            email: this.state.email,
+            content: this.state.content,
+            tags: this.state.value
+        }
+        fetch('/api/posting', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json())
+        .then(console.log('sukses terkirim...'));
+  }
+
   show = dimmer => () => this.setState({ dimmer, open: true })
   close = () => this.setState({ open: false })
 
   render() {
-    const friendOptions = [
-      {
-        text: 'Pilih Kategori',
-        value: 'null',
-        image: { avatar: true, src: 'https://pamperthecamper.com/wp-content/uploads/2016/04/SEO-PamperTheCamper-icon-choose.png' },
-      },
-      {
-        text: 'Komputer & Gadget',
-        value: 'computer-gadget',
-        image: { avatar: true, src: 'http://www.iconsweets2.com/assets/images/macbook@2x.png' },
-      },
-      {
-        text: 'Keluarga & Asmara',
-        value: 'family-love',
-        image: { avatar: true, src: 'https://png.pngtree.com/element_our/md/20180626/md_5b321ca7a1ca4.png' },
-      },
-      {
-        text: 'Fakta & Rumor',
-        value: 'fact-rumour',
-        image: { avatar: true, src: 'https://img.icons8.com/color/180/light-on.png' },
-      },
-      {
-        text: 'Bisnis & Pekerjaan',
-        value: 'business-work',
-        image: { avatar: true, src: 'https://img.icons8.com/color/1600/hard-working.png' },
-      },
-      {
-        text: 'Fashion & Gaya Hidup',
-        value: 'fashion-lifestyle',
-        image: { avatar: true, src: 'https://img.icons8.com/color/1600/fashion-trend.png' },
-      },
-      {
-        text: 'Quotes',
-        value: 'quotes',
-        image: { avatar: true, src: 'https://png.pngtree.com/svg/20170608/quotes_727798.png' },
-      },
-      {
-        text: 'Riddles',
-        value: 'riddles',
-        image: { avatar: true, src: 'https://cdn3.iconfinder.com/data/icons/fantasy-and-role-play-game-adventure-quest/512/Adventure_Map-512.png' },
-      },
-      {
-        text: 'Lainnya',
-        value: 'other',
-        image: { avatar: true, src: 'https://img.icons8.com/metro/1600/more.png' },
-      },
-    ]
-
+    console.log('pilihan: ', this.state.value)
     const { open, dimmer } = this.state
-    const {isLoading} = this.state;
-    const {isMenu} = this.state;
-    const {menu} = this.state;
-    const {datas} = this.state;
+    const {isLoading, isMenu, menu, datas, options, value} = this.state;
     if(isMenu === 'profile'){
       window.location = '#/profile'
     }else if(isMenu === 'notification'){
@@ -167,7 +165,7 @@ export default class MenuProfile extends Component {
           {datas.length}
           </Label>
           }
-          {menu === 'notification' ? <Icon name='bell' size="large" /> : <Icon name='bell outline' size="large" />}
+          {menu === 'notification' ?   <Icon name='bell' size="large" /> : <Icon name='bell outline' size="large" />}
         </Menu.Item>
 
         <Menu.Item name='profile' active={menu === 'profile'} onClick={ () => this.handleMenu('profile')}>
@@ -181,21 +179,26 @@ export default class MenuProfile extends Component {
                 <Modal.Description>
                   <Header as="h5">this will be great for your followers</Header>
                   <Form>
-                    <TextArea autoHeight placeholder='What happen...' />
+                    <TextArea name="content" onChange={this.handlePost} autoHeight placeholder='What happen...' />
                   </Form>
                 </Modal.Description>
               </Modal.Content>
-              
               <Modal.Actions>
-              <span style={{float: 'left'}}>
-              <Dropdown inline options={friendOptions} defaultValue={friendOptions[0].value} />
-              </span>
+                <span style={{float: "left"}}>
+                <select onChange={this.handleTags} value={value}>
+                  {options.map(item => (
+                  <option key={item.value} value={item.value}>
+                  {item.text}
+                  </option>
+                  ))}
+                </select>
+                </span>
                 <Button
                   primary
                   icon='checkmark'
                   labelPosition='right'
                   content="Yep, Publish!"
-                  onClick={this.close}
+                  onClick={this.publish.bind(this)}
                 />
               </Modal.Actions>
             </Modal>
