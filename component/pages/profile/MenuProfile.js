@@ -183,7 +183,6 @@ export default class MenuProfile extends Component {
                   </Form>
                 </Modal.Description>
               </Modal.Content>
-              
               <Modal.Actions>
                 <span style={{float: "left"}}>
                 <select onChange={this.handleTags} value={value}>
