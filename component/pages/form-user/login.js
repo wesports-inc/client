@@ -75,7 +75,7 @@ export default class Login extends Component {
     }
 
     render() {
-        const registButton = {
+        const areaRegisterButtonResponsive = {
             padding: '1%',
         };
         return (
@@ -112,7 +112,7 @@ export default class Login extends Component {
                     </Segment>
                     </Form>
                 </Grid.Column>
-                <Grid.Column verticalAlign="middle" style={registButton}>
+                <Grid.Column verticalAlign="middle" style={areaRegisterButtonResponsive }>
                     <Button content='Sign in with Google' color="google plus" icon='google' size='mini' />
                     <Button content='Sign in with Facebook' icon='facebook' color="facebook" size='mini' />
                 </Grid.Column>
