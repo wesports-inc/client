@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import {Image, Container, Divider, Icon, Grid, GridColumn} from 'semantic-ui-react';
-import settingIcon from '../../../assets/images/icon/setting.png';
-import groupIcon from '../../../assets/images/icon/group.png';
-import galleryIcon from '../../../assets/images/icon/gallery.png';
-import statisticIcon from '../../../assets/images/icon/Statistic.png';
 import Skeleton from 'react-skeleton-loader';
 
 export default class MoreCategory extends Component {
@@ -67,6 +63,11 @@ export default class MoreCategory extends Component {
   }
 
   render() {
+    const settingIcon= 'http://192.168.100.200/assets/icons/more-categories/setting.png';
+    const peopleIcon= 'http://192.168.100.200/assets/icons/more-categories/people.png';
+    const photoIcon= 'http://192.168.100.200/assets/icons/more-categories/photo.png';
+    const statisticIcon= 'http://192.168.100.200/assets/icons/more-categories/statistic.png';
+
     const { isLoading } = this.state;
     // bypass logout user
     if(this.state.isCategory === 'setting'){
@@ -93,11 +94,11 @@ export default class MoreCategory extends Component {
                     <p style={this.smallFontCenter}>Statistic</p>
                 </GridColumn>
                 <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('photo')}><Image src={galleryIcon} avatar /></p>
+                    <p style={this.noSpacing} onClick={() => this.handleMenu('photo')}><Image src={photoIcon} avatar /></p>
                     <p style={this.smallFontCenter}>Photo</p>
                 </GridColumn>
                 <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={groupIcon} avatar /></p>
+                    <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={peopleIcon} avatar /></p>
                     <p style={this.smallFontCenter}>People</p>
                 </GridColumn>
                 <GridColumn>
