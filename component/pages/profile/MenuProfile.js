@@ -16,7 +16,7 @@ export default class MenuProfile extends Component {
         content: '',
         tags: '',
         options: [],
-        value: '?',
+        value: 'null',
     };
     this.handleMenu = this.handleMenu.bind(this)
     this.generateSkeleton = this.generateSkeleton.bind(this)
@@ -106,6 +106,8 @@ export default class MenuProfile extends Component {
     this.setState({ value: event.target.value });
   };
 
+  handleChange = (e, { value }) => this.setState({ value })
+
   publish() {
     event.preventDefault();
         var data = {
@@ -127,7 +129,13 @@ export default class MenuProfile extends Component {
   show = dimmer => () => this.setState({ dimmer, open: true })
   close = () => this.setState({ open: false })
 
+  
+  setValue(e, data) {
+    this.setState({ value: data.value })
+  }
+
   render() {
+    
     console.log('pilihan: ', this.state.value)
     const { open, dimmer } = this.state
     const {isLoading, isMenu, menu, datas, options, value} = this.state;
@@ -185,13 +193,16 @@ export default class MenuProfile extends Component {
               </Modal.Content>
               <Modal.Actions>
                 <span style={{float: "left"}}>
-                <select onChange={this.handleTags} value={value}>
-                  {options.map(item => (
-                  <option key={item.value} value={item.value}>
-                  {item.text}
-                  </option>
-                  ))}
-                </select>
+                {
+                <Dropdown style={{position: 'relative',
+                  display: 'block',}}
+
+                  onChange={this.setValue.bind(this)}
+                  options={options}
+                  selection
+                  value={value}
+                />
+                }
                 </span>
                 <Button
                   primary
