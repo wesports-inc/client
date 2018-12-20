@@ -1,12 +1,21 @@
 import React, { Component } from "react";
-import {Grid, Container, Segment, Divider, Image, Icon, GridColumn, List, Menu} from 'semantic-ui-react';
+import {Grid, Container, Segment, Divider, Icon, GridColumn, List} from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
+import axios from 'axios'
 
 export default class MyPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
+      isLoading: true,
+      email: localStorage.getItem('email').slice(1, -1),
+      posting : [],
+      tgl : new Date().toDateString(),
+      day : new Date().getDay(),
+      jam : new Date().getHours(),
+      menit : new Date().getMinutes(),
+      menitPosting: [],
+      waktu : []
     };
     this.generateSkeleton = this.generateSkeleton.bind(this)
   }
@@ -15,6 +24,18 @@ export default class MyPost extends Component {
     setTimeout(() => {
       this.setState({isLoading: false})
     }, 500);
+
+    axios({
+      method: 'post',
+      url: '/api/posting/profile',
+      headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      data: {
+        email: this.state.email, // This is the body part
+      }
+    }).then(result => this.setState({posting: result.data}));
   }
 
   generateSkeleton() {
@@ -60,37 +81,31 @@ export default class MyPost extends Component {
   }
 
   render() {
+    const {posting} = this.state;
     const { isLoading } = this.state;
+    let a;
     return (
       <div>
       {isLoading ? this.generateSkeleton() :
       <Container>
-        <Grid>
+        {posting.map(data => { 
+        return (
+        <Grid columns={1} key={data._id}>
         <GridColumn>
           <Segment basic>
             <List>
               <List.Item>
                 <List.Content>
-                  <List.Header as='a'><Icon name='film' color="black" /></List.Header>
+                  <List.Header as='a'><Icon name='film' color="black" /><small><i>{' '}{data.tags}</i></small></List.Header>
+                  <br />
                   <List.Description>
-                    Last seen watching{' '}
                     <a>
-                      <b>Mr Robot Season 3 - Episode 6</b>
-                    </a>{' '}
-                    <small><i>just now</i></small>.
-                  </List.Description>
-                </List.Content>
-              </List.Item>
-              <Divider clearing/>
-              <List.Item>
-                <List.Content>
-                  <List.Header as='a'><Icon name='book' color="black"/></List.Header>
-                  <List.Description>
-                    Last seen reading{' '}
-                    <a>
-                      <b>Si Boy Anak Betawi Asli - by Rojali Rahmat</b>
-                    </a>{' '}
-                    <small><i>3 hours ago</i></small>.
+                      <b>{data.content}</b><br /><br />
+                    </a>
+                    <Icon name='like' color="red" /><small><i>{data.thanks}{' '}Thanks{' '}</i></small>
+                    <small style={{float: "right"}}><i>{data.jam}{' '}{data.menit}{' '}cc{data.date}</i></small>
+                    <Divider hidden>
+                    </Divider>
                   </List.Description>
                 </List.Content>
               </List.Item>
@@ -98,6 +113,7 @@ export default class MyPost extends Component {
           </Segment>
         </GridColumn>
       </Grid>
+      ); })}
       </Container>
       }
       </div>
