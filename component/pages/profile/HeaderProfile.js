@@ -15,12 +15,12 @@ export default class HeaderProfile extends Component {
       last_name: '',
       awards: 0,
       total_friends: 0,
-      total_posts: 9,
-      total_thanks: 100,
+      total_posts: 0,
+      total_thanks: 0,
       join_date: '',
       background: '',
-      color: '',
-      color2: '',
+      img_posts: '',
+      img_thanks: '',
       time: new Date(),
       hour: new Date().getHours(),
       minute: new Date().getMinutes()
@@ -59,20 +59,20 @@ export default class HeaderProfile extends Component {
     }
 
     if(total_posts == 0){
-      this.setState({color: 'grey'})
+      this.setState({img_posts: 'https://cdn0.iconfinder.com/data/icons/positive-character-traits-alphabet-m/302/positive-M010-512.png'})
     }else if (total_posts == 1 || total_posts < 10){
-      this.setState({color: 'red'})
-    }else if (total_posts == 11 || total_posts < 50){
-      this.setState({color: 'black'})
+      this.setState({img_posts: 'https://i.imgur.com/WIsfLo1.png'})
+    }else if (total_posts == 11 || total_posts > 50){
+      this.setState({img_posts: 'https://cdn0.iconfinder.com/data/icons/positive-character-traits-alphabet-r/264/positive-r013-512.png'})
     }
 
     
     if(total_thanks == 0){
-      this.setState({color2: 'grey'})
-    }else if (total_thanks > 1 && total_thanks == 10){
-      this.setState({color2: 'red'})
-    }else if (total_thanks > 11 && total_thanks == 50){
-      this.setState({color2: 'black'})
+      this.setState({img_thanks: 'http://badugukadhae.com/images/drawable/sad3.png'})
+    }else if (total_thanks == 1 || total_thanks < 10){
+      this.setState({img_thanks: 'https://cdn0.iconfinder.com/data/icons/type-of-government/257/ruler-politic-citizen-010-512.png'})
+    }else if (total_thanks == 11 || total_thanks > 50){
+      this.setState({img_thanks: 'https://cdn0.iconfinder.com/data/icons/positive-character-traits-alphabet-l-part-1/273/positive-L003-512.png'})
     }
   }
 
@@ -139,7 +139,14 @@ export default class HeaderProfile extends Component {
           </Grid.Column>
           <Grid.Column style={{opacity: 0.9}}>
             <Segment>
-              <p style={{textAlign: "center"}}><span><Icon name='chess king' size="large" style={{color: this.state.color}} /><Icon name='chess queen' size="large" style={{color: this.state.color2}} /></span></p>
+            <Grid.Row stretched>
+            <Grid.Column>
+            <Image.Group>
+              <Image centered src={ this.state.img_posts} height= "auto" width="50px" circular/>
+              <Image centered src={ this.state.img_thanks} height= "auto" width="50px" circular/>
+            </Image.Group> 
+            </Grid.Column>
+          </Grid.Row>
               <Divider />
               <p style={smallFont}>Posts <span style={toRight}>{total_posts}</span></p>
               <p style={smallFont}>Thanks <span style={toRight}>{total_thanks}</span></p>
