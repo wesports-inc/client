@@ -103,7 +103,7 @@ export default class MyPost extends Component {
                       <b>{data.content}</b><br /><br />
                     </a>
                     <Icon name='like' color="red" /><small><i>{data.thanks}{' '}Thanks{' '}</i></small>
-                    <small style={{float: "right"}}><i>{data.jam}{' '}{data.menit}{' '}cc{data.date}</i></small>
+                    <small style={{float: "right"}}><i>{data.jam}{' '}{data.menit}{' '}{data.date}</i></small>
                     <Divider hidden>
                     </Divider>
                   </List.Description>
