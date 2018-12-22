@@ -21,6 +21,7 @@ export default class HeaderProfile extends Component {
       background: '',
       img_posts: '',
       img_thanks: '',
+      followed_topic: 'other',
       time: new Date(),
       hour: new Date().getHours(),
       minute: new Date().getMinutes()
@@ -47,7 +48,7 @@ export default class HeaderProfile extends Component {
       data: {
         email: this.state.email, // This is the body part
       }
-    }).then(result => this.setState({username: result.data.username, first_name: result.data.first_name, last_name: result.data.last_name, awards: result.data.awards, total_friends: result.data.total_friends, total_posts: result.data.total_posts, total_thanks: result.data.total_thanks,join_date: result.data.join_date})))
+    }).then(result => this.setState({username: result.data.username, first_name: result.data.first_name, last_name: result.data.last_name, awards: result.data.awards, total_friends: result.data.total_friends, total_posts: result.data.total_posts, total_thanks: result.data.total_thanks,join_date: result.data.join_date, followed_topic: result.data.tags})))
 
     if(hour > 5 && hour < 10 ) {
       this.setState({background: '#ecdb3c'})
@@ -111,12 +112,12 @@ export default class HeaderProfile extends Component {
 
   render() {
     console.log('render')
-    const {username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date} = this.state;
+    const {username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date, followed_topic} = this.state;
     const { isLoading } = this.state;
 
     //set user data caching
     localStorage.setItem('username', username)
-    localStorage.setItem('first_name', first_name)
+    localStorage.setItem('first_name', first_name)  
     localStorage.setItem('last_name', last_name)
 
     //simple css styling
@@ -154,6 +155,7 @@ export default class HeaderProfile extends Component {
               <p style={smallFont}>Friends <span style={toRight}><u style={{color: "blue"}}>{total_friends}</u></span></p>
               <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{awards}</u></span></p>
               <p style={smallFont}>Join Date <span style={toRight}><i>{join_date}</i></span></p>
+              <p style={smallFont}>Followed Topic <span style={toRight}><u style={{color: "blue"}}>{followed_topic}</u></span></p>
             </Segment>
           </Grid.Column>
         </Grid.Row>
