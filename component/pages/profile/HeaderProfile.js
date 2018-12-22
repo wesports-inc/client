@@ -32,6 +32,7 @@ export default class HeaderProfile extends Component {
     const { hour } = this.state
     const {total_posts} = this.state
     const {total_thanks} = this.state
+
     const email = localStorage.getItem('email').slice(1, -1)
     this.setState({
       email
