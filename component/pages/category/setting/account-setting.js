@@ -30,8 +30,8 @@ export default class AccountSetting extends Component {
     delete() {
         event.preventDefault();
             var data = {
-                email: this.state.email
-            }
+                email: this.state.email,
+            }    
             fetch('/api/user/delete', {
                 method: 'DELETE',
                 headers: {
@@ -40,6 +40,7 @@ export default class AccountSetting extends Component {
                 },
                 body: JSON.stringify(data)
             }).then(
+                console.log(data.email, 'Telah Menghapus Akun'),
                 localStorage.removeItem('email'),
                 localStorage.removeItem('auth'),
                 localStorage.removeItem('menu'),
@@ -61,7 +62,7 @@ export default class AccountSetting extends Component {
                 },
                 body: JSON.stringify(data)
             }).then(
-                console.log(data.email, 'Merubah Password'))
+                this.setState({modalOpenPassword: false}))
     }
     handlePost(event) {
         let target = event.target;
