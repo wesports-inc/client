@@ -29,16 +29,15 @@ export default class AccountSetting extends Component {
 
     delete() {
         event.preventDefault();
-            var data = {
-                email: this.state.email
-            }
             fetch('/api/user/delete', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(data)
+                data: {
+                    email: this.state.email, // This is the body part
+                }
             }).then(
                 localStorage.removeItem('email'),
                 localStorage.removeItem('auth'),
