@@ -70,8 +70,8 @@ export default class ProfileSetting extends Component {
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify(data)
-            }).then(res => res.json())
-            .then(console.log(data));
+            })
+            .then(window.location='#/setting');
       }
 
       handlePost(event) {
