@@ -11,22 +11,19 @@ export default class ProfileSetting extends Component {
             username: '',
             first_name: '',
             last_name: '',
+            phone_number: '',
             gender: '',
             avatar: '',
             option : [],
             value: [],
-            tags : []
+            tags : [],
+            option_gender : []
 
         }
         this.handleTags = this.handleTags.bind(this)
     }
 
     componentWillMount() {
-        this.setState({
-            username: localStorage.getItem('username'),
-            first_name: localStorage.getItem('first_name'),
-            last_name: localStorage.getItem('last_name'),
-        })
 
         axios({
             method: 'get',
@@ -47,7 +44,9 @@ export default class ProfileSetting extends Component {
             data: {
                 email: this.state.email, // This is the body part
               }
-        }).then(result => this.setState({tags: result.data[0].tags}));
+        }).then(result => this.setState({tags: result.data[0].tags, first_name: result.data[0].first_name, last_name: result.data[0].last_name
+            , phone_number: result.data[0].phone_number, gender: result.data[0].jenis_kelamin
+        }, console.log(result)));
     }
 
     componentDidMount(){
@@ -58,6 +57,10 @@ export default class ProfileSetting extends Component {
         event.preventDefault();
             var data = {
                 email: this.state.email,
+                first_name: this.state.first_name,
+                last_name: this.state.last_name,
+                phone_number: this.state.phone_number,
+                gender: this.state.gender,
                 tags: this.state.value
             }
             fetch('/api/user/tags', {
@@ -68,7 +71,7 @@ export default class ProfileSetting extends Component {
                 },
                 body: JSON.stringify(data)
             }).then(res => res.json())
-            .then(console.log('sukses terkirim...'));
+            .then(console.log(data));
       }
 
       handlePost(event) {
@@ -85,17 +88,21 @@ export default class ProfileSetting extends Component {
         this.setState({ value: data.value })
         console.log('tags :', data.value)
     }
+    setGender(e, data){
+        this.setState({ gender: data.value})
+        console.log('Gender :', data.value)
+    }
 
     handleTags = (event) => {
         this.setState({ value: event.target.value });
     }
 
     render () {
-        const {option, value,tags} = this.state;
-        const options = [
-            { key: 'm', text: 'Male', value: 'male' },
-            { key: 'f', text: 'Female', value: 'female' },
-          ]          
+        const {option,value,tags,first_name,last_name,phone_number,gender} = this.state;
+        const option_gender = [
+            {text: 'Laki-laki', value: 'Laki-laki'},
+            {text: 'Perempuan', value: 'Perempuan'},
+        ]
         return (
         <div>
            <Header as='h3' dividing>
@@ -124,16 +131,24 @@ export default class ProfileSetting extends Component {
                 <Form>
                     <Form.Field>
                         <label>First Name</label>
-                        <input placeholder='first name' defaultValue={this.state.first_name} onChange={this.handlePost.bind(this)}/>
+                        <input placeholder='first name' name='first_name' defaultValue={first_name} onChange={this.handlePost.bind(this)}/>
                         <Divider hidden/>
                         <label>Last Name</label>
-                        <input placeholder='last name' defaultValue={this.state.last_name} onChange={this.handlePost.bind(this)}/>
+                        <input placeholder='last name' name='last_name' defaultValue={last_name} onChange={this.handlePost.bind(this)}/>
                         <Divider hidden/>
                         <label>Phone Number</label>
-                        <input placeholder='0811xxxxx'/>
+                        <input placeholder='0811xxxxx' name='phone_number' defaultValue={phone_number} onChange={this.handlePost.bind(this)}/>
                     </Form.Field>
                     <Divider hidden/>
-                    <Form.Field control={Select} label='Gender' options={options} placeholder='Gender' defaultValue={this.state.gender} />
+                    <label>Gender</label>
+                    <Dropdown placeholder='Gender' style={{position: 'relative' , 
+                        display: 'block',}}
+                        
+                        onChange={this.setGender.bind(this)}
+                        options={option_gender}
+                        fluid selection
+                        value={gender}
+                    />
                     <Divider hidden/>
                     <label>Tags Yang Telah Di Pilih</label>
                     <br />
