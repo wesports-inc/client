@@ -35,7 +35,7 @@ export default class ProfileSetting extends Component {
         }).then(result => this.setState({option: result.data}));
           
         axios({
-            method: 'get',
+            method: 'post',
             url: '/api/user',
             headers: { 
                 'Content-Type': 'application/json',
@@ -44,8 +44,8 @@ export default class ProfileSetting extends Component {
             data: {
                 email: this.state.email, // This is the body part
               }
-        }).then(result => this.setState({tags: result.data[0].tags, first_name: result.data[0].first_name, last_name: result.data[0].last_name
-            , phone_number: result.data[0].phone_number, gender: result.data[0].jenis_kelamin
+        }).then(result => this.setState({tags: result.data.tags, first_name: result.data.first_name, last_name: result.data.last_name
+            , phone_number: result.data.phone_number, gender: result.data.jenis_kelamin
         }, console.log(result)));
     }
 
