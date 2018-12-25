@@ -22,13 +22,13 @@ export default class TagsPost extends Component {
 
     axios({
       method: 'post',
-      url: '/api/posting/profile',
+      url: '/api/posting/tag',
       headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
       },
       data: {
-        email: this.state.email, // This is the body part
+        tag: this.state.tag, // This is the body part
       }
     }).then(result => this.setState({posting: result.data},console.log(result)));
   }
