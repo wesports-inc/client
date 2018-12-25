@@ -16,10 +16,14 @@ import Photo from "./component/pages/category/photo/"
 import Statistic from "./component/pages/category/statistic/"
 import TagsPost from "./component/pages/posts/"
 
+//people
+import UserProfile from "./component/pages/people-profile/"
+
 ReactDOM.render(
   <HashRouter>
     <div>
       <Route path="/" component={App} exact />
+      <Route path="/user/profile" component={UserProfile} />
       <Route path="/profile" component={Profile} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />

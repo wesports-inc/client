@@ -135,8 +135,6 @@ export default class MenuProfile extends Component {
   }
 
   render() {
-    
-    console.log('pilihan: ', this.state.value)
     const { open, dimmer } = this.state
     const {isLoading, isMenu, menu, datas, options, value} = this.state;
     if(isMenu === 'profile'){
