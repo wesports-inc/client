@@ -20,6 +20,10 @@ export default class MyPost extends Component {
     this.generateSkeleton = this.generateSkeleton.bind(this)
   }
 
+  componentWillMount(){
+    
+  }
+
   componentDidMount(){
     setTimeout(() => {
       this.setState({isLoading: false})
@@ -35,7 +39,7 @@ export default class MyPost extends Component {
       data: {
         email: this.state.email, // This is the body part
       }
-    }).then(result => this.setState({posting: result.data}));
+    }).then(result => this.setState({posting: result.data}, () => console.log('posting: ', this.state.posting)));
   }
 
   generateSkeleton() {
