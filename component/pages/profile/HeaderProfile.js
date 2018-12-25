@@ -85,6 +85,12 @@ export default class HeaderProfile extends Component {
       this.setState({isLoading: false})
     }, 500);
   }
+
+  post() {
+    event.preventDefault();
+    localStorage.setItem('tag', JSON.stringify(this.state.followed_topic))
+    window.location='#/TagsPost/'+this.state.followed_topic     
+  }
   
   generateSkeleton() {
     return <div>
@@ -155,7 +161,7 @@ export default class HeaderProfile extends Component {
               <p style={smallFont}>Friends <span style={toRight}><u style={{color: "blue"}}>{total_friends}</u></span></p>
               <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{awards}</u></span></p>
               <p style={smallFont}>Join Date <span style={toRight}><i>{join_date}</i></span></p>
-              <p style={smallFont}>Followed Topic <span style={toRight}><u style={{color: "blue"}}>{followed_topic}</u></span></p>
+              <p style={smallFont}>Followed Topic <span style={toRight}><a onClick={this.post.bind(this)}>{followed_topic}</a></span></p>
             </Segment>
           </Grid.Column>
         </Grid.Row>
