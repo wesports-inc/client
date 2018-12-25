@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import MenuProfile from './MenuProfile';
-import HeaderProfile from './HeaderProfile';
-import MyPost from './MyPost';
-import MoreCategory from './MoreCategory';
+import TagsPost from './TagsPost';
 
 export default class Index extends Component {
 
@@ -48,9 +46,7 @@ export default class Index extends Component {
     render () {
         return (
         <div>
-            <HeaderProfile />
-            <MoreCategory />
-            <MyPost />
+            <TagsPost />
             <MenuProfile />
         </div>
         );
