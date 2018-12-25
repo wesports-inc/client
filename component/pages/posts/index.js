@@ -57,6 +57,7 @@ export default class Index extends Component {
                 <TagsPost />
             </Container>
             <Divider hidden />
+            <Divider hidden />
             <MenuProfile />
         </div>
         );
