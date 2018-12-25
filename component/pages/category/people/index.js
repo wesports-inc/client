@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Header, Divider, Container } from 'semantic-ui-react';
 import BottomMenu from '../../profile/MenuProfile';
 import Skeleton from 'react-skeleton-loader';
-import Filter from './filter';
 import HeaderPeople from './HeaderPeople';
+import AllPeople from "./allPeople";
 
 export default class Index extends Component {
 
@@ -55,7 +55,9 @@ export default class Index extends Component {
         return <Header textAlign="center"><Skeleton/></Header>
     }
 
-    render () {        
+
+
+    render () {      
         const {isLoading} = this.state;
         return (
         <div style={{marginBottom: 45}}>
@@ -68,11 +70,11 @@ export default class Index extends Component {
                 <Header as="h2" textAlign="center" style={{marginTop: 25}}>
                     <i>Add People, More Circle</i>            
                 </Header>
+                <Divider/>
             </Container>
             }
-            {isLoading ? this.generateSkeleton() :
-            <Filter />
-            }
+            <Divider hidden/>
+            <AllPeople/>
             <BottomMenu />
         </div>
         );

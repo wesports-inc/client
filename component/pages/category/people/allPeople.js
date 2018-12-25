@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
+import { Container, Grid, Divider, Image, List, Header, Button, Modal } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import axios from 'axios';
 
@@ -10,11 +10,10 @@ export default class allPeople extends Component {
             email: localStorage.getItem('email').slice(1, -1),
             datas: [],
             isLogin: '',
-            friend_email: '',
-            friend_status: '',
-            friend_status_email: '',
+            friendship: [],
             isLoading: true,
-            friend_send: {}
+            email_friend: '',
+            open: false,
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
     }
@@ -30,7 +29,8 @@ export default class allPeople extends Component {
             data: {
               email: this.state.email, // This is the body part
             }
-          }).then(result => console.log('datasssssssss', result.data));
+          }).then(result => this.setState({datas: result.data}));
+
         this.setState({
             isLogin: localStorage.getItem('auth')
         })
@@ -55,12 +55,22 @@ export default class allPeople extends Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-        if(nextState.friendRequest){
-            console.log('ada teman baru nih: ' + nextState.friendRequest)
-        }
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if(!prevState.email_friend){
+        axios({
+            method: 'post',
+            url: '/api/profile',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+                email: this.state.email_friend
+            }, // This is the body part
+          }).then(result => this.setState({friendship: result.data}))
+        }
         const {isLogin} = this.state;
         if(isLogin === false){ 
             window.location = '#/login'
@@ -68,19 +78,7 @@ export default class allPeople extends Component {
     }
 
     handleClick(value) {
-       this.setState({friend_send: {email: this.state.email,
-        email_friend: value}}, () => 
-        axios({
-            method: 'post',
-            url: '/api/addfriend',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: JSON.stringify(this.state.friend_send),
-          }).then(result => this.setState({friend_status: result.data.status}, () => console.log('status teman: ', this.state.friend_status)))
-        )
-        
+        this.setState({email_friend: value, dimmer: 'blurring', open: true})
     }
 
     generateSkeleton() {
@@ -116,18 +114,20 @@ export default class allPeople extends Component {
         </div>
     }
 
+    close = () => this.setState({ open: false, email_friend: '' })
+    
     render() {
-        const {datas} = this.state;
-        const {isLoading} = this.state;
+        const { open, dimmer } = this.state
+        const { datas, isLoading, friendship } = this.state
         return (
             <div style={{marginBottom: 45}}>
             {isLoading ? this.generateSkeleton() :
             <Container>
                 {datas.map(data => {  
                     return (
-                <Grid columns={2} key={data._id}>
+                <Grid columns={1} key={data._id}>
                     <Grid.Column>
-                        <List verticalAlign="middle">
+                        <List verticalAlign="middle" onClick={() => {this.handleClick(data.email)}}>
                             <List.Item>
                                 <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                                 <List.Content>
@@ -137,13 +137,29 @@ export default class allPeople extends Component {
                             </List.Item>
                         </List>
                     </Grid.Column>
-                    <Grid.Column verticalAlign="middle">
-                    <Button icon onClick={() => this.handleClick(data.email)} primary style={{width: "75px"}} size="mini" floated="right">
-                        <Icon name='add circle' />
-                    </Button>
-                    </Grid.Column>
                 </Grid>
                 ); })}
+                <Modal dimmer={dimmer} open={open} onClose={this.close} closeIcon>
+            <Modal.Header>{friendship.first_name} {friendship.last_name}</Modal.Header>
+            <Modal.Content image>
+                <Image wrapped size='medium' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' />
+                <Modal.Description>
+                <Header>{friendship.username}</Header>
+                <p>Followed Tags: {friendship.tags}</p>
+                </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+                <Button
+                primary
+                icon='add square'
+                labelPosition='right'
+                content="Add Friend"
+                fluid
+                onClick={this.close}
+                style={{marginLeft: -0}}
+                />
+            </Modal.Actions>
+        </Modal>
             </Container>
             }
             </div>
