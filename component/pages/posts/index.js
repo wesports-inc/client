@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import {Divider,Container} from 'semantic-ui-react';
 import MenuProfile from './MenuProfile';
 import TagsPost from './TagsPost';
+import Headerpost from './Headerpost';
 
 export default class Index extends Component {
 
@@ -46,7 +48,15 @@ export default class Index extends Component {
     render () {
         return (
         <div>
-            <TagsPost />
+            <Headerpost />
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
+            <Container>
+            <Divider hidden />
+                <TagsPost />
+            </Container>
+            <Divider hidden />
             <MenuProfile />
         </div>
         );
