@@ -15,6 +15,7 @@ export default class Index extends Component {
     }
 
     componentWillMount() {
+        
         const email = JSON.parse(localStorage.getItem('email'))
         const auth = JSON.parse(localStorage.getItem('auth'))
         this.setState({
