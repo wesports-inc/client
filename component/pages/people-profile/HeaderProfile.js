@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, Segment } from "semantic-ui-react"
+import { Container, Grid, Divider, Image, Segment, Statistic, Button, Label, Icon } from "semantic-ui-react"
 import axios from 'axios'
 
 export default class HeaderProfile extends Component {
@@ -36,32 +36,42 @@ export default class HeaderProfile extends Component {
             float: "right"
           }
     return (
-        <div style={{marginBottom: 45}}>
+        <div style={{marginBottom: 15, background: "#f5f5f5"}}>
         <Container>
             {profile.map(data => {  
                 return (
-                    <Grid columns={2} style={{background: "#555"}} key={data._id}>
-                    <Divider hidden />
-                      <Grid.Row stretched>
-                        <Grid.Column>
-                            <Image src='https://artsy-media-uploads.s3.amazonaws.com/2P6t_Yt6dF0TNN76dlp-_Q%2F3417757448_4a6bdf36ce_o.jpg' circular/>
-                            <p style={{textAlign: "center", marginTop: 15, color: "white"}}>@{this.state.username}<br/>{data.first_name} {data.last_name}</p>
-                        </Grid.Column>
-                        <Grid.Column style={{opacity: 0.9}}>
-                          <Segment>
-                            <p style={smallFont}>Posts <span style={toRight}>{data.total_posts}</span></p>
-                            <p style={smallFont}>Thanks <span style={toRight}>{data.total_thanks}</span></p>
-                            <p style={smallFont}>Friends <span style={toRight}><u style={{color: "blue"}}>{data.total_friends}</u></span></p>
-                            <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{data.awards}</u></span></p>
-                            <p style={smallFont}>Join Date <span style={toRight}><i>{data.join_date}</i></span></p>
-                            <p style={smallFont}>Followed Topic <span style={toRight}><u style={{color: "blue"}}>{data.tags}</u></span></p>
-                          </Segment>
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
+                  <Grid columns={2} key={data._id}>
+                  <Grid.Row stretched>
+                    <Grid.Column>
+                      <Segment textAlign="center">
+                        <Image src='https://react.semantic-ui.com/images/wireframe/white-image.png' size="medium" circular bordered />
+                        <br/>
+                        @{data.username}
+                        <br/>
+                        {data.first_name} {data.last_name}
+                        <Divider/>
+                        <Button content='Follow' size="tiny" primary fluid/>
+                      </Segment>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <Segment textAlign="center">
+                        <Statistic color='yellow'>
+                          <Statistic.Label>User Rank</Statistic.Label>
+                          <Statistic.Value>49</Statistic.Value>
+                        </Statistic>
+                      </Segment>
+                      <Segment>
+                        <p style={smallFont}>Posts <span style={toRight}>{data.total_posts}</span></p>
+                        <p style={smallFont}>Friends <span style={toRight}><u style={{color: "blue"}}>{data.total_friends}</u></span></p>
+                        <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{data.awards}</u></span></p>
+                        <p style={smallFont}>Tags <span style={toRight}><u style={{color: "blue"}}>{data.tags}</u></span></p>
+                        <p style={smallFont}>Join Date <span style={toRight}><i>{data.join_date}</i></span></p>
+                      </Segment>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
             ); })}
         </Container>
-        
         </div>
     )
     }

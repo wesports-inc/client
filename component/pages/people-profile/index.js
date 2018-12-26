@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import HeaderProfile from "./HeaderProfile"
 import HeaderPeople from "./HeaderPeople"
+import Action from "./Action"
+import Posts from "./Posts"
 import { Container, Grid, Divider, Image, List, Header, Button, Modal } from 'semantic-ui-react';
 
 export default class Index extends Component {
@@ -53,6 +55,8 @@ export default class Index extends Component {
             <Divider hidden/>
             <Divider hidden/>
             <HeaderProfile/>
+            <Action/>
+            <Posts/>
         </div>
         );
     }
