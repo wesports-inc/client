@@ -131,7 +131,7 @@ export default class HeaderProfile extends Component {
                       </Segment>
                       <Segment>
                         <p style={smallFont}>Posts <span style={toRight}>{data.total_posts}</span></p>
-                        <p style={smallFont}>Friends <span style={toRight}><u style={{color: "blue"}}>{data.total_friends}</u></span></p>
+                        <p style={smallFont}>Influencing <span style={toRight}><u style={{color: "blue"}}>{data.total_friends} person</u></span></p>
                         <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{data.awards}</u></span></p>
                         <p style={smallFont}>Tags <span style={toRight}><u style={{color: "blue"}}>{data.tags}</u></span></p>
                         <p style={smallFont}>Join Date <span style={toRight}><i>{data.join_date}</i></span></p>
