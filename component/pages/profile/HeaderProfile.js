@@ -153,7 +153,7 @@ export default class HeaderProfile extends Component {
             <Segment raised>
               <p style={smallFont}>Posts <span style={toRight}>{total_posts}</span></p>
               <p style={smallFont}>Thanks <span style={toRight}>{total_thanks}</span></p>
-              <p style={smallFont}>Friends <span style={toRight}><u style={{color: "blue"}}>{total_friends}</u></span></p>
+              <p style={smallFont}>Influence <span style={toRight}><u style={{color: "blue"}}>{total_friends}</u></span></p>
               <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{awards}</u></span></p>
               <p style={smallFont}>Tags <span style={toRight}><a onClick={this.post.bind(this)}>{followed_topic}</a></span></p>
               <p style={smallFont}>Join Date <span style={toRight}><i>{join_date}</i></span></p>
