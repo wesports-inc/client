@@ -6,7 +6,9 @@ export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: localStorage.getItem('email').slice(1, -1),
       username: sessionStorage.getItem('username'),
+      status: '',
       profile: []
     };
   }
@@ -22,12 +24,79 @@ export default class HeaderProfile extends Component {
         data: {
           username: this.state.username, // This is the body part
         }
-      }).then(result => this.setState({profile: result.data}));
+      }).then(result => this.setState({profile: result.data}, () => 
+      {
+        let stat = {
+          email: this.state.email,
+          email_friend: this.state.profile[0].email
+        }
+        axios({
+          method: 'post',
+          url: '/api/follow/status',
+          headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+          },
+          data: stat,
+        }).then(result => this.setState({status: result.data}))
+      }
+      ));
   }
+
+  shouldComponentUpdate(newProps, newState) {
+    if(newState){
+      console.log('ada state baru: ', newState.status)
+      return true
+    }else{
+      return false
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log('nextstate: ', nextState)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.status != this.state.status){
+
+    }
+  }
+
+  handleFollow(value) {
+    let add = {
+      email: this.state.email,
+      email_friend: value
+    } 
+     axios({
+         method: 'post',
+         url: '/api/follow',
+         headers: { 
+             'Content-Type': 'application/json',
+             'Accept': 'application/json'
+         },
+         data: add,
+       }).then(result => this.setState({status: result.data.status}))
+ }
+
+ handleUnfollow(value) {
+  let unfoll = {
+    email: this.state.email,
+    email_friend: value
+  } 
+   axios({
+       method: 'put',
+       url: '/api/unfollow',
+       headers: { 
+           'Content-Type': 'application/json',
+           'Accept': 'application/json'
+       },
+       data: unfoll,
+     }).then(result => this.setState({status: result.data.status}))
+}
   
   
   render() {
-    const {profile} = this.state
+    const {profile, status} = this.state
         //simple css styling
         const smallFont = {
             fontSize: 10
@@ -50,7 +119,7 @@ export default class HeaderProfile extends Component {
                         <br/>
                         {data.first_name} {data.last_name}
                         <Divider/>
-                        <Button content='Follow' size="tiny" primary fluid/>
+                        {status === "followed" ? <Button content="unfollow" size="tiny" primary fluid onClick={() => this.handleUnfollow(data.email)} /> :  <Button content="follow" size="tiny" primary fluid onClick={() => this.handleFollow(data.email)} />}
                       </Segment>
                     </Grid.Column>
                     <Grid.Column>

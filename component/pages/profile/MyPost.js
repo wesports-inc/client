@@ -39,7 +39,7 @@ export default class MyPost extends Component {
       data: {
         email: this.state.email, // This is the body part
       }
-    }).then(result => this.setState({posting: result.data}, () => console.log('posting: ', this.state.posting)));
+    }).then(result => this.setState({posting: result.data}));
   }
 
   generateSkeleton() {
@@ -91,7 +91,7 @@ export default class MyPost extends Component {
     return (
       <div>
       {isLoading ? this.generateSkeleton() :
-      <Container>
+      <Container> 
         {posting.map(data => { 
         return (
         <Grid columns={1} key={data._id}>
