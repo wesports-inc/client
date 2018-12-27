@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Image, Container, Divider, Icon, Grid, GridColumn} from 'semantic-ui-react';
+import {Image, Container, Divider, Grid, GridColumn, Segment} from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 
 export default class MoreCategory extends Component {
@@ -25,7 +25,7 @@ export default class MoreCategory extends Component {
   handleMenu(category) {
       this.setState({
         isCategory: category
-      }, () => console.log('handle more category: ', this.state.isCategory));
+      });
   }
 
   generateSkeleton() {
@@ -84,27 +84,27 @@ export default class MoreCategory extends Component {
         localStorage.setItem('menu', '');
     }
     return (
-        <div>
+        <div style={{marginBottom: 10}}>
             {isLoading ? this.generateSkeleton() :
         <Container>
             <Divider hidden />
             <Grid columns={4}>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('statistic')}><Image src={statisticIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Statistic</p>
-                </GridColumn>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('photo')}><Image src={photoIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Photo</p>
-                </GridColumn>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={peopleIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>People</p>
-                </GridColumn>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('setting')}><Image src={settingIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Setting</p>
-                </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('statistic')}><Image src={statisticIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>Statistic</p>
+                    </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('photo')}><Image src={photoIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>Photo</p>
+                    </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={peopleIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>People</p>
+                    </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('setting')}><Image src={settingIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>Setting</p>
+                    </GridColumn>
             </Grid>
         </Container>
             }

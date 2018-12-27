@@ -35,7 +35,7 @@ export default class MyPost extends Component {
       data: {
         username: this.state.username, // This is the body part
       }
-    }).then(result => this.setState({posting: result.data}, () => console.log('posting: ', this.state.posting)));
+    }).then(result => this.setState({posting: result.data}));
   }
 
   generateSkeleton() {

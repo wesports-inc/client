@@ -23,24 +23,12 @@ export default class Index extends Component {
     }
 
     componentWillMount() {
-        axios({
-            method: 'post',
-            url: '/api/friend/notif',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: {
-              email: this.state.friend_email, // This is the body part
-            }
-          }).then(result => this.setState({datas: result.data}));
         this.setState({
             isLogin: localStorage.getItem('auth')
         })
     }
 
     componentDidMount() {
-        console.log('menu: ', localStorage.getItem('menu'))
         if(this.state.datas){
             setTimeout(() => {
                 this.setState({isLoading: false})
@@ -50,42 +38,12 @@ export default class Index extends Component {
         isLogin === "false" ? window.location = '#/login' : ''
     }
 
-    shouldComponentUpdate(newProps, newState){
-        if(newState){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-        if(nextState.friendRequest){
-            console.log('ada teman baru nih: ' + nextState.friendRequest)
-        }
-    }
-
     componentDidUpdate(prevProps, prevState) {
         const {isLogin} = this.state;
         if(isLogin === false){ 
             window.location = '#/login'
         }
     }
-
-    handleClick(value) {
-        this.setState({friend_send: {email: value,
-            email_friend: localStorage.getItem('email').slice(1, -1)}}, () => 
-            axios({
-                method: 'put',
-                url: '/api/friend/confirm',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                data: JSON.stringify(this.state.friend_send),
-              }).then(result => console.log('CONFIRM ------------> : ', result))
-            )
-    }
-
     generateSkeleton() {
         const {datas} = this.state;
         return <div style={{marginBottom: 45}}>
@@ -119,8 +77,6 @@ export default class Index extends Component {
         </div>
     }
 
-  
-
     generateZeroData() {
         const divConten = {
             marginTop: '40%',
@@ -142,12 +98,8 @@ export default class Index extends Component {
       </div>
     }
 
-      
-    
-
     render() {
         const {datas} = this.state;
-        console.log('banyaknya data:', datas.length)
         const {isLoading} = this.state;
         return (
             <div style={{marginBottom: 45}}>
@@ -173,7 +125,7 @@ export default class Index extends Component {
                         </List>
                     </Grid.Column>
                     <Grid.Column verticalAlign="middle">
-                    <Button icon onClick={() => this.handleClick(data.email)} primary style={{width: "75px"}} size="mini" floated="right">
+                    <Button icon primary style={{width: "75px"}} size="mini" floated="right">
                         <Icon name='check circle outline' />
                     </Button>
                     </Grid.Column>

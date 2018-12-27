@@ -25,7 +25,7 @@ export default class MenuProfile extends Component {
   }
 
   componentWillMount() {
-    axios({
+    /*axios({
       method: 'post',
       url: '/api/friend/notif',
       headers: { 
@@ -36,7 +36,7 @@ export default class MenuProfile extends Component {
         email: this.state.email, // This is the body part
       }
     }).then(result => this.setState({datas: result.data}));
-
+    */
     axios({
       method: 'get',
       url: '/api/tags',
