@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from 'react-skeleton-loader';
-import {Grid, Container, Segment, Divider, Image, Icon, Header} from 'semantic-ui-react';
+import {Grid, Container, Segment, Divider, Image, Icon, Header, Modal, Button} from 'semantic-ui-react';
 
 import axios from 'axios'
 
@@ -90,6 +90,7 @@ export default class HeaderProfile extends Component {
     localStorage.setItem('tag', JSON.stringify(this.state.followed_topic))
     window.location='#/TagsPost/'+this.state.followed_topic     
   }
+
   
   generateSkeleton() {
     return <div>
@@ -153,15 +154,15 @@ export default class HeaderProfile extends Component {
             <Segment raised>
               <p style={smallFont}>Posts <span style={toRight}>{total_posts}</span></p>
               <p style={smallFont}>Thanks <span style={toRight}>{total_thanks}</span></p>
-              <p style={smallFont}>Influencing <span style={toRight}><u style={{color: "blue"}}>{total_friends} person</u></span></p>
-              <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{awards}</u></span></p>
+              <p style={smallFont}>Influencing <a style={toRight}>{total_friends} person</a></p>
+              <p style={smallFont}>Awards <a style={toRight}>{awards}</a></p>
               <p style={smallFont}>Tags <span style={toRight}><a onClick={this.post.bind(this)}>{followed_topic}</a></span></p>
               <p style={smallFont}>Join Date <span style={toRight}><i>{join_date}</i></span></p>
             </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      </Container>
+      </Container>      
       }
       </div>
     );
