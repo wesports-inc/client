@@ -119,7 +119,7 @@ export default class allPeople extends Component {
         window.location='#/user/profile';
     }
 
-    close = () => this.setState({ open: false, email_friend: '' })
+    close = () => this.setState({ open: false, email_friend: '' }, () => sessionStorage.removeItem('username'))
     
     render() {
         const { open, dimmer } = this.state

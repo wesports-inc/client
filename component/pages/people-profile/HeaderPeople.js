@@ -3,6 +3,7 @@ import { Icon, Menu, Header } from "semantic-ui-react";
 
 export default class HeaderPeople extends Component{
     back() {
+      sessionStorage.removeItem('username')
       window.location = "#/people"
     }
     render () {

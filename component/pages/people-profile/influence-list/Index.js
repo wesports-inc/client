@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import HeaderProfile from "./HeaderProfile"
-import HeaderPeople from "./HeaderPeople"
-import Action from "./Action"
-import Posts from "./Posts"
+import HeaderPeople from "../HeaderPeople"
+import Influence from "./Influence"
 import { Container, Grid, Divider, Image, List, Header, Button, Modal } from 'semantic-ui-react';
-import axios from "axios"
 
 export default class Index extends Component {
 
@@ -12,28 +9,11 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: '',
-            username: sessionStorage.getItem('username'),
-            datas: [],
-            email_friend: ''
+            email: ''
         };
     }
 
     componentWillMount() {
-        console.log('userna: ', this.state.username)
-
-        axios({
-            method: 'post',
-            url: '/api/follow/user/data',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            data: {
-              username: this.state.username, // This is the body part
-            }
-          }).then(result => this.setState({datas: result.data[0], email_friend: result.data[0].email}, () => console.log('a: ', this.state.email_friend)))
-
         const email = JSON.parse(localStorage.getItem('email'))
         const auth = JSON.parse(localStorage.getItem('auth'))
         this.setState({
@@ -65,16 +45,13 @@ export default class Index extends Component {
     }
 
     render () {
-        sessionStorage.setItem('email_friend', this.state.email_friend)
         return (
         <div style={{marginBottom: 45}}>
             <HeaderPeople />
             <Divider hidden/>
             <Divider hidden/>
             <Divider hidden/>
-            <HeaderProfile/>
-            <Action/>
-            <Posts/>
+            <Influence/>
         </div>
         );
     }

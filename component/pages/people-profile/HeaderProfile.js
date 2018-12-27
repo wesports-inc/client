@@ -11,6 +11,7 @@ export default class HeaderProfile extends Component {
       status: '',
       profile: []
     };
+    this.gotoInfluenceList = this.gotoInfluenceList.bind(this)
   }
 
   componentWillMount() {
@@ -45,7 +46,6 @@ export default class HeaderProfile extends Component {
 
   shouldComponentUpdate(newProps, newState) {
     if(newState){
-      console.log('ada state baru: ', newState.status)
       return true
     }else{
       return false
@@ -53,7 +53,6 @@ export default class HeaderProfile extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('nextstate: ', nextState)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -93,6 +92,10 @@ export default class HeaderProfile extends Component {
        data: unfoll,
      }).then(result => this.setState({status: result.data.status}))
 }
+
+gotoInfluenceList () {
+  window.location = "#/user/influence/list"
+}
   
   
   render() {
@@ -131,7 +134,7 @@ export default class HeaderProfile extends Component {
                       </Segment>
                       <Segment>
                         <p style={smallFont}>Posts <span style={toRight}>{data.total_posts}</span></p>
-                        <p style={smallFont}>Influencing <span style={toRight}><u style={{color: "blue"}}>{data.total_friends} person</u></span></p>
+                        <p style={smallFont}>Influencing <a onClick={this.gotoInfluenceList} style={toRight}><u style={{color: "blue"}}>{data.total_friends} person</u></a></p>
                         <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{data.awards}</u></span></p>
                         <p style={smallFont}>Tags <span style={toRight}><u style={{color: "blue"}}>{data.tags}</u></span></p>
                         <p style={smallFont}>Join Date <span style={toRight}><i>{data.join_date}</i></span></p>
