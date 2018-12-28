@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon, Statistic } from 'semantic-ui-react';
+import { Container, Grid, Divider, Image, List, Header, Label, Statistic } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import HeaderNotification from './HeaderNotification';
 import MenuProfile from '../../profile/MenuProfile';
@@ -9,20 +9,27 @@ export default class Index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            email: localStorage.getItem('email').slice(1, -1),
             datas: [],
             isLogin: '',
-            friend_email: localStorage.getItem('email').slice(1, -1),
-            friend_status: '',
-            friend_status_email: '',
             isLoading: true,
-            friend_send: {}
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
         this.generateZeroData = this.generateZeroData.bind(this)
     }
 
     componentWillMount() {
+        axios({
+            method: 'post',
+            url: '/api/follow/notif',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+              email: this.state.email, // This is the body part
+            }
+          }).then(result => this.setState({datas: result.data}));
         this.setState({
             isLogin: localStorage.getItem('auth')
         })
@@ -119,15 +126,16 @@ export default class Index extends Component {
                             <List.Item>
                                 <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                                 <List.Content>
+                                    {/* bypass potong email */}
                                     <List.Header>{ data.email.slice(0, -10) }</List.Header>
                                 </List.Content>
                             </List.Item>
                         </List>
                     </Grid.Column>
                     <Grid.Column verticalAlign="middle">
-                    <Button icon primary style={{width: "75px"}} size="mini" floated="right">
-                        <Icon name='check circle outline' />
-                    </Button>
+                    <Label style={{width: "100px", float: "right", textAlign: "center"}} size="small">
+                        followed you
+                    </Label>
                     </Grid.Column>
                 </Grid>
                 ); })}
