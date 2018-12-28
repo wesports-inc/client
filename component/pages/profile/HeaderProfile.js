@@ -8,7 +8,7 @@ export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null,
+      email: localStorage.getItem('email').slice(1, -1),
       isLoading: true,
       username: '',
       first_name: '',
@@ -22,9 +22,10 @@ export default class HeaderProfile extends Component {
       img_posts: '',
       img_thanks: '',
       followed_topic: 'other',
+      foto: '',
       time: new Date(),
       hour: new Date().getHours(),
-      minute: new Date().getMinutes()
+      minute: new Date().getMinutes(),
     };
     this.generateSkeleton = this.generateSkeleton.bind(this)
   }
@@ -33,11 +34,7 @@ export default class HeaderProfile extends Component {
     const { hour } = this.state
     const {total_posts} = this.state
     const {total_thanks} = this.state
-
-    const email = localStorage.getItem('email').slice(1, -1)
-    this.setState({
-      email
-    }, () => 
+ 
     axios({
       method: 'post',
       url: '/api/profile',
@@ -48,7 +45,19 @@ export default class HeaderProfile extends Component {
       data: {
         email: this.state.email, // This is the body part
       }
-    }).then(result => this.setState({username: result.data.username, first_name: result.data.first_name, last_name: result.data.last_name, awards: result.data.awards, total_friends: result.data.total_friends, total_posts: result.data.total_posts, total_thanks: result.data.total_thanks,join_date: result.data.join_date, followed_topic: result.data.tags})))
+    }).then(result => this.setState({username: result.data.username, first_name: result.data.first_name, last_name: result.data.last_name, awards: result.data.awards, total_friends: result.data.total_friends, total_posts: result.data.total_posts, total_thanks: result.data.total_thanks,join_date: result.data.join_date, followed_topic: result.data.tags}));
+
+    axios({
+      method: 'post',
+      url: '/api/user/avatar',
+      headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      data: {
+        email: this.state.email, // This is the body part
+      }
+    }).then(result => this.setState({foto: result.data}));
 
     if(hour > 5 && hour < 10 ) {
       this.setState({background: '#ecdb3c'})
@@ -76,10 +85,13 @@ export default class HeaderProfile extends Component {
     }else if (total_thanks == 11 || total_thanks > 50){
       this.setState({img_thanks: 'https://cdn0.iconfinder.com/data/icons/positive-character-traits-alphabet-l-part-1/273/positive-L003-512.png'})
     }
+
+    
   }
 
   componentDidMount() {
     console.log('did mount')
+    console.log(this.state.email)
 
     setTimeout(() => {
       this.setState({isLoading: false})
@@ -117,7 +129,7 @@ export default class HeaderProfile extends Component {
   }
 
   render() {
-    console.log('render')
+    console.log('render :' + this.state.foto)
     const {username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date, followed_topic} = this.state;
     const { isLoading } = this.state;
 
@@ -142,7 +154,7 @@ export default class HeaderProfile extends Component {
       <Divider hidden />
         <Grid.Row stretched>
           <Grid.Column>
-              <Image src='https://artsy-media-uploads.s3.amazonaws.com/2P6t_Yt6dF0TNN76dlp-_Q%2F3417757448_4a6bdf36ce_o.jpg' circular/>
+              <Image src={"http://localhost:3000/src/web-api/public/avatar/"+ this.state.foto} circular/>
               <p style={{textAlign: "center", marginTop: 15, color: "white"}}>@{username}<br/>{first_name} {last_name}</p>
           </Grid.Column>
           <Grid.Column style={{opacity: 0.9}}>
