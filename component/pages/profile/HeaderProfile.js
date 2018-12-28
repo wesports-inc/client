@@ -8,7 +8,7 @@ export default class HeaderProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null,
+      email: localStorage.getItem('email').slice(1, -1),
       isLoading: true,
       username: '',
       first_name: '',
@@ -22,6 +22,7 @@ export default class HeaderProfile extends Component {
       img_posts: '',
       img_thanks: '',
       followed_topic: 'other',
+      foto: '',
       time: new Date(),
       hour: new Date().getHours(),
       minute: new Date().getMinutes(),
@@ -34,11 +35,7 @@ export default class HeaderProfile extends Component {
     const { hour } = this.state
     const {total_posts} = this.state
     const {total_thanks} = this.state
-
-    const email = localStorage.getItem('email').slice(1, -1)
-    this.setState({
-      email
-    }, () => 
+ 
     axios({
       method: 'post',
       url: '/api/profile',
@@ -49,7 +46,19 @@ export default class HeaderProfile extends Component {
       data: {
         email: this.state.email, // This is the body part
       }
-    }).then(result => this.setState({username: result.data.username, first_name: result.data.first_name, last_name: result.data.last_name, awards: result.data.awards, total_friends: result.data.total_friends, total_posts: result.data.total_posts, total_thanks: result.data.total_thanks,join_date: result.data.join_date, followed_topic: result.data.tags})))
+    }).then(result => this.setState({username: result.data.username, first_name: result.data.first_name, last_name: result.data.last_name, awards: result.data.awards, total_friends: result.data.total_friends, total_posts: result.data.total_posts, total_thanks: result.data.total_thanks,join_date: result.data.join_date, followed_topic: result.data.tags}));
+
+    axios({
+      method: 'post',
+      url: '/api/user/avatar',
+      headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      },
+      data: {
+        email: this.state.email, // This is the body part
+      }
+    }).then(result => this.setState({foto: result.data}));
 
     if(hour > 5 && hour < 10 ) {
       this.setState({background: 'http://hdbackgroundspic.com/wp-content/uploads/2017/04/beautiful-view-good-morning.jpg', coloring: '#625D5D'})
@@ -77,6 +86,8 @@ export default class HeaderProfile extends Component {
     }else if (total_thanks == 11 || total_thanks > 50){
       this.setState({img_thanks: ''})
     }
+
+    
   }
 
   componentDidMount() {
@@ -117,7 +128,11 @@ export default class HeaderProfile extends Component {
   }
 
   render() {
+
+    console.log('render :' + this.state.foto)
+    const {username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date, followed_topic} = this.state;
     const {background, username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date, followed_topic} = this.state;
+
     const { isLoading } = this.state;
 
     //set user data caching
@@ -141,6 +156,8 @@ export default class HeaderProfile extends Component {
       <Divider hidden />
         <Grid.Row>
           <Grid.Column>
+              <Image src={"http://localhost:3000/src/web-api/public/avatar/"+ this.state.foto} circular/>
+              <p style={{textAlign: "center", marginTop: 15, color: "white"}}>@{username}<br/>{first_name} {last_name}</p>
             <Segment basic textAlign="center">
               <Image src='https://react.semantic-ui.com/images/wireframe/white-image.png' size="medium" circular bordered />
               <Header as='p' style={{marginTop: 0, color: this.state.coloring}}>

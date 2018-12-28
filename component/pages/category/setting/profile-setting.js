@@ -14,6 +14,8 @@ export default class ProfileSetting extends Component {
             phone_number: '',
             gender: '',
             avatar: '',
+            file: null,
+            reload: '0',
             option : [],
             value: [],
             tags : [],
@@ -47,10 +49,60 @@ export default class ProfileSetting extends Component {
         }).then(result => this.setState({tags: result.data.tags, first_name: result.data.first_name, last_name: result.data.last_name
             , phone_number: result.data.phone_number, gender: result.data.jenis_kelamin
         }, console.log(result)));
+
+        axios({
+            method: 'post',
+            url: '/api/user/avatar',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+                email: this.state.email, // This is the body part
+            }
+        }).then(result => this.setState({ avatar: result.data}))
+    }
+
+    shouldComponentUpdate(newProps, newState){
+        console.log('shouldComponentUpdate')
+        if(newState){
+            console.log('as', newState.reload)
+            return true;   
+        }else{
+            return false;
+        }
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(this.state.reload == '1'){
+            const data = new FormData()
+            data.append('avatar', this.state.file, this.state.file.name)
+            data.append('email', this.state.email)
+            console.log(data)
+                    
+            axios.post('/api/upload/avatar', data)
+            .then( () => 
+                axios({
+                    method: 'post',
+                    url: '/api/user/avatar',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    data: {
+                        email: this.state.email, // This is the body part
+                    }
+                    }).then(result => this.setState({ avatar: result.data, reload: '0'}, console.log(this.state.avatar)))
+            )
+        }
     }
 
     componentDidMount(){
-        console.log('data: ', this.state)
+        console.log('reload: ', this.state.reload)
     }
 
     update() {
@@ -71,8 +123,15 @@ export default class ProfileSetting extends Component {
                 },
                 body: JSON.stringify(data)
             })
-            .then(window.location='#/setting');
-      }
+            .then(window.location.reload());
+    }
+
+    fileHandler = event => {
+        this.setState({
+            file: event.target.files[0],
+            reload: '1'
+        })
+    }
 
       handlePost(event) {
         let target = event.target;
@@ -83,7 +142,7 @@ export default class ProfileSetting extends Component {
         })
         console.log('data berubah: ', value)
       }
-
+    
     setValue(e, data) {
         this.setState({ value: data.value })
         console.log('tags :', data.value)
@@ -112,15 +171,18 @@ export default class ProfileSetting extends Component {
             <Divider hidden/>
                 <Grid verticalAlign="middle" columns={2}>
                     <GridColumn>
-                        <Image size="small" src='https://react.semantic-ui.com/images/wireframe/square-image.png' circular />
+                        <Image size="small" src={"http://localhost:3000/src/web-api/public/avatar/"+ this.state.avatar} circular />
                     </GridColumn>
                     <GridColumn>
                         <Form>
                             <Form.Field>
                                 <label style={{textAlign: "center"}}>Your Avatar</label>
                                 <div className="input-file-container">
-                                    <input className="input-file" id="my-file" type="file" />
-                                    <label htmlFor="my-file" className="input-file-trigger" style={{textAlign: "center"}}>upload</label>
+                                    <input className="input-file" id="my-file" type="file" onChange={this.fileHandler}/>
+                                    <label htmlFor="my-file" className="input-file-trigger" style={{textAlign: "center"}}>Pilih foto</label>
+                                    <br />
+                                    <br />
+                                    <br />
                                 </div>
                             <p className="file-return"></p>
                             </Form.Field>
