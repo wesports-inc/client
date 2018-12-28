@@ -99,7 +99,6 @@ export default class MenuProfile extends Component {
     this.setState({
         [name]: value 
     })
-    console.log('data berubah: ', value)
   }
 
   handleTags = (event) => {
@@ -123,7 +122,6 @@ export default class MenuProfile extends Component {
             },
             body: JSON.stringify(data)
         }).then(res => res.json())
-        .then(console.log('sukses terkirim...'));
   }
 
   show = dimmer => () => this.setState({ dimmer, open: true })

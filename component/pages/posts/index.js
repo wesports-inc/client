@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Divider,Container} from 'semantic-ui-react';
-import MenuProfile from './MenuProfile';
+import MenuProfile from '../profile/MenuProfile';
 import TagsPost from './TagsPost';
 import Headerpost from './Headerpost';
 

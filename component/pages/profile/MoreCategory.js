@@ -72,16 +72,12 @@ export default class MoreCategory extends Component {
     // bypass logout user
     if(this.state.isCategory === 'setting'){
         window.location='#/setting'
-        localStorage.setItem('menu', '');
     }else if(this.state.isCategory === 'people'){
         window.location='#/people'
-        localStorage.setItem('menu', '');
-    }else if(this.state.isCategory === 'photo'){
-        window.location = '#/photo'
-        localStorage.setItem('menu', '');
+    }else if(this.state.isCategory === 'reputation'){
+        window.location = '#/reputation'
     }else if(this.state.isCategory === 'statistic'){
         window.location = '#/statistic'
-        localStorage.setItem('menu', '');
     }
     return (
         <div style={{marginBottom: 10}}>
@@ -94,8 +90,8 @@ export default class MoreCategory extends Component {
                         <p style={this.smallFontCenter}>Statistic</p>
                     </GridColumn>
                     <GridColumn>
-                        <p style={this.noSpacing} onClick={() => this.handleMenu('photo')}><Image src={photoIcon} avatar /></p>
-                        <p style={this.smallFontCenter}>Photo</p>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('reputation')}><Image src={photoIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>reputation</p>
                     </GridColumn>
                     <GridColumn>
                         <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={peopleIcon} avatar /></p>
