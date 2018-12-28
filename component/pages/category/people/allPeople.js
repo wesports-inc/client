@@ -114,7 +114,12 @@ export default class allPeople extends Component {
         </div>
     }
 
-    close = () => this.setState({ open: false, email_friend: '' })
+    gotoprofile(username) {
+        sessionStorage.setItem('username', username)
+        window.location='#/user/profile';
+    }
+
+    close = () => this.setState({ open: false, email_friend: '' }, () => sessionStorage.removeItem('username'))
     
     render() {
         const { open, dimmer } = this.state
@@ -145,17 +150,21 @@ export default class allPeople extends Component {
                 <Image wrapped size='medium' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' />
                 <Modal.Description>
                 <Header>{friendship.username}</Header>
-                <p>Followed Tags: {friendship.tags}</p>
+                <span>
+                    <span style={{float: "left"}}>thanks: {friendship.total_thanks}</span>
+                    <span style={{float: "right"}}>posts: {friendship.total_posts}</span>
+                    <br/>
+                    <hr/>
+                    <p>Followed Tags: <a>{friendship.tags}</a></p> 
+                </span>
                 </Modal.Description>
             </Modal.Content>
             <Modal.Actions>
                 <Button
                 primary
-                icon='add square'
-                labelPosition='right'
-                content="Add Friend"
+                content="View Profile"
                 fluid
-                onClick={this.close}
+                onClick={() => this.gotoprofile(friendship.username)}
                 style={{marginLeft: -0}}
                 />
             </Modal.Actions>

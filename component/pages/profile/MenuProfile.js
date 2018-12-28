@@ -27,7 +27,7 @@ export default class MenuProfile extends Component {
   componentWillMount() {
     axios({
       method: 'post',
-      url: '/api/friend/notif',
+      url: '/api/follow/notif',
       headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -36,7 +36,7 @@ export default class MenuProfile extends Component {
         email: this.state.email, // This is the body part
       }
     }).then(result => this.setState({datas: result.data}));
-
+    
     axios({
       method: 'get',
       url: '/api/tags',
@@ -99,7 +99,6 @@ export default class MenuProfile extends Component {
     this.setState({
         [name]: value 
     })
-    console.log('data berubah: ', value)
   }
 
   handleTags = (event) => {
@@ -123,7 +122,6 @@ export default class MenuProfile extends Component {
             },
             body: JSON.stringify(data)
         }).then(res => res.json())
-        .then(console.log('sukses terkirim...'));
   }
 
   show = dimmer => () => this.setState({ dimmer, open: true })
@@ -135,8 +133,6 @@ export default class MenuProfile extends Component {
   }
 
   render() {
-    
-    console.log('pilihan: ', this.state.value)
     const { open, dimmer } = this.state
     const {isLoading, isMenu, menu, datas, options, value} = this.state;
     if(isMenu === 'profile'){

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Divider,Container} from 'semantic-ui-react';
-import MenuProfile from './MenuProfile';
+import MenuProfile from '../profile/MenuProfile';
 import TagsPost from './TagsPost';
 import Headerpost from './Headerpost';
 
@@ -15,6 +15,7 @@ export default class Index extends Component {
     }
 
     componentWillMount() {
+        
         const email = JSON.parse(localStorage.getItem('email'))
         const auth = JSON.parse(localStorage.getItem('auth'))
         this.setState({

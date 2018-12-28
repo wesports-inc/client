@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Header, Divider, Container } from 'semantic-ui-react';
-import BottomMenu from '../../profile/MenuProfile';
-import Skeleton from 'react-skeleton-loader';
-import HeaderPeople from './HeaderPeople';
-import AllPeople from "./allPeople";
+import HeaderPeople from "../HeaderPeople"
+import Influence from "./Influence"
+import { Container, Grid, Divider, Image, List, Header, Button, Modal } from 'semantic-ui-react';
 
 export default class Index extends Component {
 
@@ -11,10 +9,8 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: '',
-            isLoading: true
+            email: ''
         };
-        this.generateSkeleton = this.generateSkeleton.bind(this)
     }
 
     componentWillMount() {
@@ -30,9 +26,6 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
-        setTimeout(() => {
-            this.setState({isLoading: false})
-        }, 500);
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -51,31 +44,14 @@ export default class Index extends Component {
         
     }
 
-    generateSkeleton() {
-        return <Header textAlign="center"><Skeleton/></Header>
-    }
-
-
-
-    render () {      
-        const {isLoading} = this.state;
+    render () {
         return (
         <div style={{marginBottom: 45}}>
             <HeaderPeople />
             <Divider hidden/>
             <Divider hidden/>
             <Divider hidden/>
-            {isLoading ? this.generateSkeleton() :
-            <Container>
-                <Header as="h2" textAlign="center" style={{marginTop: 25}}>
-                    <i>More People, More Influencer</i>            
-                </Header>
-                <Divider/>
-            </Container>
-            }
-            <Divider hidden/>
-            <AllPeople/>
-            <BottomMenu />
+            <Influence/>
         </div>
         );
     }

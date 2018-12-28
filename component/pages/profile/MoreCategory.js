@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Image, Container, Divider, Icon, Grid, GridColumn} from 'semantic-ui-react';
+import {Image, Container, Divider, Grid, GridColumn, Segment} from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 
 export default class MoreCategory extends Component {
@@ -25,7 +25,7 @@ export default class MoreCategory extends Component {
   handleMenu(category) {
       this.setState({
         isCategory: category
-      }, () => console.log('handle more category: ', this.state.isCategory));
+      });
   }
 
   generateSkeleton() {
@@ -72,39 +72,35 @@ export default class MoreCategory extends Component {
     // bypass logout user
     if(this.state.isCategory === 'setting'){
         window.location='#/setting'
-        localStorage.setItem('menu', '');
     }else if(this.state.isCategory === 'people'){
         window.location='#/people'
-        localStorage.setItem('menu', '');
-    }else if(this.state.isCategory === 'photo'){
-        window.location = '#/photo'
-        localStorage.setItem('menu', '');
+    }else if(this.state.isCategory === 'reputation'){
+        window.location = '#/reputation'
     }else if(this.state.isCategory === 'statistic'){
         window.location = '#/statistic'
-        localStorage.setItem('menu', '');
     }
     return (
-        <div>
+        <div style={{marginBottom: 10}}>
             {isLoading ? this.generateSkeleton() :
         <Container>
             <Divider hidden />
             <Grid columns={4}>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('statistic')}><Image src={statisticIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Statistic</p>
-                </GridColumn>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('photo')}><Image src={photoIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Photo</p>
-                </GridColumn>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={peopleIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>People</p>
-                </GridColumn>
-                <GridColumn>
-                    <p style={this.noSpacing} onClick={() => this.handleMenu('setting')}><Image src={settingIcon} avatar /></p>
-                    <p style={this.smallFontCenter}>Setting</p>
-                </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('statistic')}><Image src={statisticIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>Statistic</p>
+                    </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('reputation')}><Image src={photoIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>reputation</p>
+                    </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={peopleIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>People</p>
+                    </GridColumn>
+                    <GridColumn>
+                        <p style={this.noSpacing} onClick={() => this.handleMenu('setting')}><Image src={settingIcon} avatar /></p>
+                        <p style={this.smallFontCenter}>Setting</p>
+                    </GridColumn>
             </Grid>
         </Container>
             }

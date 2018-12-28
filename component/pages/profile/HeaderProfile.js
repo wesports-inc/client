@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from 'react-skeleton-loader';
-import {Grid, Container, Segment, Divider, Image, Icon} from 'semantic-ui-react';
+import {Grid, Container, Segment, Divider, Image, Icon, Header, Modal, Button} from 'semantic-ui-react';
 
 import axios from 'axios'
 
@@ -26,6 +26,7 @@ export default class HeaderProfile extends Component {
       time: new Date(),
       hour: new Date().getHours(),
       minute: new Date().getMinutes(),
+      coloring: ''
     };
     this.generateSkeleton = this.generateSkeleton.bind(this)
   }
@@ -60,39 +61,36 @@ export default class HeaderProfile extends Component {
     }).then(result => this.setState({foto: result.data}));
 
     if(hour > 5 && hour < 10 ) {
-      this.setState({background: '#ecdb3c'})
+      this.setState({background: 'http://hdbackgroundspic.com/wp-content/uploads/2017/04/beautiful-view-good-morning.jpg', coloring: '#625D5D'})
     }else if(hour > 9 && hour < 15){
-      this.setState({background: '#4682b4'})
-    }else if(hour > 14 && hour < 19){
-      this.setState({background: '#e1ad46'})
+      this.setState({background: 'https://c1.staticflickr.com/6/5010/5344146801_e8e2cea999_b.jpg', coloring: '#3D3C3A'})
+    }else if(hour > 14 && hour < 18){
+      this.setState({background: 'https://www.desktop-background.com/p/2014/02/13/716536_1024x1024-beautiful-beach-sunset-wallpapers_1024x1024_h.jpg', coloring: '#f0f0f0'})
     }else {
-      this.setState({background: '#555555'})
+      this.setState({background: 'http://www.tabletwallpapers.org/download/stars-and-snow-night-in-the-alps-wallpaper_1024x1024.jpg', coloring: 'white'})
     }
 
     if(total_posts == 0){
-      this.setState({img_posts: 'https://cdn0.iconfinder.com/data/icons/positive-character-traits-alphabet-m/302/positive-M010-512.png'})
+      this.setState({img_posts: ''})
     }else if (total_posts == 1 || total_posts < 10){
-      this.setState({img_posts: 'https://i.imgur.com/WIsfLo1.png'})
+      this.setState({img_posts: ''})
     }else if (total_posts == 11 || total_posts > 50){
-      this.setState({img_posts: 'https://cdn0.iconfinder.com/data/icons/positive-character-traits-alphabet-r/264/positive-r013-512.png'})
+      this.setState({img_posts: ''})
     }
 
     
     if(total_thanks == 0){
-      this.setState({img_thanks: 'http://badugukadhae.com/images/drawable/sad3.png'})
+      this.setState({img_thanks: ''})
     }else if (total_thanks == 1 || total_thanks < 10){
-      this.setState({img_thanks: 'https://cdn0.iconfinder.com/data/icons/type-of-government/257/ruler-politic-citizen-010-512.png'})
+      this.setState({img_thanks: ''})
     }else if (total_thanks == 11 || total_thanks > 50){
-      this.setState({img_thanks: 'https://cdn0.iconfinder.com/data/icons/positive-character-traits-alphabet-l-part-1/273/positive-L003-512.png'})
+      this.setState({img_thanks: ''})
     }
 
     
   }
 
   componentDidMount() {
-    console.log('did mount')
-    console.log(this.state.email)
-
     setTimeout(() => {
       this.setState({isLoading: false})
     }, 500);
@@ -103,6 +101,7 @@ export default class HeaderProfile extends Component {
     localStorage.setItem('tag', JSON.stringify(this.state.followed_topic))
     window.location='#/TagsPost/'+this.state.followed_topic     
   }
+
   
   generateSkeleton() {
     return <div>
@@ -129,8 +128,11 @@ export default class HeaderProfile extends Component {
   }
 
   render() {
+
     console.log('render :' + this.state.foto)
     const {username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date, followed_topic} = this.state;
+    const {background, username, first_name, last_name, awards, total_friends, total_posts, total_thanks, join_date, followed_topic} = this.state;
+
     const { isLoading } = this.state;
 
     //set user data caching
@@ -150,35 +152,34 @@ export default class HeaderProfile extends Component {
       <div>
       {isLoading ? this.generateSkeleton() :
       <Container>
-      <Grid columns={2} style={{background: this.state.background}}>
+      <Grid columns={2} style={{backgroundImage: `url(${background})`}}>
       <Divider hidden />
-        <Grid.Row stretched>
+        <Grid.Row>
           <Grid.Column>
               <Image src={"http://localhost:3000/src/web-api/public/avatar/"+ this.state.foto} circular/>
               <p style={{textAlign: "center", marginTop: 15, color: "white"}}>@{username}<br/>{first_name} {last_name}</p>
+            <Segment basic textAlign="center">
+              <Image src='https://react.semantic-ui.com/images/wireframe/white-image.png' size="medium" circular bordered />
+              <Header as='p' style={{marginTop: 0, color: this.state.coloring}}>
+              @{username}
+              <br/>
+              <small><i>{first_name} {last_name}</i></small>
+              </Header>
+            </Segment>
           </Grid.Column>
-          <Grid.Column style={{opacity: 0.9}}>
-            <Segment>
-            <Grid.Row stretched>
-            <Grid.Column>
-            <Image.Group>
-              <Image centered src={ this.state.img_posts} height= "auto" width="50px" circular/>
-              <Image centered src={ this.state.img_thanks} height= "auto" width="50px" circular/>
-            </Image.Group> 
-            </Grid.Column>
-          </Grid.Row>
-              <Divider />
+          <Grid.Column style={{opacity: 0.8}}>
+            <Segment raised>
               <p style={smallFont}>Posts <span style={toRight}>{total_posts}</span></p>
               <p style={smallFont}>Thanks <span style={toRight}>{total_thanks}</span></p>
-              <p style={smallFont}>Friends <span style={toRight}><u style={{color: "blue"}}>{total_friends}</u></span></p>
-              <p style={smallFont}>Awards <span style={toRight}><u style={{color: "blue"}}>{awards}</u></span></p>
+              <p style={smallFont}>Influencing <a style={toRight}>{total_friends} person</a></p>
+              <p style={smallFont}>Awards <a style={toRight}>{awards}</a></p>
+              <p style={smallFont}>Tags <span style={toRight}><a onClick={this.post.bind(this)}>{followed_topic}</a></span></p>
               <p style={smallFont}>Join Date <span style={toRight}><i>{join_date}</i></span></p>
-              <p style={smallFont}>Followed Topic <span style={toRight}><a onClick={this.post.bind(this)}>{followed_topic}</a></span></p>
             </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      </Container>
+      </Container>      
       }
       </div>
     );
