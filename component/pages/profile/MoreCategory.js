@@ -63,10 +63,10 @@ export default class MoreCategory extends Component {
   }
 
   render() {
-    const settingIcon= 'http://192.168.100.200/assets/icons/more-categories/setting.png';
-    const peopleIcon= 'http://192.168.100.200/assets/icons/more-categories/people.png';
-    const photoIcon= 'http://192.168.100.200/assets/icons/more-categories/photo.png';
-    const statisticIcon= 'http://192.168.100.200/assets/icons/more-categories/statistic.png';
+    const settingIcon= 'http://192.168.1.14/assets/icons/more-categories/setting.png';
+    const peopleIcon= 'http://192.168.1.14/assets/icons/more-categories/people.png';
+    const photoIcon= 'http://192.168.1.14/assets/icons/more-categories/photo.png';
+    const statisticIcon= 'http://192.168.1.14/assets/icons/more-categories/statistic.png';
 
     const { isLoading } = this.state;
     // bypass logout user
@@ -91,7 +91,7 @@ export default class MoreCategory extends Component {
                     </GridColumn>
                     <GridColumn>
                         <p style={this.noSpacing} onClick={() => this.handleMenu('reputation')}><Image src={photoIcon} avatar /></p>
-                        <p style={this.smallFontCenter}>reputation</p>
+                        <p style={this.smallFontCenter}>Reputation</p>
                     </GridColumn>
                     <GridColumn>
                         <p style={this.noSpacing} onClick={() => this.handleMenu('people')}><Image src={peopleIcon} avatar /></p>
