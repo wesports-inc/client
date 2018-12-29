@@ -6,7 +6,8 @@ import {
   Divider,
   Icon,
   GridColumn,
-  List
+  List,
+  Image
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -114,7 +115,11 @@ export default class MyPost extends Component {
     const gridMargin = {
       marginBottom: "-70px"
     };
+    const textMargin = {
+      marginLeft: "2%"
+    };
     let a;
+
     return (
       <div>
         {isLoading ? (
@@ -130,9 +135,65 @@ export default class MyPost extends Component {
                         <List.Item>
                           <List.Content>
                             <List.Header as="a">
-                              <Icon name="film" color="black" />
                               <small>
-                                <i> {data.tags}</i>
+                                {data.tags === "null" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/pilihkategori.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "computer-gadget" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/komputergadget.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "family-love" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/keluargaasmara.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fact-rumour" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/faktarumor.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "business-work" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/bisnispekerjaan.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "fashion-lifestyle" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/fashion.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "quotes" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/quotes.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "other" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/lainnya.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : data.tags === "riddles" ? (
+                                  <Image
+                                    src="http://192.168.1.14/assets/icons/tags/riddle.png"
+                                    width="7%"
+                                    style={{ float: "left" }}
+                                  />
+                                ) : null}
+                              </small>
+                              <small>
+                                <i style={textMargin}> {data.tags}</i>
                               </small>
                             </List.Header>
                             <br />
