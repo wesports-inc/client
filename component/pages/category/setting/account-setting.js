@@ -88,24 +88,24 @@ export default class AccountSetting extends Component {
       marginRight: "2%"
     };
     return (
-      <div>
-        <Header as="h3" dividing>
+      <div style={{color: "white"}}>
+        <Header as="h3"  style={{color: "white"}} dividing>
           Account Setting
         </Header>
         <Container>
           <Divider hidden />
           <Form>
             <Form.Field>
-              <label>Your Email</label>
+              <label style={{color: "white"}}>Your Email</label>
               <input defaultValue={this.state.email} disabled />
             </Form.Field>
             <Form.Field>
-              <label>Username</label>
+              <label style={{color: "white"}}>Username</label>
               <input defaultValue={this.state.username} disabled />
             </Form.Field>
 
             <Modal
-              trigger={<a onClick={this.handleOpenPassword}>Change Password</a>}
+              trigger={<a onClick={this.handleOpenPassword} style={{color: "white"}}><i>Change Password</i></a>}
               open={this.state.modalOpenPassword}
               onClose={this.handleClosePassword}
               basic
@@ -147,7 +147,7 @@ export default class AccountSetting extends Component {
           </Form>
           <br />
           <Modal
-            trigger={<a onClick={this.handleOpen}>Self Destroy</a>}
+            trigger={<a onClick={this.handleOpen} style={{color: "white"}}><i>Self Destroy</i></a>}
             open={this.state.modalOpen}
             onClose={this.handleClose}
             basic

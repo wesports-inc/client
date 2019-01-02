@@ -174,10 +174,10 @@ export default class HeaderProfile extends Component {
 
     //simple css styling
     const smallFont = {
-      fontSize: 10
+      fontSize: 10,
     };
     const toRight = {
-      float: "right"
+      float: "right",
     };
 
     return (
@@ -209,7 +209,7 @@ export default class HeaderProfile extends Component {
                   </Segment>
                 </Grid.Column>
                 <Grid.Column style={{ opacity: 0.8 }}>
-                  <Segment raised>
+                  <Segment style={{backgroundImage: "linear-gradient(to bottom right, #ED6A5A, #FFE1A8, #FFBA49)", borderRadius: "6%"}}>
                     <p style={smallFont}>
                       Posts <span style={toRight}>{total_posts}</span>
                     </p>
@@ -217,7 +217,7 @@ export default class HeaderProfile extends Component {
                       Thanks <span style={toRight}>{total_thanks}</span>
                     </p>
                     <p style={smallFont}>
-                      Influencing <a style={toRight}>{total_friends} person</a>
+                      <i>Influencing <a style={toRight}>{total_friends} person</a></i>
                     </p>
                     <p style={smallFont}>
                       Awards <a style={toRight}>{awards}</a>
@@ -225,7 +225,7 @@ export default class HeaderProfile extends Component {
                     <p style={smallFont}>
                       Tags{" "}
                       <span style={toRight}>
-                        <a onClick={this.post.bind(this)}>{followed_topic}</a>
+                        <i><a onClick={this.post.bind(this)}>{followed_topic}</a></i>
                       </span>
                     </p>
                     <p style={smallFont}>

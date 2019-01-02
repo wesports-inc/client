@@ -63,11 +63,20 @@ export default class MoreCategory extends Component {
   }
 
   render() {
+    /*
     const settingIcon= 'http://192.168.1.14/assets/icons/more-categories/setting.png';
     const peopleIcon= 'http://192.168.1.14/assets/icons/more-categories/people.png';
     const photoIcon= 'http://192.168.1.14/assets/icons/more-categories/photo.png';
     const statisticIcon= 'http://192.168.1.14/assets/icons/more-categories/statistic.png';
+    */
 
+   const settingIcon= '../../../../assets/images/icon/setting.png';
+   const peopleIcon= '../../../../assets/images/icon/group.png';
+   const photoIcon= '../../../../assets/images/icon/gallery.png';
+   const statisticIcon= '../../../../assets/images/icon/statistic.png';
+   const coloring = {
+       color: "#555"
+   }
     const { isLoading } = this.state;
     // bypass logout user
     if(this.state.isCategory === 'setting'){
@@ -84,7 +93,8 @@ export default class MoreCategory extends Component {
             {isLoading ? this.generateSkeleton() :
         <Container>
             <Divider hidden />
-            <Grid columns={4}>
+            <Segment>
+            <Grid columns={4} style={coloring}>
                     <GridColumn>
                         <p style={this.noSpacing} onClick={() => this.handleMenu('statistic')}><Image src={statisticIcon} avatar /></p>
                         <p style={this.smallFontCenter}>Statistic</p>
@@ -102,6 +112,8 @@ export default class MoreCategory extends Component {
                         <p style={this.smallFontCenter}>Setting</p>
                     </GridColumn>
             </Grid>
+            </Segment>
+            <Divider />
         </Container>
             }
         </div>

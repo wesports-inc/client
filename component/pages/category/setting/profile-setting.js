@@ -198,8 +198,8 @@ export default class ProfileSetting extends Component {
       { text: "Perempuan", value: "Perempuan" }
     ];
     return (
-      <div>
-        <Header as="h3" dividing>
+      <div >
+        <Header as="h3" style={{color: "white"}} dividing>
           Profile Setting
         </Header>
         <Container>
@@ -218,7 +218,7 @@ export default class ProfileSetting extends Component {
             <GridColumn>
               <Form>
                 <Form.Field>
-                  <label style={{ textAlign: "center" }}>Your Avatar</label>
+                  <label style={{ textAlign: "center", color: "white" }}>Your Avatar</label>
                   <div className="input-file-container">
                     <input
                       className="input-file"
@@ -229,7 +229,7 @@ export default class ProfileSetting extends Component {
                     <label
                       htmlFor="my-file"
                       className="input-file-trigger"
-                      style={{ textAlign: "center" }}
+                      style={{ textAlign: "center", color: "#555" }}
                     >
                       Choose Picture
                     </label>
@@ -245,7 +245,7 @@ export default class ProfileSetting extends Component {
           <Divider hidden />
           <Form>
             <Form.Field>
-              <label>First Name</label>
+              <label style={{color: "white"}}>First Name</label>
               <input
                 placeholder="first name"
                 name="first_name"
@@ -253,7 +253,7 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
               <Divider hidden />
-              <label>Last Name</label>
+              <label style={{color: "white"}}>Last Name</label>
               <input
                 placeholder="last name"
                 name="last_name"
@@ -261,16 +261,15 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
               <Divider hidden />
-              <label>Phone Number</label>
+              <label style={{color: "white"}}>Phone Number</label>
               <input
                 placeholder="0811xxxxx"
                 name="phone_number"
                 defaultValue={phone_number}
                 onChange={this.handlePost.bind(this)}
               />
-            </Form.Field>
             <Divider hidden />
-            <label>Gender</label>
+            <label style={{color: "white"}}>Gender</label>
             <Dropdown
               placeholder="Gender"
               style={{ position: "relative", display: "block" }}
@@ -281,10 +280,10 @@ export default class ProfileSetting extends Component {
               value={gender}
             />
             <Divider hidden />
-            <label>Choosen Tags :</label>
+            <label style={{color: "white"}}>Choosen Tags :</label>
             <br />
 
-            <b>{tags}</b>
+            <b style={{color: "white"}}><i>{tags}</i></b>
             <Divider hidden />
             <Dropdown
               placeholder="tags"
@@ -300,11 +299,11 @@ export default class ProfileSetting extends Component {
             <Modal
               trigger={
                 <Button
-                  primary
                   fluid
                   icon="checkmark"
                   labelPosition="right"
                   content="Update Profile"
+                  style={{backround: "white", color: "#555"}}
                   onClick={this.update.bind(this)}
                 />
               }
@@ -315,6 +314,7 @@ export default class ProfileSetting extends Component {
               >
               <Header style={{ textAlign: "center" }} content="Account Updated !" />
             </Modal>
+            </Form.Field>
           </Form>
           <Divider hidden />
           <Divider hidden />

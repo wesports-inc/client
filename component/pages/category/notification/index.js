@@ -149,7 +149,7 @@ export default class Index extends Component {
                   </Grid.Column>
                   <Grid.Column verticalAlign="middle">
                     <Label style={{ width: "100px", float: "right", textAlign: "center" }} size="small">
-                      followed you
+                      influenced
                     </Label>
                   </Grid.Column>
                 </Grid>

@@ -155,7 +155,7 @@ export default class MenuProfile extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify(data)
-    }).then(res => res.json());
+    }).then(res => res.json()).then(() => window.location.reload());
   }
 
   show = dimmer => () => this.setState({ dimmer, open: true });
@@ -193,22 +193,22 @@ export default class MenuProfile extends Component {
             }}
           >
             <Menu.Item name="home" onClick={() => this.handleMenu("home")}>
-              {menu === "home" ? <Icon name="clock outline" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="clock outline" size="large" />}
+              {menu === "home" ? <Icon name="clock" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="clock outline" style={{color: "#555"}} size="large" />}
             </Menu.Item>
 
             <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
               {menu === "message" ? (
-                <Icon name="comment alternate outline" style={{color:"#ED6A5E"}} size="large" />
+                <Icon name="comment alternate" style={{color:"#ED6A5E"}} size="large" />
               ) : (
-                <Icon name="comment alternate outline" size="large" />
+                <Icon name="comment alternate outline" style={{color: "#555"}} size="large" />
               )}
             </Menu.Item>
 
             <Menu.Item name="post" onClick={this.show("blurring")}>
               {menu === "post" ? (
-                <Icon name="plus square outline" style={{color:"#ED6A5E"}} size="large" />
+                <Icon name="plus square" style={{color:"#ED6A5E"}} size="large" />
               ) : (
-                <Icon name="plus square outline" size="large" />
+                <Icon name="plus square outline" style={{color: "#555"}} size="large" />
               )}
             </Menu.Item>
 
@@ -225,22 +225,19 @@ export default class MenuProfile extends Component {
                   {this.state.seen}
                 </Label>
               )}
-              {menu === "notification" ? <Icon name="bell outline" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="bell outline" size="large" />}
+              {menu === "notification" ? <Icon name="bell outline" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="bell outline" style={{color: "#555"}} size="large" />}
             </Menu.Item>
 
             <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
               {menu === "profile" ? (
-                <Icon name="user circle outline" style={{color:"#ED6A5E"}} size="large" />
+                <Icon name="user circle" style={{color:"#ED6A5E"}} size="large" />
               ) : (
-                <Icon name="user circle outline" size="large" />
+                <Icon name="user circle outline" style={{color: "#555"}} size="large" />
               )}
             </Menu.Item>
           </Menu>
         )}
         <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
-          <Modal.Header>
-            Post Your Activity <Icon name="share" />
-          </Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <Header as="h5">this will be great for your followers</Header>
@@ -253,7 +250,7 @@ export default class MenuProfile extends Component {
             <span style={{ float: "left" }}>
               {
                 <Dropdown
-                  style={{ position: "relative", display: "block" }}
+                  compact
                   onChange={this.setValue.bind(this)}
                   options={options}
                   selection
@@ -262,7 +259,7 @@ export default class MenuProfile extends Component {
               }
             </span>
             <Button
-              primary
+              style={{background: "#ED6A5A", color: "white", float: "right"}}
               icon="checkmark"
               labelPosition="right"
               content="Yep, Publish!"
