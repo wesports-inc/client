@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Grid, Container, Segment, Divider, Icon, GridColumn, List, Image } from "semantic-ui-react";
+import {
+  Grid,
+  Container,
+  Segment,
+  Divider,
+  Icon,
+  GridColumn,
+  List,
+  Image
+} from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
 
@@ -143,7 +152,6 @@ export default class MyPost extends Component {
 
   render() {
     const { posting } = this.state;
-    console.log("post: ", posting);
     const { isLoading } = this.state;
     const gridMargin = {
       marginBottom: "-70px"
@@ -225,10 +233,7 @@ export default class MyPost extends Component {
                                 ) : null}
                               </small>
                               <small>
-                                <i style={textMargin}>
-                                  {" "}
-                                  {data.tags} {data._id}
-                                </i>
+                                <i style={textMargin}>{data.tags}</i>
                               </small>
                             </List.Header>
                             <br />
@@ -236,7 +241,10 @@ export default class MyPost extends Component {
                               <b>{data.content}</b>
                               <br />
                               <br />
-                              <Icon name="handshake outline" onClick={() => this.givethanks(data._id)} />
+                              <Icon
+                                name="handshake outline"
+                                onClick={() => this.givethanks(data._id)}
+                              />
                               <small>
                                 <i>{data.thanks} Thanks </i>
                               </small>
@@ -249,7 +257,6 @@ export default class MyPost extends Component {
                           </List.Content>
                         </List.Item>
                       </List>
-                      <Divider hidden />
                     </Segment>
                     <Divider hidden />
                   </GridColumn>
