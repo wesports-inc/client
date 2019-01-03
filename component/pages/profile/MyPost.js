@@ -143,7 +143,6 @@ export default class MyPost extends Component {
 
   render() {
     const { posting } = this.state;
-    console.log("post: ", posting);
     const { isLoading } = this.state;
     const gridMargin = {
       marginBottom: "-70px"
@@ -249,7 +248,6 @@ export default class MyPost extends Component {
                           </List.Content>
                         </List.Item>
                       </List>
-                      <Divider hidden />
                     </Segment>
                     <Divider hidden />
                   </GridColumn>
