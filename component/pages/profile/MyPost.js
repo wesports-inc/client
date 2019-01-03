@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  Container,
-  Segment,
-  Divider,
-  Icon,
-  GridColumn,
-  List,
-  Image
-} from "semantic-ui-react";
+import { Grid, Container, Segment, Divider, Icon, GridColumn, List, Image } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
 
@@ -24,9 +15,11 @@ export default class MyPost extends Component {
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
       menitPosting: [],
-      waktu: []
+      waktu: [],
+      thanks: 0
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
+    this.givethanks = this.givethanks.bind(this);
   }
 
   componentWillMount() {}
@@ -47,6 +40,45 @@ export default class MyPost extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ posting: result.data }));
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    if (newState) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.thanks == 1) {
+      axios({
+        method: "post",
+        url: "/api/posting/profile",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          email: this.state.email // This is the body part
+        }
+      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
+    }
+  }
+
+  givethanks(value) {
+    axios({
+      method: "put",
+      url: "/api/posting/thanks/up",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        _id: value // This is the body part
+      }
+    }).then(() => this.setState({ thanks: 1 }));
   }
 
   generateSkeleton() {
@@ -111,13 +143,14 @@ export default class MyPost extends Component {
 
   render() {
     const { posting } = this.state;
+    console.log("post: ", posting);
     const { isLoading } = this.state;
     const gridMargin = {
       marginBottom: "-70px"
     };
     const textMargin = {
       marginLeft: "2%"
-    }
+    };
 
     return (
       <div>
@@ -125,7 +158,7 @@ export default class MyPost extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
-            {posting.map(data => {
+            {posting.map((data, index) => {
               return (
                 <Grid columns={1} key={data._id}>
                   <GridColumn style={gridMargin}>
@@ -192,7 +225,10 @@ export default class MyPost extends Component {
                                 ) : null}
                               </small>
                               <small>
-                                <i style={textMargin}> {data.tags}</i>
+                                <i style={textMargin}>
+                                  {" "}
+                                  {data.tags} {data._id}
+                                </i>
                               </small>
                             </List.Header>
                             <br />
@@ -200,7 +236,7 @@ export default class MyPost extends Component {
                               <b>{data.content}</b>
                               <br />
                               <br />
-                              <Icon name="handshake outline" />
+                              <Icon name="handshake outline" onClick={() => this.givethanks(data._id)} />
                               <small>
                                 <i>{data.thanks} Thanks </i>
                               </small>
