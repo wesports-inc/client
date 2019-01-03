@@ -1,60 +1,55 @@
 import React, { Component } from "react";
-import HeaderPeople from "../HeaderPeople"
-import Influence from "./Influence"
-import { Container, Grid, Divider, Image, List, Header, Button, Modal } from 'semantic-ui-react';
+import HeaderInfluence from "./HeaderInfluence";
+import Influence from "./Influence";
+import { Divider } from "semantic-ui-react";
 
 export default class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogin: "",
+      email: ""
+    };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLogin: '',
-            email: ''
-        };
+  componentWillMount() {
+    const email = JSON.parse(localStorage.getItem("email"));
+    const auth = JSON.parse(localStorage.getItem("auth"));
+    this.setState({
+      email,
+      isLogin: auth
+    });
+  }
+
+  componentDidMount() {
+    if (this.state.isLogin != true) {
+      window.location = "#/login";
     }
+  }
 
-    componentWillMount() {
-        const email = JSON.parse(localStorage.getItem('email'))
-        const auth = JSON.parse(localStorage.getItem('auth'))
-        this.setState({
-            email,
-            isLogin: auth
-        })
+  shouldComponentUpdate(newProps, newState) {
+    if (newState.isLogin) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    componentDidMount() {
-        if(this.state.isLogin != true){
-            window.location='#/login';
-        }
-    }
+  componentWillUpdate(nextProps, nextState) {
+    nextState.isLogin === "false" ? (window.location = "#/login") : "";
+  }
 
-    shouldComponentUpdate(newProps, newState){
-        if(newState.isLogin){
-            return true;
-        }else{
-            return false;
-        }
-    }
+  componentDidUpdate(prevProps, prevState) {}
 
-    componentWillUpdate(nextProps, nextState) {
-        nextState.isLogin === "false" ? window.location = '#/login' : '';
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        
-    }
-
-    render () {
-        return (
-        <div style={{marginBottom: 45}}>
-            <HeaderPeople />
-            <Divider hidden/>
-            <Divider hidden/>
-            <Divider hidden/>
-            <Influence/>
-        </div>
-        );
-    }
-
-
+  render() {
+    return (
+      <div style={{ marginBottom: 45 }}>
+        <HeaderInfluence />
+        <Divider hidden />
+        <Divider hidden />
+        <Divider hidden />
+        <Influence />
+      </div>
+    );
+  }
 }

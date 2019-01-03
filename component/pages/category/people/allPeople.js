@@ -136,8 +136,8 @@ export default class allPeople extends Component {
                             <List.Item>
                                 <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
                                 <List.Content>
-                                    <List.Header>{ data.first_name } {data.last_name}</List.Header>
-                                    <p>@{ data.username }</p>
+                                    <List.Header style={{color: "#f2f2f2"}}>{ data.first_name } {data.last_name}</List.Header>
+                                    <p style={{color: "#f2f2f2"}}>@{ data.username }</p>
                                 </List.Content>
                             </List.Item>
                         </List>

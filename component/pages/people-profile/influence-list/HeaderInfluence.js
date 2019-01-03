@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Icon, Menu, Header } from "semantic-ui-react";
 
-export default class HeaderPeople extends Component {
+export default class HeaderInfluence extends Component {
   back() {
-    sessionStorage.removeItem("username");
-    window.location = "#/people";
+    window.location = "#/user/profile";
   }
   render() {
     return (
@@ -17,7 +16,7 @@ export default class HeaderPeople extends Component {
             <Header as="h5">
               <small>
                 <i>
-                  <a>{sessionStorage.getItem("username")}</a>'s profile
+                  influenced by <a onClick={this.back.bind(this)}>{sessionStorage.getItem("username")}</a>
                 </i>
               </small>
             </Header>

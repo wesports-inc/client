@@ -117,8 +117,7 @@ export default class MyPost extends Component {
     };
     const textMargin = {
       marginLeft: "2%"
-    };
-    let a;
+    }
 
     return (
       <div>
@@ -130,7 +129,7 @@ export default class MyPost extends Component {
               return (
                 <Grid columns={1} key={data._id}>
                   <GridColumn style={gridMargin}>
-                    <Segment basic>
+                    <Segment>
                       <List>
                         <List.Item>
                           <List.Content>
@@ -210,18 +209,21 @@ export default class MyPost extends Component {
                                   {data.jam} {data.menit} {data.date}
                                 </i>
                               </small>
-                              <Divider hidden />
-                              <Divider fitted />
-                              <Divider hidden />
                             </List.Description>
                           </List.Content>
                         </List.Item>
                       </List>
+                      <Divider hidden />
                     </Segment>
+                    <Divider hidden />
                   </GridColumn>
+                  <Divider hidden />
                 </Grid>
               );
             })}
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
           </Container>
         )}
       </div>

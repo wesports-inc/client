@@ -155,7 +155,7 @@ export default class MenuProfile extends Component {
         Accept: "application/json"
       },
       body: JSON.stringify(data)
-    }).then(res => res.json());
+    }).then(res => res.json()).then(() => window.location.reload());
   }
 
   show = dimmer => () => this.setState({ dimmer, open: true });
@@ -174,6 +174,8 @@ export default class MenuProfile extends Component {
       window.location = "#/notification";
     } else if (isMenu === "home") {
       window.location = "#/home";
+    }else if (isMenu === "message") {
+      window.location = "#/message";
     } else {
     }
     return (
@@ -190,29 +192,28 @@ export default class MenuProfile extends Component {
               bottom: 0
             }}
           >
-            <Menu.Item name="home" active={menu === "home"} onClick={() => this.handleMenu("home")}>
-              {menu === "home" ? <Icon name="clock" size="large" /> : <Icon name="clock outline" size="large" />}
+            <Menu.Item name="home" onClick={() => this.handleMenu("home")}>
+              {menu === "home" ? <Icon name="clock" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="clock outline" style={{color: "#555"}} size="large" />}
             </Menu.Item>
 
-            <Menu.Item name="chat" active={menu === "chat"} onClick={() => this.handleMenu("chat")}>
-              {menu === "chat" ? (
-                <Icon name="comment alternate" size="large" />
+            <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
+              {menu === "message" ? (
+                <Icon name="comment alternate" style={{color:"#ED6A5E"}} size="large" />
               ) : (
-                <Icon name="comment alternate outline" size="large" />
+                <Icon name="comment alternate outline" style={{color: "#555"}} size="large" />
               )}
             </Menu.Item>
 
-            <Menu.Item name="post" active={menu === "post"} onClick={this.show("blurring")}>
+            <Menu.Item name="post" onClick={this.show("blurring")}>
               {menu === "post" ? (
-                <Icon name="plus square" size="large" />
+                <Icon name="plus square" style={{color:"#ED6A5E"}} size="large" />
               ) : (
-                <Icon name="plus square outline" size="large" />
+                <Icon name="plus square outline" style={{color: "#555"}} size="large" />
               )}
             </Menu.Item>
 
             <Menu.Item
               name="Notification"
-              active={menu === "notification"}
               onClick={() => this.handleMenu("notification")}
             >
               {datas.length === 0 ? (
@@ -224,22 +225,19 @@ export default class MenuProfile extends Component {
                   {this.state.seen}
                 </Label>
               )}
-              {menu === "notification" ? <Icon name="bell" size="large" /> : <Icon name="bell outline" size="large" />}
+              {menu === "notification" ? <Icon name="bell outline" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="bell outline" style={{color: "#555"}} size="large" />}
             </Menu.Item>
 
-            <Menu.Item name="profile" active={menu === "profile"} onClick={() => this.handleMenu("profile")}>
+            <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
               {menu === "profile" ? (
-                <Icon name="user circle" size="large" />
+                <Icon name="user circle" style={{color:"#ED6A5E"}} size="large" />
               ) : (
-                <Icon name="user circle outline" size="large" />
+                <Icon name="user circle outline" style={{color: "#555"}} size="large" />
               )}
             </Menu.Item>
           </Menu>
         )}
         <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
-          <Modal.Header>
-            Post Your Activity <Icon name="share" />
-          </Modal.Header>
           <Modal.Content>
             <Modal.Description>
               <Header as="h5">this will be great for your followers</Header>
@@ -252,7 +250,7 @@ export default class MenuProfile extends Component {
             <span style={{ float: "left" }}>
               {
                 <Dropdown
-                  style={{ position: "relative", display: "block" }}
+                  compact
                   onChange={this.setValue.bind(this)}
                   options={options}
                   selection
@@ -261,7 +259,7 @@ export default class MenuProfile extends Component {
               }
             </span>
             <Button
-              primary
+              style={{background: "#ED6A5A", color: "white", float: "right"}}
               icon="checkmark"
               labelPosition="right"
               content="Yep, Publish!"

@@ -15,7 +15,7 @@ import Notifications from "./component/pages/category/notification/"
 import Photo from "./component/pages/category/photo/"
 import Statistic from "./component/pages/category/statistic/"
 import TagsPost from "./component/pages/posts/"
-
+import Message from "./component/pages/message/"
 //people
 import UserProfile from "./component/pages/people-profile/"
 import Influence from "./component/pages/people-profile/influence-list/"
@@ -29,6 +29,7 @@ ReactDOM.render(
       <Route path="/profile" component={Profile} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/message" component={Message} />
       <Route path="/people" component={People} />
       <Route path="/setting" component={Setting} />
       <Route path="/notification" component={Notifications} />
