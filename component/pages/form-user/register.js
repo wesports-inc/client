@@ -85,7 +85,13 @@ export default class Register extends Component {
         last_name: this.state.last_name,
         password: this.state.password
       }
-    }).then(result => this.setState({ warning: result.data }));
+    }).then(result =>
+      this.setState({
+        warning: result.data,
+        isLogin: result.data.auth,
+        token: result.data.token
+      })
+    );
   }
 
   render() {
@@ -98,102 +104,102 @@ export default class Register extends Component {
     };
     return (
       <div>
-      <Container>
-      <Divider hidden />
-      {warning == 1 ? (
+        <Container>
+          <Divider hidden />
+          {warning == 1 ? (
             <Message negative>
               <center>Username/Email Has Been Used !</center>
             </Message>
           ) : null}
-        <Grid
-          textAlign="center"
-          style={{ height: "100%" }}
-          columns={1}
-          verticalAlign="middle"
-        >
-          <Grid.Column style={{ maxWidth: 450 }}>
-            <Divider hidden />
-            <Header as="h3">
-              <Icon name="file alternate outline" size="large" />
-              Create your Account
-            </Header>
-            <Form size="large" onSubmit={this.handleSubmit}>
-              <Segment stacked>
-                <Form.Input
-                  fluid
-                  icon="mail"
-                  iconPosition="left"
-                  placeholder="E-Mail Address"
-                  name="email"
-                  type="email"
-                  onChange={this.handleChange}
-                />
-                <Form.Input
-                  fluid
-                  icon="user circle outline"
-                  iconPosition="left"
-                  placeholder="Username"
-                  name="username"
-                  onChange={this.handleChange}
-                />
-                <Form.Input
-                  fluid
-                  icon="pencil alternate"
-                  iconPosition="left"
-                  placeholder="First name"
-                  name="first_name"
-                  onChange={this.handleChange}
-                />
-                <Form.Input
-                  fluid
-                  icon="pencil alternate"
-                  iconPosition="left"
-                  placeholder="Last name"
-                  name="last_name"
-                  onChange={this.handleChange}
-                />
-                <Form.Input
-                  fluid
-                  icon="lock"
-                  iconPosition="left"
-                  placeholder="Password"
-                  type="password"
-                  name="password"
-                  onChange={this.handleChange}
-                />
-                <Button color="blue" fluid size="large">
-                  Daftar
-                </Button>
-              </Segment>
-            </Form>
-            <Message attached="bottom" warning>
+          <Grid
+            textAlign="center"
+            style={{ height: "100%" }}
+            columns={1}
+            verticalAlign="middle"
+          >
+            <Grid.Column style={{ maxWidth: 450 }}>
+              <Divider hidden />
+              <Header as="h3">
+                <Icon name="file alternate outline" size="large" />
+                Create your Account
+              </Header>
+              <Form size="large" onSubmit={this.handleSubmit}>
+                <Segment stacked>
+                  <Form.Input
+                    fluid
+                    icon="mail"
+                    iconPosition="left"
+                    placeholder="E-Mail Address"
+                    name="email"
+                    type="email"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    icon="user circle outline"
+                    iconPosition="left"
+                    placeholder="Username"
+                    name="username"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    icon="pencil alternate"
+                    iconPosition="left"
+                    placeholder="First name"
+                    name="first_name"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    icon="pencil alternate"
+                    iconPosition="left"
+                    placeholder="Last name"
+                    name="last_name"
+                    onChange={this.handleChange}
+                  />
+                  <Form.Input
+                    fluid
+                    icon="lock"
+                    iconPosition="left"
+                    placeholder="Password"
+                    type="password"
+                    name="password"
+                    onChange={this.handleChange}
+                  />
+                  <Button color="blue" fluid size="large">
+                    Daftar
+                  </Button>
+                </Segment>
+              </Form>
+              <Message attached="bottom" warning>
                 <Icon name="help" />
                 Already signed up?&nbsp;<a href="#/login">Login here</a>
                 &nbsp;instead.
               </Message>
-          </Grid.Column>
-          <Grid.Column
-            verticalAlign="middle"
-            style={areaRegisterButtonResponsive}
-          >
-            <Button
-              content="Register with Google"
-              icon="google"
-              color="google plus"
-              size="mini"
-              style={registerButtonResponsive}
-            />
-            <Button
-              content="Register with Facebook"
-              icon="facebook"
-              color="facebook"
-              size="mini"
-              style={registerButtonResponsive}
-            />
-          </Grid.Column>
-        </Grid>
-        <Divider />
-      </Container>
+            </Grid.Column>
+            <Grid.Column
+              verticalAlign="middle"
+              style={areaRegisterButtonResponsive}
+            >
+              <Button
+                content="Register with Google"
+                icon="google"
+                color="google plus"
+                size="mini"
+                style={registerButtonResponsive}
+              />
+              <Button
+                content="Register with Facebook"
+                icon="facebook"
+                color="facebook"
+                size="mini"
+                style={registerButtonResponsive}
+              />
+            </Grid.Column>
+          </Grid>
+          <Divider />
+        </Container>
       </div>
     );
   }
