@@ -12,9 +12,12 @@ export default class MoreCategory extends Component {
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
+    this.OpenDimmer = this.OpenDimmer.bind(this)
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    console.log('data: ', localStorage.getItem('email'))
+  }
 
   componentDidMount() {
     setTimeout(() => {
@@ -26,6 +29,17 @@ export default class MoreCategory extends Component {
     this.setState({
       isCategory: category
     });
+  }
+
+  OpenDimmer() {
+    return (
+    <Dimmer active page onClickOutside={() => this.setState({ dimmers: false })}>
+                <Header as="h2" icon inverted>
+                  <Icon name="studiovinari" />
+                  MASTERPIECE
+                </Header>
+              </Dimmer>
+    )
   }
 
   generateSkeleton() {
@@ -81,7 +95,7 @@ export default class MoreCategory extends Component {
 
     const settingIcon = "../../../../assets/images/icon/setting.png";
     const peopleIcon = "../../../../assets/images/icon/group.png";
-    const photoIcon = "../../../../assets/images/icon/gallery.png";
+    const photoIcon = "../../../../assets/images/icon/reputation.png";
     const statisticIcon = "../../../../assets/images/icon/statistic.png";
     const coloring = {
       color: "#555"
@@ -104,12 +118,7 @@ export default class MoreCategory extends Component {
         ) : (
           <Container>
             {this.state.dimmers ? (
-              <Dimmer active page onClickOutside={() => this.setState({ dimmers: false })}>
-                <Header as="h2" icon inverted>
-                  <Icon name="studiovinari" />
-                  MASTERPIECE
-                </Header>
-              </Dimmer>
+              this.OpenDimmer()
             ) : null}
             <Divider hidden />
             <Segment>
