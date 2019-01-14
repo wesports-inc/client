@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Image, Container, Divider, Grid, GridColumn, Segment, Dimmer, Header, Icon } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
+import axios from "axios";
 
 export default class MoreCategory extends Component {
   constructor(props) {
@@ -8,7 +9,10 @@ export default class MoreCategory extends Component {
     this.state = {
       isCategory: "",
       isLoading: true,
-      dimmers: false
+      dimmers: false,
+      total_influence: null,
+      total_thank: null,
+      email: localStorage.getItem('email').slice(1, -1)
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -16,7 +20,26 @@ export default class MoreCategory extends Component {
   }
 
   componentWillMount() {
-    console.log('data: ', localStorage.getItem('email'))
+    axios({
+      method: "post",
+      url: "/api/profile",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({total_influence: result.data.total_friends, total_thank: result.data.total_thanks}));
+  }
+
+  getReputation() {
+    const {total_influence, total_thank} = this.state
+    const total = (total_influence + total_thank) * 69
+    if(total <= 69){
+      return "You Have No Reputation"
+    }
+    return total + " Point"
   }
 
   componentDidMount() {
@@ -36,7 +59,7 @@ export default class MoreCategory extends Component {
     <Dimmer active page onClickOutside={() => this.setState({ dimmers: false })}>
                 <Header as="h2" icon inverted>
                   <Icon name="studiovinari" />
-                  MASTERPIECE
+                {this.getReputation()}
                 </Header>
               </Dimmer>
     )
