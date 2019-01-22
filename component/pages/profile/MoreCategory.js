@@ -35,11 +35,26 @@ export default class MoreCategory extends Component {
 
   getReputation() {
     const {total_influence, total_thank} = this.state
-    const total = (total_influence + total_thank) * 69
-    if(total <= 69){
-      return "You Have No Reputation"
+    const total = ((total_influence + 1) * (total_thank + 1)) * 10
+    if(total >= 0 && total < 1000 ){
+      return "Baby Born " + total + " point"
+    }else if(total >= 1000 && total < 3500){
+      return "Settle Down " + total + " point"
+    }else if(total >= 3500 && total < 7500){
+      return "Familliar " + total + " point"
+    }else if(total >= 7500 && total < 15000){
+      return "Almost Huge " + total + " point"
+    }else if(total >= 15000 && total < 20000){
+      return "Way Of Glory " + total + " point"
+    }else if(total >= 20000 && total < 50000){
+      return "Geek Explorer " + total + " point"
+    }else if(total >= 50000 && total < 50000){
+      return "Masterpiece " + total + " point"
+    }else if(total > 100000){
+      return "Enough " + total + " point"
+    }else{
+      return "what???" + total + " point"
     }
-    return total + " Point"
   }
 
   componentDidMount() {
