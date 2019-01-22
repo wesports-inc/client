@@ -10,6 +10,7 @@ export default class HeaderProfile extends Component {
       username: sessionStorage.getItem("username"),
       status: "",
       profile: [],
+      rank: null,
       temp_total: null
     };
     this.gotoInfluenceList = this.gotoInfluenceList.bind(this);
@@ -41,6 +42,32 @@ export default class HeaderProfile extends Component {
           },
           data: stat
         }).then(result => this.setState({ status: result.data }));
+      })
+    );
+    axios({
+      method: "post",
+      url: "/api/people/profile/get",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        username: this.state.username // This is the body part
+      }
+    }).then(result =>
+      this.setState({ profile: result.data, temp_total: result.data[0].total_friends }, () => {
+        let stat = {
+          email: this.state.profile[0].email
+        };
+        axios({
+          method: "post",
+          url: "/api/user/rank",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          data: stat
+        }).then(result => this.setState( {rank : result.data[0].rank+1}));
       })
     );
   }
@@ -95,6 +122,7 @@ export default class HeaderProfile extends Component {
 
   render() {
     const { profile, status, temp_total } = this.state;
+    var ranking = this.state.rank ;
     //simple css styling
     const smallFont = {
       fontSize: 10
@@ -144,7 +172,7 @@ export default class HeaderProfile extends Component {
                     <Segment textAlign="center">
                       <Statistic color="yellow">
                         <Statistic.Label>User Rank</Statistic.Label>
-                        <Statistic.Value>49</Statistic.Value>
+                        <Statistic.Value>{ranking}</Statistic.Value>
                       </Statistic>
                     </Segment>
                     <Segment>
