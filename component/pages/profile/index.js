@@ -3,6 +3,7 @@ import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
 import MoreCategory from './MoreCategory';
+import axios from 'axios';
 
 export default class Index extends Component {
 
@@ -16,11 +17,11 @@ export default class Index extends Component {
 
     componentWillMount() {
         const email = JSON.parse(localStorage.getItem('email'))
-        const auth = JSON.parse(localStorage.getItem('auth'))
-        this.setState({
-            email,
-            isLogin: auth
-        })
+            const auth = JSON.parse(localStorage.getItem('auth'))
+            this.setState({
+                email,
+                isLogin: auth
+            }) 
     }
 
     componentDidMount() {

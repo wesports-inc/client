@@ -32,6 +32,7 @@ export default class HeaderProfile extends Component {
   }
 
   componentWillMount() {
+    console.log("EMAIL: ", localStorage.getItem('email'))
     const { hour } = this.state;
     const { total_posts } = this.state;
     const { total_thanks } = this.state;
