@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Image, Container, Divider, Grid, GridColumn, Segment, Dimmer, Header, Icon } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
+import axios from "axios";
 
 export default class MoreCategory extends Component {
   constructor(props) {
@@ -8,7 +9,10 @@ export default class MoreCategory extends Component {
     this.state = {
       isCategory: "",
       isLoading: true,
-      dimmers: false
+      dimmers: false,
+      total_influence: null,
+      total_thank: null,
+      email: localStorage.getItem('email').slice(1, -1)
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -16,7 +20,41 @@ export default class MoreCategory extends Component {
   }
 
   componentWillMount() {
-    console.log('data: ', localStorage.getItem('email'))
+    axios({
+      method: "post",
+      url: "/api/profile",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({total_influence: result.data.total_friends, total_thank: result.data.total_thanks}));
+  }
+
+  getReputation() {
+    const {total_influence, total_thank} = this.state
+    const total = ((total_influence + 1) * (total_thank + 1)) * 10
+    if(total >= 0 && total < 1000 ){
+      return "Baby Born " + total + " point"
+    }else if(total >= 1000 && total < 3500){
+      return "Settle Down " + total + " point"
+    }else if(total >= 3500 && total < 7500){
+      return "Familliar " + total + " point"
+    }else if(total >= 7500 && total < 15000){
+      return "Almost Huge " + total + " point"
+    }else if(total >= 15000 && total < 20000){
+      return "Way Of Glory " + total + " point"
+    }else if(total >= 20000 && total < 50000){
+      return "Geek Explorer " + total + " point"
+    }else if(total >= 50000 && total < 50000){
+      return "Masterpiece " + total + " point"
+    }else if(total > 100000){
+      return "Enough " + total + " point"
+    }else{
+      return "what???" + total + " point"
+    }
   }
 
   componentDidMount() {
@@ -36,7 +74,7 @@ export default class MoreCategory extends Component {
     <Dimmer active page onClickOutside={() => this.setState({ dimmers: false })}>
                 <Header as="h2" icon inverted>
                   <Icon name="studiovinari" />
-                  MASTERPIECE
+                {this.getReputation()}
                 </Header>
               </Dimmer>
     )
