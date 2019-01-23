@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Menu, Icon, Label, Modal, Header, Form, TextArea, Button, Dropdown } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
+import { Textfit } from 'react-textfit';
 
 export default class MenuProfile extends Component {
   constructor(props) {
@@ -174,83 +175,87 @@ export default class MenuProfile extends Component {
       window.location = "#/notification";
     } else if (isMenu === "home") {
       window.location = "#/home";
-    }else if (isMenu === "message") {
+    } else if (isMenu === "message") {
       window.location = "#/message";
     } else {
     }
+    const postSize = {
+      width: "1%",
+      float: "left"
+    };
     return (
       <div>
         {isLoading ? (
           this.generateSkeleton()
         ) : (
-          <Menu
-            fluid
-            widths={5}
-            style={{
-              zIndex: 2,
-              position: "fixed",
-              bottom: 0
-            }}
-          >
-            <Menu.Item name="home" onClick={() => this.handleMenu("home")}>
-              {menu === "home" ? <Icon name="clock" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="clock outline" style={{color: "#555"}} size="large" />}
-            </Menu.Item>
-
-            <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
-              {menu === "message" ? (
-                <Icon name="comment alternate" style={{color:"#ED6A5E"}} size="large" />
-              ) : (
-                <Icon name="comment alternate outline" style={{color: "#555"}} size="large" />
-              )}
-            </Menu.Item>
-
-            <Menu.Item name="post" onClick={this.show("blurring")}>
-              {menu === "post" ? (
-                <Icon name="plus square" style={{color:"#ED6A5E"}} size="large" />
-              ) : (
-                <Icon name="plus square outline" style={{color: "#555"}} size="large" />
-              )}
-            </Menu.Item>
-
-            <Menu.Item
-              name="Notification"
-              onClick={() => this.handleMenu("notification")}
+            <Menu
+              fluid
+              widths={5}
+              style={{
+                zIndex: 2,
+                position: "fixed",
+                bottom: 0
+              }}
             >
-              {datas.length === 0 ? (
-                ""
-              ) : this.state.seen === 0 ? (
-                ""
-              ) : (
-                <Label circular size="tiny" floating color="red" key="red">
-                  {this.state.seen}
-                </Label>
-              )}
-              {menu === "notification" ? <Icon name="bell outline" style={{color:"#ED6A5E"}} size="large" /> : <Icon name="bell outline" style={{color: "#555"}} size="large" />}
-            </Menu.Item>
+              <Menu.Item name="home" onClick={() => this.handleMenu("home")}>
+                {menu === "home" ? <Icon name="clock" style={{ color: "#ED6A5E" }} size="large" /> : <Icon name="clock outline" style={{ color: "#555" }} size="large" />}
+              </Menu.Item>
 
-            <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
-              {menu === "profile" ? (
-                <Icon name="user circle" style={{color:"#ED6A5E"}} size="large" />
-              ) : (
-                <Icon name="user circle outline" style={{color: "#555"}} size="large" />
-              )}
-            </Menu.Item>
-          </Menu>
-        )}
+              <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
+                {menu === "message" ? (
+                  <Icon name="comment alternate" style={{ color: "#ED6A5E" }} size="large" />
+                ) : (
+                    <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />
+                  )}
+              </Menu.Item>
+
+              <Menu.Item name="post" onClick={this.show("blurring")}>
+                {menu === "post" ? (
+                  <Icon name="plus square" style={{ color: "#ED6A5E" }} size="large" />
+                ) : (
+                    <Icon name="plus square outline" style={{ color: "#555" }} size="large" />
+                  )}
+              </Menu.Item>
+
+              <Menu.Item
+                name="Notification"
+                onClick={() => this.handleMenu("notification")}
+              >
+                {datas.length === 0 ? (
+                  ""
+                ) : this.state.seen === 0 ? (
+                  ""
+                ) : (
+                      <Label circular size="tiny" floating color="red" key="red">
+                        {this.state.seen}
+                      </Label>
+                    )}
+                {menu === "notification" ? <Icon name="bell outline" style={{ color: "#ED6A5E" }} size="large" /> : <Icon name="bell outline" style={{ color: "#555" }} size="large" />}
+              </Menu.Item>
+
+              <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
+                {menu === "profile" ? (
+                  <Icon name="user circle" style={{ color: "#ED6A5E" }} size="large" />
+                ) : (
+                    <Icon name="user circle outline" style={{ color: "#555" }} size="large" />
+                  )}
+              </Menu.Item>
+            </Menu>
+          )}
         <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
           <Modal.Content>
             <Modal.Description>
-              <Header as="h5">this will be great for your followers</Header>
+              <Header as="h5">This will be great for your Followers</Header>
               <Form>
                 <TextArea name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
               </Form>
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
-            <span style={{ float: "left" }}>
+            <span style={postSize}>
               {
                 <Dropdown
-                  compact
+                  search
                   onChange={this.setValue.bind(this)}
                   options={options}
                   selection
@@ -259,10 +264,10 @@ export default class MenuProfile extends Component {
               }
             </span>
             <Button
-              style={{background: "#ED6A5A", color: "white", float: "right"}}
+              style={{ background: "#87CEEB", color: "white", float: "right" }}
               icon="checkmark"
               labelPosition="right"
-              content="Yep, Publish!"
+              content="Post"
               onClick={this.publish.bind(this)}
             />
           </Modal.Actions>

@@ -20,10 +20,14 @@ import Message from "./component/pages/message/"
 import UserProfile from "./component/pages/people-profile/"
 import Influence from "./component/pages/people-profile/influence-list/"
 
+//home
+import Home from "./component/pages/home/"
+
 ReactDOM.render(
   <HashRouter>
     <div>
       <Route path="/" component={App} exact />
+      <Route path="/home" component={Home} />
       <Route path="/user/profile" component={UserProfile} />
       <Route path="/user/influence/list" component={Influence} />
       <Route path="/profile" component={Profile} />
