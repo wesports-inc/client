@@ -25,10 +25,6 @@ export default class TagsPost extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-    }, 500);
-
     axios({
       method: "post",
       url: "/api/posting/tag",
@@ -40,7 +36,7 @@ export default class TagsPost extends Component {
         tag: this.state.tag // This is the body part
       }
     }).then(result =>
-      this.setState({ posting: result.data }, console.log(result))
+      this.setState({ posting: result.data, isLoading: false })
     );
   }
 

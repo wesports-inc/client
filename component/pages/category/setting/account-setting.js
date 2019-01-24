@@ -33,7 +33,7 @@ export default class AccountSetting extends Component {
   handleClosePassword = () => this.setState({ modalOpenPassword: false });
 
   handleChange() {
-    console.log("oke");
+
   }
 
   delete() {
@@ -49,7 +49,6 @@ export default class AccountSetting extends Component {
       },
       body: JSON.stringify(data)
     }).then(
-      console.log(data.email, "Telah Menghapus Akun"),
       localStorage.removeItem("email"),
       localStorage.removeItem("auth"),
       localStorage.removeItem("menu"),
@@ -80,7 +79,6 @@ export default class AccountSetting extends Component {
     this.setState({
       [name]: value
     });
-    console.log("data berubah: ", value);
   }
 
   render() {

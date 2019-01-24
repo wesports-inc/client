@@ -37,9 +37,7 @@ export default class Index extends Component {
 
   componentDidMount() {
     if (this.state.datas) {
-      setTimeout(() => {
         this.setState({ isLoading: false });
-      }, 500);
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
@@ -118,8 +116,7 @@ export default class Index extends Component {
   }
 
   render() {
-    const { datas } = this.state;
-    const { isLoading } = this.state;
+    const { datas, isLoading } = this.state;
     return (
       <div style={{ marginBottom: 45 }}>
         <HeaderNotification />

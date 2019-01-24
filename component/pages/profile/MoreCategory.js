@@ -58,9 +58,9 @@ export default class MoreCategory extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    if(this.state.email){
       this.setState({ isLoading: false });
-    }, 500);
+    }
   }
 
   handleMenu(category) {

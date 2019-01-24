@@ -34,10 +34,6 @@ export default class MyPost extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-    }, 500);
-
     axios({
       method: "post",
       url: "/api/posting/profile",
@@ -48,7 +44,7 @@ export default class MyPost extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ posting: result.data }));
+    }).then(result => this.setState({ posting: result.data, isLoading: false }));
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -151,8 +147,8 @@ export default class MyPost extends Component {
   }
 
   render() {
-    const { posting } = this.state;
-    const { isLoading } = this.state;
+    
+    const { posting, isLoading } = this.state;
     const gridMargin = {
       marginBottom: "-70px"
     };

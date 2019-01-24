@@ -72,7 +72,6 @@ export default class ProfileSetting extends Component {
           phone_number: result.data.phone_number,
           gender: result.data.jenis_kelamin
         },
-        console.log(result)
       )
     );
 
@@ -90,23 +89,18 @@ export default class ProfileSetting extends Component {
   }
 
   shouldComponentUpdate(newProps, newState) {
-    console.log("shouldComponentUpdate");
     if (newState) {
-      console.log("as", newState.reload);
       return true;
     } else {
       return false;
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {}
-
   componentDidUpdate(prevProps, prevState) {
     if (this.state.reload == "1") {
       const data = new FormData();
       data.append("avatar", this.state.file, this.state.file.name);
       data.append("email", this.state.email);
-      console.log(data);
 
       axios.post("/api/upload/avatar", data).then(() =>
         axios({
@@ -122,15 +116,10 @@ export default class ProfileSetting extends Component {
         }).then(result =>
           this.setState(
             { avatar: result.data, reload: "0" },
-            console.log(this.state.avatar)
           )
         )
       );
     }
-  }
-
-  componentDidMount() {
-    console.log("reload: ", this.state.reload);
   }
 
   update() {
@@ -167,16 +156,13 @@ export default class ProfileSetting extends Component {
     this.setState({
       [name]: value
     });
-    console.log("data berubah: ", value);
   }
 
   setValue(e, data) {
     this.setState({ value: data.value });
-    console.log("tags :", data.value);
   }
   setGender(e, data) {
     this.setState({ gender: data.value });
-    console.log("Gender :", data.value);
   }
 
   handleTags = event => {
