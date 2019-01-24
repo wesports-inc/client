@@ -30,9 +30,7 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
-        setTimeout(() => {
-            this.setState({isLoading: false})
-        }, 500);
+        this.setState({isLoading: false})
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -47,15 +45,9 @@ export default class Index extends Component {
         nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        
-    }
-
     generateSkeleton() {
         return <Header textAlign="center"><Skeleton/></Header>
     }
-
-
 
     render () {      
         const {isLoading} = this.state;

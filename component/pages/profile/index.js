@@ -3,7 +3,6 @@ import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
 import MoreCategory from './MoreCategory';
-import axios from 'axios';
 
 export default class Index extends Component {
 
@@ -40,10 +39,6 @@ export default class Index extends Component {
 
     componentWillUpdate(nextProps, nextState) {
         nextState.isLogin === "false" ? window.location = '#/login' : '';
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        
     }
 
     render () {

@@ -56,8 +56,7 @@ export default class Register extends Component {
     this.setState(
       {
         isLogin: localStorage.getItem("auth")
-      },
-      () => console.log("di dalam state islogin: ", this.state.isLogin)
+      }
     );
   }
 
@@ -65,7 +64,7 @@ export default class Register extends Component {
     const { isLogin } = this.state;
     isLogin === "true"
       ? (window.location = "#/profile")
-      : console.log("ternyata tidak true");
+      : null;
   }
 
   shouldComponentUpdate(newProps, newState) {

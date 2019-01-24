@@ -32,10 +32,7 @@ export default class HeaderProfile extends Component {
   }
 
   componentWillMount() {
-    console.log("EMAIL: ", localStorage.getItem('email'))
-    const { hour } = this.state;
-    const { total_posts } = this.state;
-    const { total_thanks } = this.state;
+    const { hour, total_posts, total_thanks } = this.state;
 
     axios({
       method: "post",
@@ -114,9 +111,9 @@ export default class HeaderProfile extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    if(this.state.email){
       this.setState({ isLoading: false });
-    }, 500);
+    }
   }
 
   post() {
@@ -152,7 +149,6 @@ export default class HeaderProfile extends Component {
   }
 
   render() {
-    console.log("render :" + this.state.foto);
     const {
       username,
       first_name,
@@ -163,10 +159,9 @@ export default class HeaderProfile extends Component {
       total_thanks,
       join_date,
       followed_topic,
-      background
+      background,
+      isLoading
     } = this.state;
-
-    const { isLoading } = this.state;
 
     //set user data caching
     localStorage.setItem("username", username);

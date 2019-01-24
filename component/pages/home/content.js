@@ -21,10 +21,6 @@ export default class Content extends Component {
         }
     
       componentDidMount(){
-        setTimeout(() => {
-          this.setState({isLoading: false})
-        }, 500);
-    
         const email = localStorage.getItem('email').slice(1, -1)
         this.setState({
           email
@@ -40,7 +36,7 @@ export default class Content extends Component {
             email: this.state.email, // This is the body part
           }
           
-        }).then(result => this.setState({tags: result.data.tags})))
+        }).then(result => this.setState({tags: result.data.tags, isLoading: false})))
     }
 
     handleChange() {

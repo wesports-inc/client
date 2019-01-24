@@ -38,7 +38,7 @@ export default class Register extends Component {
 
   componentDidMount() {
     const { isLogin } = this.state;
-    isLogin === "true" ? (window.location = "#/profile") : "";
+    isLogin === "true" ? (window.location = "#/profile") : null;
   }
 
   shouldComponentUpdate(newProps, newState) {
