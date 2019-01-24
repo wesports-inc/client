@@ -36,10 +36,6 @@ export default class MyPost extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-    }, 500);
-
     axios({
       method: "post",
       url: "/api/posting/people",

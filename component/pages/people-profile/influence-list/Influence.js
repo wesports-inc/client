@@ -52,7 +52,6 @@ export default class Influence extends Component {
     );
   }
 
-  componentDidUpdate() {}
   render() {
     const { datas } = this.state;
     return datas.length != 0 ? (

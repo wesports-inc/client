@@ -56,8 +56,7 @@ export default class Register extends Component {
     this.setState(
       {
         isLogin: localStorage.getItem("auth")
-      },
-      () => console.log("di dalam state islogin: ", this.state.isLogin)
+      }
     );
   }
 
@@ -65,7 +64,7 @@ export default class Register extends Component {
     const { isLogin } = this.state;
     isLogin === "true"
       ? (window.location = "#/profile")
-      : console.log("ternyata tidak true");
+      : null;
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -122,9 +121,6 @@ export default class Register extends Component {
 
   render() {
     const { warning } = this.state;
-    const areaRegisterButtonResponsive = {
-      padding: "1%"
-    };
     return (
       <div>
         <Container>
@@ -143,10 +139,10 @@ export default class Register extends Component {
             <Grid.Column style={{ maxWidth: 450 }}>
               <Divider hidden />
               <Divider hidden />
-              <Header as="h3">
-                <Icon name="user circle" size="large" />
-                Login Account
+              <Header as="h1" color="orange">
+                <i>enjoy your Way!</i>
               </Header>
+              <Divider hidden/>
               <Form size="large" onSubmit={this.handleSubmit}>
                 <Segment stacked>
                   <Form.Input
@@ -173,29 +169,21 @@ export default class Register extends Component {
                 </Segment>
               </Form>
             </Grid.Column>
-            <Grid.Column
-              verticalAlign="middle"
-              style={areaRegisterButtonResponsive}
-            >
-              <Button
-                onClick={this.googleSignin.bind(this)}
-                content="Sign in with Google"
-                color="google plus"
-                icon="google"
-                size="mini"
-              />
-              <Button
-                content="Sign in with Facebook"
-                icon="facebook"
-                color="facebook"
-                size="mini"
-              />
+            <Grid.Column>
+              <Message>                
+                New to Way ? <a href="#/register"><i>Sign Up Here !</i></a>
+                <Divider horizontal>Or</Divider>
+                <Button
+                  onClick={this.googleSignin.bind(this)}
+                  content="Sign in with Google"
+                  color="google plus"
+                  icon="google"
+                  size="small"
+                  fluid
+                />
+              </Message>
             </Grid.Column>
           </Grid>
-          <Divider />
-          <Message>
-            New to Sleeperbox ? <a href="#/register">Sign Up Here ! </a>
-          </Message>
         </Container>
       </div>
     );

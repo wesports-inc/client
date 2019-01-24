@@ -48,7 +48,7 @@ export default class MenuProfile extends Component {
       data: {
         email: this.state.email // This is the body part
       }
-    }).then(result => this.setState({ seen: result.data }, () => console.log("seen: ", this.state.seen)));
+    }).then(result => this.setState({ seen: result.data }));
 
     axios({
       method: "get",
@@ -61,9 +61,9 @@ export default class MenuProfile extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    if(this.state.email){
       this.setState({ isLoading: false });
-    }, 400);
+    }
   }
 
   handleMenu(category) {
@@ -83,7 +83,7 @@ export default class MenuProfile extends Component {
             data: {
               email: this.state.email
             }
-          }).then(console.log("seen di ubah jadi 1"));
+          })
         }
         localStorage.setItem("menu", this.state.isMenu);
       }
@@ -166,8 +166,7 @@ export default class MenuProfile extends Component {
   }
 
   render() {
-    const { open, dimmer } = this.state;
-    const { isLoading, isMenu, menu, datas, options, value } = this.state;
+    const { open, dimmer, isLoading, isMenu, menu, datas, options, value } = this.state;
     if (isMenu === "profile") {
       window.location = "#/profile";
     } else if (isMenu === "notification") {

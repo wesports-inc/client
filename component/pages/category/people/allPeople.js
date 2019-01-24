@@ -38,9 +38,7 @@ export default class allPeople extends Component {
 
     componentDidMount() {
         if(this.state.datas){
-            setTimeout(() => {
-                this.setState({isLoading: false})
-            }, 500);
+            this.setState({isLoading: false})
         }
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
@@ -52,9 +50,6 @@ export default class allPeople extends Component {
         }else{
             return false;
         }
-    }
-
-    componentWillUpdate(nextProps, nextState) {
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -122,8 +117,7 @@ export default class allPeople extends Component {
     close = () => this.setState({ open: false, email_friend: '' }, () => sessionStorage.removeItem('username'))
     
     render() {
-        const { open, dimmer } = this.state
-        const { datas, isLoading, friendship } = this.state
+        const { datas, isLoading, friendship, open, dimmer } = this.state
         return (
             <div style={{marginBottom: 45}}>
             {isLoading ? this.generateSkeleton() :
