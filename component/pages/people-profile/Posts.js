@@ -9,7 +9,8 @@ import {
   List,
   Dimmer,
   Header,
-  Image
+  Image,
+  Popup
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -20,13 +21,16 @@ export default class MyPost extends Component {
     this.state = {
       isLoading: true,
       username: sessionStorage.getItem("username"),
+      email: sessionStorage.getItem("email"),
       posting: [],
       tgl: new Date().toDateString(),
       day: new Date().getDay(),
       jam: new Date().getHours(),
       menit: new Date().getMinutes(),
       menitPosting: [],
-      waktu: []
+      waktu: [],
+      thanks: 0,
+      kode: 0
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
   }
@@ -46,7 +50,47 @@ export default class MyPost extends Component {
       data: {
         username: this.state.username // This is the body part
       }
-    }).then(result => this.setState({ posting: result.data }));
+    }).then(result => this.setState({ posting: result.data }))
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    if (newState) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.thanks == 1) {
+      axios({
+        method: "post",
+        url: "/api/posting/people",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          username: this.state.username // This is the body part
+        }
+      }).then(result => this.setState({ posting: result.data }));
+    }
+  }
+
+  givethanks(value) {
+    axios({
+      method: "put",
+      url: "/api/posting/thanks/post/user",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        _id: value,
+        username : this.state.username // This is the body part
+      }
+    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
   }
 
   generateSkeleton() {
@@ -111,9 +155,9 @@ export default class MyPost extends Component {
 
   render() {
     const { posting } = this.state;
+    const { thankpost } = this.state;
     const nopost = posting.length;
     const { isLoading } = this.state;
-    let a;
     const gridMargin = {
       marginBottom: "-70px"
     };
@@ -212,7 +256,14 @@ export default class MyPost extends Component {
                               <b>{data.content}</b>
                               <br />
                               <br />
-                              <Icon name="handshake outline" onClick={() => this.givethanks(data._id)} />
+                              <Popup 
+                                trigger={
+                                <Icon
+                                  name="handshake outline"
+                                  onClick={() => this.givethanks(data._id)}
+                                />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
+                                    : "Anda Telah UnThanks"}
+                                </Popup>
                               <small>
                                 <i>{data.thanks} Thanks </i>
                               </small>

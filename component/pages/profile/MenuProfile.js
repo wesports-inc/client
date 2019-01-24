@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Menu, Icon, Label, Modal, Header, Form, TextArea, Button, Dropdown } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
-import { Textfit } from 'react-textfit';
 
 export default class MenuProfile extends Component {
   constructor(props) {
