@@ -182,20 +182,6 @@ export default class Register extends Component {
               verticalAlign="middle"
               style={areaRegisterButtonResponsive}
             >
-              <Button
-                content="Register with Google"
-                icon="google"
-                color="google plus"
-                size="mini"
-                style={registerButtonResponsive}
-              />
-              <Button
-                content="Register with Facebook"
-                icon="facebook"
-                color="facebook"
-                size="mini"
-                style={registerButtonResponsive}
-              />
             </Grid.Column>
           </Grid>
           <Divider />

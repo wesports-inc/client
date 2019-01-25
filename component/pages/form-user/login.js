@@ -11,6 +11,7 @@ import {
   Message
 } from "semantic-ui-react";
 import axios from "axios";
+import queryString from "query-string";
 
 export default class Register extends Component {
   constructor(props) {
@@ -28,6 +29,30 @@ export default class Register extends Component {
 
   // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
+    var query = queryString.parse(this.props.location.search);
+    if (query.token) {
+      axios.get('https://www.googleapis.com/plus/v1/people/me?access_token=' + query.token)
+      .then(response => {
+        localStorage.setItem('email', JSON.stringify(response.data.emails[0].value))
+        localStorage.setItem('auth', true)
+        axios({
+          method: "POST",
+          url: "/api/register",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+          },
+          data: {
+            email: response.data.emails[0].value,
+            username: response.data.name.givenName,
+            first_name: response.data.name.givenName,
+            last_name: response.data.name.familyName,
+            password: "123"
+          }
+        }).then(window.location = "/#/profile");
+      }
+      )
+    }
     this.setState(
       {
         isLogin: localStorage.getItem("auth")
@@ -91,6 +116,10 @@ export default class Register extends Component {
     );
   }
 
+  googleSignin() {
+    window.location = "/api/auth/google"
+  }
+
   render() {
     const { warning } = this.state;
     const areaRegisterButtonResponsive = {
@@ -149,6 +178,7 @@ export default class Register extends Component {
               style={areaRegisterButtonResponsive}
             >
               <Button
+                onClick={this.googleSignin.bind(this)}
                 content="Sign in with Google"
                 color="google plus"
                 icon="google"
