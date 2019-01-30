@@ -8,7 +8,11 @@ import {
   GridColumn,
   List,
   Image,
-  Popup
+  Popup,
+  Modal,
+  Button,
+  Header,
+  Label
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -27,11 +31,17 @@ export default class MyPost extends Component {
       menitPosting: [],
       waktu: [],
       thanks: 0,
-      kode: 0
+      kode: 0,
+      modal: false
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
+    this.delete = this.delete.bind(this);
   }
+
+  handleOpen = () => this.setState({ modal: true });
+
+  handleClose = () => this.setState({ modal: false });
 
   componentWillMount() {}
 
@@ -87,6 +97,21 @@ export default class MyPost extends Component {
         _id: value // This is the body part
       }
     }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
+  }
+
+  delete(value) {
+    axios({
+      method: "delete",
+      url: "/api/posting/delete",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        _id: value,
+      }
+    }).then(this.setState({modal: false, thanks: 1,}));
   }
 
   generateSkeleton() {
@@ -233,13 +258,31 @@ export default class MyPost extends Component {
                               <small>
                                 <i style={textMargin}>{data.tags}</i>
                               </small>
+                              <Modal
+                                trigger={<Label onClick={this.handleOpen} style={{color: "Red", border: "1", background: "white", float: "right"}}><i>X</i></Label>}
+                                open={this.state.modal}
+                                onClose={this.handleClose}
+                                basic
+                              >
+                                <Header icon="trash" content="Delete Posting!" />
+                                <Modal.Content>
+                                  <p>Are You Sure?</p>
+                                </Modal.Content>
+                                <Modal.Actions>
+                                <Button color="red" onClick={this.handleClose} inverted>
+                                  <Icon name="remove" /> No
+                                </Button>
+                                <Button color="yellow" inverted onClick={() => this.delete(data._id)}>
+                                  <Icon name="checkmark" /> Yes
+                                </Button>
+                                </Modal.Actions>
+                              </Modal>
                             </List.Header>
                             <br />
                             <List.Description>
                               <b>{data.content}</b>
                               <br />
                               <br />
-                              {console.log(this.state.kode)}
                                 <Popup trigger={
                                 <Icon
                                   name="handshake outline"
