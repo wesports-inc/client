@@ -245,7 +245,7 @@ export default class MenuProfile extends Component {
             <Modal.Description>
               <Header as="h5">This will be great for your Followers</Header>
               <Form>
-                <TextArea name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
+                <TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
               </Form>
             </Modal.Description>
           </Modal.Content>
