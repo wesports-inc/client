@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Icon, Label, Modal, Header, Form, TextArea, Button, Dropdown } from "semantic-ui-react";
+import { Menu, Icon, Label, Modal, Header, Form, TextArea, Button, Dropdown, Message } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
 
@@ -148,6 +148,11 @@ export default class MenuProfile extends Component {
       content: this.state.content,
       tags: this.state.value
     };
+    if(data.tags == "null"){
+      console.log('user didnt choose any tag yet')
+    }else if(data.content == ""){
+      console.log('user didnt write any post yet')
+    }else{
     fetch("/api/posting", {
       method: "POST",
       headers: {
@@ -156,6 +161,7 @@ export default class MenuProfile extends Component {
       },
       body: JSON.stringify(data)
     }).then(res => res.json()).then(() => window.location.reload());
+    }
   }
 
   show = dimmer => () => this.setState({ dimmer, open: true });
