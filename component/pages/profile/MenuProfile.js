@@ -268,7 +268,7 @@ export default class MenuProfile extends Component {
               }
             </span>
             <Button
-              style={{ background: "#87CEEB", color: "white", float: "right" }}
+              secondary
               icon="checkmark"
               labelPosition="right"
               content="Post"
