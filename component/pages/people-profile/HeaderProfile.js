@@ -140,7 +140,7 @@ export default class HeaderProfile extends Component {
                   <Grid.Column>
                     <Segment textAlign="center">
                       <Image
-                        src="https://react.semantic-ui.com/images/wireframe/white-image.png"
+                        src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto}
                         size="medium"
                         circular
                         bordered
