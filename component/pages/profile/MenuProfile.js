@@ -257,7 +257,7 @@ export default class MenuProfile extends Component {
               <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini"/></i> : null}
               <Header as="h5">This will be great for your Followers</Header>
               <Form>
-               <TextArea name="content" onChange={this.handlePost} autoHeight placeholder="What happen..."/>
+                <TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
               </Form>
             </Modal.Description>
           </Modal.Content>
@@ -274,7 +274,7 @@ export default class MenuProfile extends Component {
               }
             </span>
             <Button
-              style={{ background: "#87CEEB", color: "white", float: "right" }}
+              secondary
               icon="checkmark"
               labelPosition="right"
               content="Post"
