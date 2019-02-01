@@ -4,6 +4,8 @@ import {
   Form,
   Container,
   Grid,
+  Label,
+  Flag,
   Divider,
   Header,
   Icon,
@@ -185,6 +187,9 @@ export default class Register extends Component {
             </Grid.Column>
           </Grid>
           <Divider />
+          <Segment textAlign="center">
+            <i>app version 1.5</i>
+          </Segment>
         </Container>
       </div>
     );
