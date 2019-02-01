@@ -17,7 +17,9 @@ export default class MenuProfile extends Component {
       tags: "",
       options: [],
       value: "null",
-      seen: null
+      seen: null,
+      tag: 0,
+      post: 0
     };
     this.handleMenu = this.handleMenu.bind(this);
     this.generateSkeleton = this.generateSkeleton.bind(this);
@@ -149,9 +151,9 @@ export default class MenuProfile extends Component {
       tags: this.state.value
     };
     if(data.tags == "null"){
-      console.log('user didnt choose any tag yet')
+      this.setState({tag : 1, post : 0})
     }else if(data.content == ""){
-      console.log('user didnt write any post yet')
+      this.setState({tag : 0, post : 1})
     }else{
     fetch("/api/posting", {
       method: "POST",
@@ -249,6 +251,10 @@ export default class MenuProfile extends Component {
         <Modal dimmer={dimmer} size="large" open={open} onClose={this.close}>
           <Modal.Content>
             <Modal.Description>
+              {this.state.tag == 1 ? 
+              <i><Message error icon="warning circle" header='Anda Belum Memilih Tag' size="mini"/></i>
+              : this.state.post == 1 ?
+              <i><Message icon="warning circle" error header='Konten Tidak Boleh Kosong' size="mini"/></i> : null}
               <Header as="h5">This will be great for your Followers</Header>
               <Form>
                 <TextArea maxLength={250} name="content" onChange={this.handlePost} autoHeight placeholder="What happen..." />
