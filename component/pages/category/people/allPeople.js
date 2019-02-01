@@ -14,6 +14,7 @@ export default class allPeople extends Component {
             isLoading: true,
             email_friend: '',
             open: false,
+            fotos: ''
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
     }
@@ -73,7 +74,17 @@ export default class allPeople extends Component {
     }
 
     handleClick(value) {
-        this.setState({email_friend: value, dimmer: 'blurring', open: true})
+        this.setState({email_friend: value, dimmer: 'blurring', open: true}, () => axios({
+            method: 'post',
+            url: '/api/user/avatar',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+                email: value
+            }, // This is the body part
+          }).then(result => this.setState({fotos: result.data}, () => console.log(this.state.fotos))))
     }
 
     generateSkeleton() {
@@ -117,7 +128,7 @@ export default class allPeople extends Component {
     close = () => this.setState({ open: false, email_friend: '' }, () => sessionStorage.removeItem('username'))
     
     render() {
-        const { datas, isLoading, friendship, open, dimmer } = this.state
+        const { datas, isLoading, friendship, open, dimmer, fotos } = this.state
         return (
             <div style={{marginBottom: 45}}>
             {isLoading ? this.generateSkeleton() :
@@ -128,7 +139,7 @@ export default class allPeople extends Component {
                     <Grid.Column>
                         <List verticalAlign="middle" onClick={() => {this.handleClick(data.email)}}>
                             <List.Item>
-                                <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
+                                <Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.fotos} />
                                 <List.Content>
                                     <List.Header style={{color: "#f2f2f2"}}>{ data.first_name } {data.last_name}</List.Header>
                                     <p style={{color: "#f2f2f2"}}>@{ data.username }</p>
@@ -141,7 +152,7 @@ export default class allPeople extends Component {
                 <Modal dimmer={dimmer} open={open} onClose={this.close} closeIcon>
             <Modal.Header>{friendship.first_name} {friendship.last_name}</Modal.Header>
             <Modal.Content image>
-                <Image wrapped size='medium' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' />
+                <Image wrapped size='medium' src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} />
                 <Modal.Description>
                 <Header>{friendship.username}</Header>
                 <span>
