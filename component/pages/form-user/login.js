@@ -6,7 +6,8 @@ import {
   Grid,
   Divider,
   Header,
-  Icon,
+  Label,
+  Flag,
   Segment,
   Message
 } from "semantic-ui-react";
@@ -184,6 +185,9 @@ export default class Register extends Component {
               </Message>
             </Grid.Column>
           </Grid>
+          <Segment textAlign="center">
+            <i>app version 1.5</i>
+          </Segment>
         </Container>
       </div>
     );
