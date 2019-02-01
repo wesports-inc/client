@@ -14,7 +14,8 @@ export default class allPeople extends Component {
             isLoading: true,
             email_friend: '',
             open: false,
-            fotos: ''
+            fotos: '',
+            allfoto: []
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
     }
@@ -30,8 +31,7 @@ export default class allPeople extends Component {
             data: {
               email: this.state.email, // This is the body part
             }
-          }).then(result => this.setState({datas: result.data}));
-
+          }).then(result => this.setState({datas: result.data.user, allfoto: result.data.foto}));
         this.setState({
             isLogin: localStorage.getItem('auth')
         })
@@ -84,7 +84,7 @@ export default class allPeople extends Component {
             data: {
                 email: value
             }, // This is the body part
-          }).then(result => this.setState({fotos: result.data}, () => console.log(this.state.fotos))))
+          }).then(result => this.setState({fotos: result.data})))
     }
 
     generateSkeleton() {
@@ -120,6 +120,13 @@ export default class allPeople extends Component {
         </div>
     }
 
+    loop() {
+        const test = []
+        const {allfoto} = this.state
+        allfoto.map(fotox => test.push(fotox.avatar))
+        return test
+    }
+
     gotoprofile(username) {
         sessionStorage.setItem('username', username)
         window.location='#/user/profile';
@@ -128,7 +135,7 @@ export default class allPeople extends Component {
     close = () => this.setState({ open: false, email_friend: '' }, () => sessionStorage.removeItem('username'))
     
     render() {
-        const { datas, isLoading, friendship, open, dimmer, fotos } = this.state
+        const { datas, isLoading, friendship, open, dimmer, fotos, allfoto } = this.state
         return (
             <div style={{marginBottom: 45}}>
             {isLoading ? this.generateSkeleton() :
@@ -139,7 +146,7 @@ export default class allPeople extends Component {
                     <Grid.Column>
                         <List verticalAlign="middle" onClick={() => {this.handleClick(data.email)}}>
                             <List.Item>
-                                <Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.fotos} />
+                                <Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto} />
                                 <List.Content>
                                     <List.Header style={{color: "#f2f2f2"}}>{ data.first_name } {data.last_name}</List.Header>
                                     <p style={{color: "#f2f2f2"}}>@{ data.username }</p>
