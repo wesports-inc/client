@@ -25,6 +25,10 @@ export default class ProfileSetting extends Component {
       last_name: "",
       phone_number: "",
       gender: "",
+      first_name2: "",
+      last_name2: "",
+      phone_number2: "",
+      gender2: "",
       avatar: "",
       file: null,
       reload: "0",
@@ -32,7 +36,8 @@ export default class ProfileSetting extends Component {
       value: [],
       tags: [],
       option_gender: [],
-      modalNotification: false
+      modalNotification: false,
+      kode: 0
     };
     this.handleTags = this.handleTags.bind(this);
   }
@@ -70,7 +75,11 @@ export default class ProfileSetting extends Component {
           first_name: result.data.first_name,
           last_name: result.data.last_name,
           phone_number: result.data.phone_number,
-          gender: result.data.jenis_kelamin
+          gender: result.data.jenis_kelamin,
+          first_name2: result.data.first_name,
+          last_name2: result.data.last_name,
+          phone_number2: result.data.phone_number,
+          gender2: result.data.jenis_kelamin,
         },
       )
     );
@@ -132,14 +141,23 @@ export default class ProfileSetting extends Component {
       gender: this.state.gender,
       tags: this.state.value
     };
-    fetch("/api/user/tags", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(data)
-    }).then(window.location.reload());
+    if(this.state.kode == 1){
+      this.setState({kode: 0})
+    }else{
+      this.setState({kode: 0})
+    }
+    if(this.state.first_name != this.state.first_name2 || this.state.last_name != this.state.last_name2 || this.state.phone_number != this.state.phone_number2 || this.state.gender != this.state.gender2){
+      fetch("/api/user/tags", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(data)
+      }).then(window.location.reload());
+    }else{
+      this.setState({kode: 1})
+  }
   }
 
   fileHandler = event => {
@@ -298,7 +316,7 @@ export default class ProfileSetting extends Component {
               basic
               size="small"
               >
-              <Header style={{ textAlign: "center" }} content="Account Updated !" />
+              {this.state.kode === 1 ? <Header style={{ textAlign: "center" }} content="No Updated !" /> : <Header style={{ textAlign: "center" }} content="Account Updated !" />}
             </Modal>
             </Form.Field>
           </Form>
