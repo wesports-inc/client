@@ -2,7 +2,14 @@ import React, { Component } from "react"
 import { Container, Segment, Icon, List, Grid, GridColumn, Divider} from 'semantic-ui-react'
 import Skeleton from 'react-skeleton-loader';
 import axios from 'axios'
-import MyPost from "../profile/MyPost";
+import PostOther from "./PostingOther";
+import PostQuotes from "./PostingQuotes";
+import PostRiddles from "./PostingRiddles";
+import PostComputerGadget from "./PostingComputerGadget";
+import PostFamilyLove from "./PostingFamilyLove";
+import PostFactRumour from "./PostingFactRumour";
+import PostBussinessWork from "./PostingBussinessWork";
+import PostFashionLifestyle from "./PostingFashionLifestyle";
 
 export default class Content extends Component {
     constructor(props) {
@@ -13,8 +20,9 @@ export default class Content extends Component {
             time: new Date(),
             hour: new Date().getHours(),
             minute: new Date().getMinutes(),
-            tags: ['?'],
+            tags: [''],
             nilai: [],
+            kode: 0
           };
           this.view = this.view.bind(this)
           this.generateSkeleton = this.generateSkeleton.bind(this)
@@ -34,10 +42,23 @@ export default class Content extends Component {
           },
           data: {
             email: this.state.email, // This is the body part
-          }
-          
-        }).then(result => this.setState({tags: result.data.tags, isLoading: false})))
-    }
+          } 
+        }).then(result => this.setState({tags: result.data.tags, isLoading: false})));
+      }
+
+      shouldComponentUpdate(newProps, newState) {
+        if (newState) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    
+      componentDidUpdate(prevProps, prevState) {
+        if (this.state.kode == 1) {
+          this.setState({kode:0})
+        }
+      }
 
     handleChange() {
         console.log('oke')
@@ -46,7 +67,6 @@ export default class Content extends Component {
         this.setState({
             nilai: data.isi
         })
-        console.log('data : ', nilai)
       }
     generateSkeleton() {
         return (
@@ -100,18 +120,16 @@ export default class Content extends Component {
         <div>      
             {newArray.map(data => { 
                 isi.push(data)
-               console.log(isi)
         return (    
             <Grid style={{display: 'block', margin: '0px'}} columns={1} key={data}>
             <Segment.Group >
                 <Segment>
-                    <h3> {judul.next().value}
-                    <Icon style={{float: 'right'}} onClick={this.view.bind(this)} name="angle right"/>
+                    <h3> { judul.next().value }
+                    <Icon  onClick={this.view.bind(this)} name="angle right"/>
                     </h3>
                 </Segment>
                 <Segment>
-                    <List.Item style={{float: 'block'}}><MyPost/></List.Item>
-
+                    <List.Item style={{float: 'block'}}>{ data === "other" ? <PostOther/> : data === "quotes" ? <PostQuotes/> : data === "riddles" ? <PostRiddles/> : data === "computer-gadget" ? <PostComputerGadget/> : data === "family-love" ? <PostFamilyLove/> :data === "business-work" ? <PostBussinessWork/> :data === "fact-rumour" ? <PostFactRumour/> :data === "fashion-lifestyle" ? <PostFashionLifestyle/> : null }</List.Item>
                 </Segment>
             </Segment.Group>
             </Grid>
