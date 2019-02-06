@@ -40,8 +40,6 @@ export default class MyPost extends Component {
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
     this.delete = this.delete.bind(this);
-    this.discuss = this.discuss.bind(this)
-    this.discussClose = this.discussClose.bind(this)
   }
 
   handleOpen = () => this.setState({ modal: true });
@@ -179,11 +177,8 @@ export default class MyPost extends Component {
     );
   }
 
-  discuss() {
-    this.setState({modalDiscuss: true})
-  }
-  discussClose() {
-    this.setState({modalDiscuss: false})
+  discuss(value) {
+    window.location = '#/posts/'+ value + '' 
   }
 
   render() {
@@ -308,32 +303,7 @@ export default class MyPost extends Component {
                               </small>
                               <br/>
                               <br/>
-                              <Modal size="mini" trigger={<a onClick={this.discuss}>Discuss</a>} open={this.state.modalDiscuss} onClose={this.discussClose}>
-                                <Modal.Header>DISCUSSION <small onClick={this.discussClose} style={{float: "right"}}>x</small></Modal.Header>
-                                  <Modal.Content image>
-                                    <Comment.Group threaded>
-                                      <Comment>
-                                        <Comment.Avatar as='a' src='/images/avatar/small/joe.jpg' />
-                                        <Comment.Content>
-                                          <Comment.Author as='a'>Nama Lengkap</Comment.Author>
-                                          <Comment.Metadata>
-                                            <span>@username</span>
-                                          </Comment.Metadata>
-                                          <Comment.Text>Deskripsi komentar</Comment.Text>
-                                          <Comment.Actions>
-                                          </Comment.Actions>
-                                        </Comment.Content>
-                                      </Comment>
-                                    </Comment.Group>
-                                  </Modal.Content>
-                                  <Modal.Actions>
-                                  <Form reply>
-                                    <Form.TextArea />
-                                    <Button content='Comment' labelPosition='left' icon='edit' primary />
-                                  </Form>
-                                </Modal.Actions>
-                                <br/>
-                              </Modal>
+                              <a onClick= {() => this.discuss(data._id)}>Discuss</a>
                               <small style={{ float: "right" }}>
                                 <i>
                                   {data.jam} {data.menit} {data.date}
