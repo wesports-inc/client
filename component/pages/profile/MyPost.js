@@ -178,7 +178,7 @@ export default class MyPost extends Component {
   }
 
   discuss(value) {
-    window.location = '#/posts/'+ value + '' 
+    window.location = '#/posts?id='+ value + '' 
   }
 
   render() {
@@ -303,7 +303,7 @@ export default class MyPost extends Component {
                               </small>
                               <br/>
                               <br/>
-                              <a onClick= {() => this.discuss(data._id)}>Discuss</a>
+                              <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
                               <small style={{ float: "right" }}>
                                 <i>
                                   {data.jam} {data.menit} {data.date}
