@@ -175,8 +175,7 @@ export default class Register extends Component {
                 </Segment>
               </Form>
               <Message attached="bottom" warning>
-                <Icon name="help" />
-                Already signed up?&nbsp;<a href="#/login">Login here</a>
+                Already signed up?&nbsp;<a href="#/login">Login Here</a>
                 &nbsp;instead.
               </Message>
             </Grid.Column>
