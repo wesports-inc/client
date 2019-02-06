@@ -7,12 +7,10 @@ import {
   Icon,
   GridColumn,
   List,
-  Image,
-  Popup,
-  Modal,
-  Button,
+  Dimmer,
   Header,
-  Label
+  Image,
+  Popup
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -22,7 +20,8 @@ export default class MyPost extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      email: localStorage.getItem("email").slice(1, -1),
+      username: sessionStorage.getItem("username"),
+      email: sessionStorage.getItem("email"),
       posting: [],
       tgl: new Date().toDateString(),
       day: new Date().getDay(),
@@ -31,32 +30,23 @@ export default class MyPost extends Component {
       menitPosting: [],
       waktu: [],
       thanks: 0,
-      kode: 0,
-      modal: false
+      kode: 0
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
-    this.givethanks = this.givethanks.bind(this);
-    this.delete = this.delete.bind(this);
   }
-
-  handleOpen = () => this.setState({ modal: true });
-
-  handleClose = () => this.setState({ modal: false });
-
-  componentWillMount() {}
 
   componentDidMount() {
     axios({
       method: "post",
-      url: "/api/posting/profile",
+      url: "/api/posting/people",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: this.state.email // This is the body part
+        username: this.state.username // This is the body part
       }
-    }).then(result => this.setState({ posting: result.data, isLoading: false }));
+    }).then(result => this.setState({ posting: result.data, isLoading: false }))
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -71,38 +61,22 @@ export default class MyPost extends Component {
     if (this.state.thanks == 1) {
       axios({
         method: "post",
-        url: "/api/posting/profile",
+        url: "/api/posting/people",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
         data: {
-          email: this.state.email // This is the body part
+          username: this.state.username // This is the body part
         }
-      }).then(result => this.setState({ posting: result.data, thanks: 0 }));
-      
+      }).then(result => this.setState({ posting: result.data }));
     }
   }
 
   givethanks(value) {
     axios({
       method: "put",
-      url: "/api/posting/thanks/up",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        email: this.state.email,
-        _id: value // This is the body part
-      }
-    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
-  }
-
-  delete(value) {
-    axios({
-      method: "delete",
-      url: "/api/posting/delete",
+      url: "/api/posting/thanks/post/user",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
@@ -110,8 +84,9 @@ export default class MyPost extends Component {
       data: {
         email: this.state.email,
         _id: value,
+        username : this.state.username // This is the body part
       }
-    }).then(this.setState({modal: false, thanks: 1,}));
+    }).then((result) => this.setState({ thanks: 1, kode: result.data.kode.kode}));
   }
 
   generateSkeleton() {
@@ -175,8 +150,10 @@ export default class MyPost extends Component {
   }
 
   render() {
-    
-    const { posting, isLoading } = this.state;
+    const { posting } = this.state;
+    const { thankpost } = this.state;
+    const nopost = posting.length;
+    const { isLoading } = this.state;
     const gridMargin = {
       marginBottom: "-70px"
     };
@@ -187,6 +164,17 @@ export default class MyPost extends Component {
       <div>
         {isLoading ? (
           this.generateSkeleton()
+        ) : nopost == 0 ? (
+          <Container>
+            <Divider hidden />
+            <Header as="h2" icon textAlign="center">
+              <Icon name="meh" />
+              No Post
+              <Header.Subheader>
+                <i>This user has no post yet, comeback later</i>
+              </Header.Subheader>
+            </Header>
+          </Container>
         ) : (
           <Container>
             {posting.map((data, index) => {
@@ -258,32 +246,14 @@ export default class MyPost extends Component {
                               <small>
                                 <i style={textMargin}>{data.tags}</i>
                               </small>
-                              <Modal
-                                trigger={<Label onClick={this.handleOpen} style={{color: "Red", border: "1", background: "white", float: "right"}}><i>X</i></Label>}
-                                open={this.state.modal}
-                                onClose={this.handleClose}
-                                basic
-                              >
-                                <Header icon="trash" content="Delete Posting!" />
-                                <Modal.Content>
-                                  <p>Are You Sure?</p>
-                                </Modal.Content>
-                                <Modal.Actions>
-                                <Button color="red" onClick={this.handleClose} inverted>
-                                  <Icon name="remove" /> No
-                                </Button>
-                                <Button color="yellow" inverted onClick={() => this.delete(data._id)}>
-                                  <Icon name="checkmark" /> Yes
-                                </Button>
-                                </Modal.Actions>
-                              </Modal>
                             </List.Header>
                             <br />
                             <List.Description>
                               <b>{data.content}</b>
                               <br />
                               <br />
-                                <Popup trigger={
+                              <Popup 
+                                trigger={
                                 <Icon
                                   name="handshake outline"
                                   onClick={() => this.givethanks(data._id)}
@@ -298,7 +268,7 @@ export default class MyPost extends Component {
                                   {data.jam} {data.menit} {data.date}
                                 </i>
                               </small>
-                            </List.Description>
+                              </List.Description>
                           </List.Content>
                         </List.Item>
                       </List>

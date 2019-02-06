@@ -16,13 +16,13 @@ export default class HeaderMenu extends Component {
 
     render () {
         return (
-            <Menu borderless size="huge">
+            <Menu borderless size="huge" fixed="top">
             <Menu.Item name='back'>
-              <Icon onClick={this.back.bind(this)} name="arrow left"/>
+              <Icon onClick={this.back.bind(this)} name="arrow left" style={{color: "#555"}}/>
             </Menu.Item>
             <Menu.Menu position='right'>
               <Menu.Item name='help'>
-              <Header as="h5"><a onClick={this.logout.bind(this)}>Logout</a></Header>
+              <Header as="h5"><a onClick={this.logout.bind(this)} style={{color: "#ED6A5E"}}>Logout</a></Header>
               </Menu.Item>
             </Menu.Menu>
           </Menu>

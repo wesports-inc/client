@@ -1,8 +1,4 @@
 import React, { Component } from "react";
-import MenuProfile from './MenuProfile';
-import HeaderProfile from './HeaderProfile';
-import MyPost from './MyPost';
-import MoreCategory from './MoreCategory';
 
 export default class Index extends Component {
 
@@ -15,12 +11,13 @@ export default class Index extends Component {
     }
 
     componentWillMount() {
+        
         const email = JSON.parse(localStorage.getItem('email'))
-            const auth = JSON.parse(localStorage.getItem('auth'))
-            this.setState({
-                email,
-                isLogin: auth
-            }) 
+        const auth = JSON.parse(localStorage.getItem('auth'))
+        this.setState({
+            email,
+            isLogin: auth
+        })
     }
 
     componentDidMount() {
@@ -41,13 +38,14 @@ export default class Index extends Component {
         nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        
+    }
+
     render () {
         return (
         <div>
-            <HeaderProfile />
-            <MoreCategory />
-            <MyPost />
-            <MenuProfile />
+            hehe
         </div>
         );
     }

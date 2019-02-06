@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
+import { Container, Grid, Divider, Image, List, Header, Button, Modal } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import axios from 'axios';
 
@@ -10,11 +10,12 @@ export default class allPeople extends Component {
             email: localStorage.getItem('email').slice(1, -1),
             datas: [],
             isLogin: '',
-            friend_email: '',
-            friend_status: '',
-            friend_status_email: '',
+            friendship: [],
             isLoading: true,
-            friend_send: {}
+            email_friend: '',
+            open: false,
+            fotos: '',
+            allfoto: []
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
     }
@@ -30,7 +31,7 @@ export default class allPeople extends Component {
             data: {
               email: this.state.email, // This is the body part
             }
-          }).then(result => console.log('datasssssssss', result.data));
+          }).then(result => this.setState({datas: result.data.user, allfoto: result.data.foto}));
         this.setState({
             isLogin: localStorage.getItem('auth')
         })
@@ -38,9 +39,7 @@ export default class allPeople extends Component {
 
     componentDidMount() {
         if(this.state.datas){
-            setTimeout(() => {
-                this.setState({isLoading: false})
-            }, 500);
+            this.setState({isLoading: false})
         }
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
@@ -54,13 +53,20 @@ export default class allPeople extends Component {
         }
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        if(nextState.friendRequest){
-            console.log('ada teman baru nih: ' + nextState.friendRequest)
-        }
-    }
-
     componentDidUpdate(prevProps, prevState) {
+        if(!prevState.email_friend){
+        axios({
+            method: 'post',
+            url: '/api/profile',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+                email: this.state.email_friend
+            }, // This is the body part
+          }).then(result => this.setState({friendship: result.data}))
+        }
         const {isLogin} = this.state;
         if(isLogin === false){ 
             window.location = '#/login'
@@ -68,19 +74,17 @@ export default class allPeople extends Component {
     }
 
     handleClick(value) {
-       this.setState({friend_send: {email: this.state.email,
-        email_friend: value}}, () => 
-        axios({
+        this.setState({email_friend: value, dimmer: 'blurring', open: true}, () => axios({
             method: 'post',
-            url: '/api/addfriend',
+            url: '/api/user/avatar',
             headers: { 
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            data: JSON.stringify(this.state.friend_send),
-          }).then(result => this.setState({friend_status: result.data.status}, () => console.log('status teman: ', this.state.friend_status)))
-        )
-        
+            data: {
+                email: value
+            }, // This is the body part
+          }).then(result => this.setState({fotos: result.data})))
     }
 
     generateSkeleton() {
@@ -116,34 +120,67 @@ export default class allPeople extends Component {
         </div>
     }
 
+    loop() {
+        const test = []
+        const {allfoto} = this.state
+        allfoto.map(fotox => test.push(fotox.avatar))
+        return test
+    }
+
+    gotoprofile(username) {
+        sessionStorage.setItem('username', username)
+        window.location='#/user/profile';
+    }
+
+    close = () => this.setState({ open: false, email_friend: '' }, () => sessionStorage.removeItem('username'))
+    
     render() {
-        const {datas} = this.state;
-        const {isLoading} = this.state;
+        const { datas, isLoading, friendship, open, dimmer, fotos, allfoto } = this.state
         return (
             <div style={{marginBottom: 45}}>
             {isLoading ? this.generateSkeleton() :
             <Container>
                 {datas.map(data => {  
                     return (
-                <Grid columns={2} key={data._id}>
+                <Grid columns={1} key={data._id}>
                     <Grid.Column>
-                        <List verticalAlign="middle">
+                        <List verticalAlign="middle" onClick={() => {this.handleClick(data.email)}}>
                             <List.Item>
-                                <Image avatar src='https://react.semantic-ui.com/images/avatar/small/tom.jpg' />
+                                <Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto} />
                                 <List.Content>
-                                    <List.Header>{ data.first_name } {data.last_name}</List.Header>
-                                    <p>@{ data.username }</p>
+                                    <List.Header style={{color: "#f2f2f2"}}>{ data.first_name } {data.last_name}</List.Header>
+                                    <p style={{color: "#f2f2f2"}}>@{ data.username }</p>
                                 </List.Content>
                             </List.Item>
                         </List>
                     </Grid.Column>
-                    <Grid.Column verticalAlign="middle">
-                    <Button icon onClick={() => this.handleClick(data.email)} primary style={{width: "75px"}} size="mini" floated="right">
-                        <Icon name='add circle' />
-                    </Button>
-                    </Grid.Column>
                 </Grid>
                 ); })}
+                <Modal dimmer={dimmer} open={open} onClose={this.close} closeIcon>
+            <Modal.Header>{friendship.first_name} {friendship.last_name}</Modal.Header>
+            <Modal.Content image>
+                <Image wrapped size='medium' src={"http://localhost:3000/src/web-api/public/avatar/" + fotos} />
+                <Modal.Description>
+                <Header>{friendship.username}</Header>
+                <span>
+                    <span style={{float: "left"}}>thanks: {friendship.total_thanks}</span>
+                    <span style={{float: "right"}}>posts: {friendship.total_posts}</span>
+                    <br/>
+                    <hr/>
+                    <p>Followed Tags: <a>{friendship.tags}</a></p> 
+                </span>
+                </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+                <Button
+                primary
+                content="View Profile"
+                fluid
+                onClick={() => this.gotoprofile(friendship.username)}
+                style={{marginLeft: -0}}
+                />
+            </Modal.Actions>
+        </Modal>
             </Container>
             }
             </div>

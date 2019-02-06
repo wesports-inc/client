@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Header, Divider } from 'semantic-ui-react';
+import { Header, Divider, Container } from 'semantic-ui-react';
 import BottomMenu from '../../profile/MenuProfile';
 import Skeleton from 'react-skeleton-loader';
-import Filter from './filter';
+import HeaderPeople from './HeaderPeople';
+import AllPeople from "./allPeople";
 
 export default class Index extends Component {
 
@@ -29,9 +30,7 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
-        setTimeout(() => {
-            this.setState({isLoading: false})
-        }, 500);
+        this.setState({isLoading: false})
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -46,27 +45,28 @@ export default class Index extends Component {
         nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        
-    }
-
     generateSkeleton() {
         return <Header textAlign="center"><Skeleton/></Header>
     }
 
-    render () {
+    render () {      
         const {isLoading} = this.state;
         return (
-        <div>
+        <div style={{marginBottom: 45}}>
+            <HeaderPeople />
+            <Divider hidden/>
+            <Divider hidden/>
+            <Divider hidden/>
             {isLoading ? this.generateSkeleton() :
-            <Header as="h2" textAlign="center" style={{marginTop: 25}}>
-                <i>Add People, More Circle</i>
-            </Header>
+            <Container>
+                <Header as="h2" textAlign="center" style={{marginTop: 25, color: "#f0f0f0"}}>
+                    <i>More People, More Influencer</i>            
+                </Header>
+                <Divider/>
+            </Container>
             }
-            <Divider />
-            {isLoading ? this.generateSkeleton() :
-            <Filter />
-            }
+            <Divider hidden/>
+            <AllPeople/>
             <BottomMenu />
         </div>
         );

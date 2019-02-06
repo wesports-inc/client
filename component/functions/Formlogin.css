@@ -1,0 +1,93 @@
+body{
+    background: #3b5998;
+    margin: 0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+h1, h2, h3, h4, h5, h6, a {
+    margin:0; padding:0;
+}
+
+.login{
+    text-align: center;
+    margin: 0 auto;
+    max-width: 500px;
+    padding-top:100px; 
+}
+
+.login-header{
+    color: #fff;
+    text-align: center;
+    font-size: 200%;
+}
+.login-form{
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding-top:40px;
+    padding-bottom: 10%;
+    margin: 5% auto;
+    text-align: center; 
+}
+
+.login-form h3{
+    text-align: left;
+    margin-left: 40px;
+    color: #fff;
+}
+
+.login input[type="text"],
+.login input[type="password"]{
+    max-width: 400px;
+    width: 80%;
+    line-height: 3em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 1em 2em;
+    border-radius:5px;
+    border: 2px solid #f2f2f2;
+    outline: none;
+    padding-left: 10px; 
+}
+
+.login-form button{
+    max-width: 400px;
+    width: 80%;
+    line-height: 3em;
+    background:#223b73;
+    border:0px solid #f2f2f2;
+    margin: 1em 2em;
+    border-radius:5px;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor:pointer;
+  }
+
+  .sign-up{
+    color:#f2f2f2;
+    margin-left:-70%;
+    cursor:pointer;
+    text-decoration:underline;
+    padding-top:40px;
+  }
+
+  .no-access {
+    color:#fff;
+    margin:20px 0px 20px -57%;
+    text-decoration:underline;
+    cursor:pointer;
+  }
+
+  /*Media Querie*/
+@media only screen and (min-width : 150px) and (max-width : 530px){
+    .login-form h3 {
+      text-align:center;
+      margin:0;
+    }
+    .sign-up, .no-access {
+      margin:10px 0;
+    }
+    .login-button {
+      margin-bottom:10px;
+    }
+  }

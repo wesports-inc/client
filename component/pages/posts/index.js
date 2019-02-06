@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import MenuProfile from './MenuProfile';
-import HeaderProfile from './HeaderProfile';
-import MyPost from './MyPost';
-import MoreCategory from './MoreCategory';
+import {Divider,Container} from 'semantic-ui-react';
+import MenuProfile from '../profile/MenuProfile';
+import TagsPost from './TagsPost';
+import Headerpost from './Headerpost';
 
 export default class Index extends Component {
 
@@ -15,6 +15,7 @@ export default class Index extends Component {
     }
 
     componentWillMount() {
+        
         const email = JSON.parse(localStorage.getItem('email'))
         const auth = JSON.parse(localStorage.getItem('auth'))
         this.setState({
@@ -48,9 +49,16 @@ export default class Index extends Component {
     render () {
         return (
         <div>
-            <HeaderProfile />
-            <MoreCategory />
-            <MyPost />
+            <Headerpost />
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
+            <Container>
+            <Divider hidden />
+                <TagsPost />
+            </Container>
+            <Divider hidden />
+            <Divider hidden />
             <MenuProfile />
         </div>
         );
