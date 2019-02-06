@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Statistic, Button, Modal } from "semantic-ui-react";
+import { Container, Grid, Divider, Image, List, Header, Statistic, Label } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
-import HeaderMessage from "./HeaderMessage";
-import MenuProfile from "../profile/MenuProfile";
+import HeaderMessagePrivate from "./HeaderMessagePrivate";
+import SendMessage from "./SendMessage";
 import axios from "axios";
 
 export default class Index extends Component {
@@ -11,6 +11,7 @@ export default class Index extends Component {
     this.state = {
       email: localStorage.getItem("email").slice(1, -1),
       datas: [],
+      username : window.location.href.split('=')[1],
       username_send: "",
       username_received: "",
       isLogin: "",
@@ -24,13 +25,14 @@ export default class Index extends Component {
   componentWillMount() {
     axios({
       method: "post",
-      url: "/api/list/message",
+      url: "/api/detail/message",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        email: this.state.email // This is the body part
+        email: this.state.email,
+        username_send: this.state.username
       }
     }).then(result => this.setState({ datas: result.data }));
     this.setState({
@@ -39,27 +41,7 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    if (this.state.datas) {
-        this.setState({ isLoading: false });
-    }
-    const { isLogin } = this.state;
-    isLogin === "false" ? (window.location = "#/login") : "";
   }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { isLogin } = this.state;
-    if (isLogin === false) {
-      window.location = "#/login";
-    }
-  }
-
-  message(send,received) {
-    event.preventDefault();
-    localStorage.setItem("username_received", this.state.username_received);
-    this.setState({username_send : send, username_received : received})
-    window.location = "#/dm?username=" + send
-  }
-
   generateSkeleton() {
     const { datas } = this.state;
     return (
@@ -72,7 +54,7 @@ export default class Index extends Component {
           <Divider />
           {datas.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
+              <Grid columns={1} key={data._id}>
                 <Grid.Column>
                   <List verticalAlign="middle">
                     <List.Item>
@@ -107,18 +89,13 @@ export default class Index extends Component {
     return (
       <div style={divConten}>
         <Header as="h2" icon textAlign="center">
-          <Image
-            centered
-            size="large"
-            src="https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png"
-          />
           <Header.Content>
             <Statistic>
               <Statistic.Value text>Hell Yeah,</Statistic.Value>
               <Statistic.Label>
-                <i>0 Million</i>
+                <i>No Message</i>
               </Statistic.Label>
-              <Statistic.Label>Message</Statistic.Label>
+              <Statistic.Label></Statistic.Label>
             </Statistic>
           </Header.Content>
         </Header>
@@ -127,43 +104,52 @@ export default class Index extends Component {
   }
 
   render() {
-    const { datas, isLoading } = this.state;
+    const { datas } = this.state;
     return (
       <div style={{ marginBottom: 45 }}>
-        <HeaderMessage />
+        <HeaderMessagePrivate />
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
         {datas.length === 0 ? (
           this.generateZeroData()
-        ) : isLoading ? (
-          this.generateSkeleton()
         ) : (
           <Container>
+            <Divider hidden />
+              <Header as="h4" textAlign="center">{this.state.username}</Header>
+            <Divider />
             {datas.map(data => {
+              console.log(data)
               return (
-                <Grid columns={2} key={data._id}>
+                <Grid columns={1} key={data._id}>
                   <Grid.Column>
-                    <List verticalAlign="middle" onClick={() => {this.message(data.username_send, data.username_received)}}>
-                      <List.Item>
-                        <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
+                    <List verticalAlign="middle">
+                      {data.username_send === this.state.username ?
+                      <List.Item style={{float: "left"}}>
                         <List.Content>
-                          <List.Header>{data.name_send}</List.Header>
-                          <i>{data.message}</i>
+                          <List.Header><Label size="small" style={{ backgroundColor: "transparent"}}><b><Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />{data.name_send}</b></Label></List.Header>
+                          <Label size="large" className="ui black label" pointing="left">
+                            {data.message}
+                          </Label><Label size="small" style={{ backgroundColor: "transparent"}}>{data.date}</Label>
                         </List.Content>
                       </List.Item>
+                      : 
+                      <List.Item style={{float: "right"}}>
+                        <List.Content style={{float: "right"}}>
+                        <Label size="small" style={{ backgroundColor: "transparent"}}>{data.date}</Label><Label size="large" className="ui grey label" pointing="right">
+                            {data.message}
+                          </Label>
+                        </List.Content>
+                      </List.Item>}
                     </List>
-                  </Grid.Column>
-                  <Grid.Column verticalAlign="middle">
                   </Grid.Column>
                 </Grid>
               );
             })}
           </Container>
         )}
-        <Button style={{float: "right"}}>+</Button>
-        <MenuProfile />
+        <SendMessage />
       </div>
     );
   }
