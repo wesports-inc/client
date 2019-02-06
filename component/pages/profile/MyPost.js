@@ -259,7 +259,7 @@ export default class MyPost extends Component {
                                 <i style={textMargin}>{data.tags}</i>
                               </small>
                               <Modal
-                                trigger={<Label onClick={this.handleOpen} style={{color: "Red", border: "1", background: "white", float: "right"}}><i>X</i></Label>}
+                                trigger={<Label onClick={this.handleOpen} style={{color: "Red", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate"/></Label>}
                                 open={this.state.modal}
                                 onClose={this.handleClose}
                                 basic

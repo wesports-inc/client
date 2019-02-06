@@ -36,6 +36,13 @@ export default class AccountSetting extends Component {
 
   }
 
+  logout() {
+    localStorage.removeItem('email')
+    localStorage.removeItem('auth')
+    localStorage.removeItem('menu')
+    window.location='#/login';
+}
+
   delete() {
     event.preventDefault();
     var data = {
@@ -86,7 +93,7 @@ export default class AccountSetting extends Component {
       marginRight: "2%"
     };
     return (
-      <div style={{color: "white"}}>
+      <div style={{color: "white", marginTop:"-50px"}}>
         <Header as="h3"  style={{color: "white"}} dividing>
           Account Setting
         </Header>
@@ -94,16 +101,16 @@ export default class AccountSetting extends Component {
           <Divider hidden />
           <Form>
             <Form.Field>
-              <label style={{color: "white"}}>Your Email</label>
+              <label>Your Email</label>
               <input defaultValue={this.state.email} disabled />
             </Form.Field>
             <Form.Field>
-              <label style={{color: "white"}}>Username</label>
+              <label>Username</label>
               <input defaultValue={this.state.username} disabled />
             </Form.Field>
 
             <Modal
-              trigger={<a onClick={this.handleOpenPassword} style={{color: "white"}}><i>Change Password</i></a>}
+              trigger={<a onClick={this.handleOpenPassword} ><i>Change Password</i></a>}
               open={this.state.modalOpenPassword}
               onClose={this.handleClosePassword}
               basic
@@ -144,8 +151,17 @@ export default class AccountSetting extends Component {
             </Modal>
           </Form>
           <br />
+          
           <Modal
-            trigger={<a onClick={this.handleOpen} style={{color: "white"}}><i>Self Destroy</i></a>}
+            trigger={
+              <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
+                <Button.Content hidden onClick={this.handleOpen}><lebel>Self Destroy</lebel></Button.Content>
+                <Button.Content visible>
+                  <Icon name='user delete' />
+                </Button.Content>
+              </Button>
+            
+            }
             open={this.state.modalOpen}
             onClose={this.handleClose}
             basic
@@ -164,6 +180,12 @@ export default class AccountSetting extends Component {
               </Button>
             </Modal.Actions>
           </Modal>
+            <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
+                <Button.Content hidden onClick={this.logout.bind(this)}><lebel>Loguot</lebel></Button.Content>
+                <Button.Content visible>
+                  <Icon name='log out' />
+                </Button.Content>
+              </Button>
           <Divider hidden />
         </Container>
       </div>

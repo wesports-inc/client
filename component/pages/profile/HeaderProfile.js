@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
-import { Grid, Container, Segment, Divider, Image, Icon, Header, Modal, Button } from "semantic-ui-react";
+import { Grid, Container, Segment, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
 
 import axios from "axios";
 
@@ -176,6 +176,12 @@ export default class HeaderProfile extends Component {
       float: "right",
     };
 
+    const popupStyle = {
+      borderRadius: 0,
+      opacity: 0.7,
+      padding: '0.5em',
+    }
+
     return (
       <div>
         {isLoading ? (
@@ -187,21 +193,22 @@ export default class HeaderProfile extends Component {
               <Grid.Row>
                 <Grid.Column>
                   <Segment basic textAlign="center">
-                    <Image
-                      src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
-                      size="medium"
-                      circular
-                      bordered
-                    />
-                    <Header as="p" style={{ marginTop: 0, color: this.state.coloring }}>
-                      @{username}
-                      <br />
-                      <small>
-                        <i>
-                          {first_name} {last_name}
-                        </i>
-                      </small>
-                    </Header>
+                  <Popup 
+                    trigger={
+                      <Image
+                        src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
+                        size="medium"
+                        circular
+                        bordered
+                      />
+                    }
+                    position='top center'
+                    style={popupStyle}>
+                    {first_name} {last_name}
+                  </Popup>
+                  <Header as="p" style={{ marginTop: "7px", color: this.state.coloring }}>
+                    @{username}
+                  </Header>
                   </Segment>
                 </Grid.Column>
                 <Grid.Column style={{ opacity: 0.8 }}>
