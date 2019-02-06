@@ -189,6 +189,11 @@ export default class MenuProfile extends Component {
       width: "1%",
       float: "left"
     };
+    const labelNotif = {
+      width: "40%",
+      marginTop: "-20%",
+      marginLeft: "25%"
+    }
     return (
       <div>
         {isLoading ? (
@@ -232,11 +237,11 @@ export default class MenuProfile extends Component {
                 ) : this.state.seen === 0 ? (
                   ""
                 ) : (
-                      <Label circular size="tiny" floating color="red" key="red">
-                        {this.state.seen}
-                      </Label>
-                    )}
-                {menu === "notification" ? <Icon name="bell outline" style={{ color: "#ED6A5E" }} size="large" /> : <Icon name="bell outline" style={{ color: "#555" }} size="large" />}
+                  <Icon name="bell outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                    {this.state.seen}
+                  </Label></Icon>
+                )}
+                {menu === "notification" ? (<Icon name="bell outline" style={{ color: "#ED6A5E" }} size="large" />) : this.state.seen === 0 ? (<Icon name="bell outline" style={{ color: "#555" }} size="large" />) : ""}
               </Menu.Item>
 
               <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>

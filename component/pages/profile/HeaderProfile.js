@@ -194,7 +194,7 @@ export default class HeaderProfile extends Component {
                       bordered
                     />
                     <Header as="p" style={{ marginTop: 0, color: this.state.coloring }}>
-                      @{username}
+                    @{username}
                       <br />
                       <small>
                         <i>
