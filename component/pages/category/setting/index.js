@@ -64,8 +64,12 @@ export default class Index extends Component {
             <Divider hidden />
                 <Grid columns={1}>
                     <GridColumn>
-                        <AccountSetting/>
                         <ProfileSetting/>
+                        <AccountSetting/>
+                        <br />
+                        <br />
+                        <br />
+                        
                     </GridColumn>
                 </Grid>
             </Container>
