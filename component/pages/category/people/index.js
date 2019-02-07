@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, Divider, Container } from 'semantic-ui-react';
+import { Dimmer, Loader, Image, Segment, Header, Divider, Container } from 'semantic-ui-react';
 import BottomMenu from '../../profile/MenuProfile';
 import Skeleton from 'react-skeleton-loader';
 import HeaderPeople from './HeaderPeople';
@@ -12,9 +12,11 @@ export default class Index extends Component {
         this.state = {
             isLogin: '',
             email: '',
-            isLoading: true
+            isLoading: true,
+            loading: true
         };
         this.generateSkeleton = this.generateSkeleton.bind(this)
+        this.loading = this.loading.bind(this)
     }
 
     componentWillMount() {
@@ -30,7 +32,12 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
-        this.setState({isLoading: false})
+        console.log('first ', this.state.loading)
+        setTimeout(() => {
+            if(this.state.loading == true){
+                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+            }
+        }, 1500)
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -45,11 +52,22 @@ export default class Index extends Component {
         nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
+    loading() {
+        return (
+            <div>    
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
+                </Dimmer>    
+            </div>  
+        );
+    }
+
     generateSkeleton() {
         return <Header textAlign="center"><Skeleton/></Header>
     }
 
-    render () {      
+    render () {
+        const { loading} = this.state;     
         const {isLoading} = this.state;
         return (
         <div style={{marginBottom: 45}}>
@@ -57,7 +75,7 @@ export default class Index extends Component {
             <Divider hidden/>
             <Divider hidden/>
             <Divider hidden/>
-            {isLoading ? this.generateSkeleton() :
+            {loading ? (this.loading()) : loading ? this.generateSkeleton() :
             <Container>
                 <Header as="h2" textAlign="center" style={{marginTop: 25, color: "#f0f0f0"}}>
                     <i>More People, More Influencer</i>            
@@ -65,6 +83,7 @@ export default class Index extends Component {
                 <Divider/>
             </Container>
             }
+          
             <Divider hidden/>
             <AllPeople/>
             <BottomMenu />
