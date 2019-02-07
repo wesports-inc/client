@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Modal,
   Container,
   Comment,
   Icon,
@@ -9,7 +8,8 @@ import {
   Divider,
   Input,
   Form,
-  ItemMeta
+  ItemMeta,
+  CommentAvatar
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -21,9 +21,9 @@ export default class Posts extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       username: localStorage.getItem("username"),
       posts: [],
+      commentByPostId: [],
       comment: '',
       message: '',
-      id_posts: '',
       url: window.location.href.split('=')[1]
     };
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -35,6 +35,17 @@ export default class Posts extends Component {
     .then(response => {
       this.setState({posts: response.data})
     })
+    axios({
+      method: "POST",
+      url: "/api/comments",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        id_posts: this.state.url
+      }
+    }).then(result => this.setState({commentByPostId: result.data}));
   }
 
   handleChange(event) {
@@ -50,30 +61,30 @@ export default class Posts extends Component {
     event.preventDefault();
     axios({
       method: "POST",
-      url: "/api/posts/comment",
+      url: "/api/posts/comments",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       data: {
-        id_posts: this.state.id_posts,
+        id_posts: this.state.url,
         email: this.state.email,
         username: this.state.username,
         comment: this.state.comment,
         status: "publish"
       }
-    }).then(result => console.log('hasil: ', result));
+    }).then(window.location.reload());
   }
   
   render() {
-    const {posts, url} = this.state;
+    const {posts, url, commentByPostId} = this.state;
     return (
       <div>
         <Container >
           <Item.Group>
             <Item>
               <Item.Content>
-                <ItemMeta as='a' style={{color: "black"}}><Image avatar src='https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png'/> @{posts.username}</ItemMeta>
+                <ItemMeta as='a' style={{color: "black"}}><Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + posts.foto}/> <b>{posts.username}</b></ItemMeta>
                 <Item.Description style={{padding: 15, margin: 5}}>
                   {posts.content}
                 </Item.Description>
@@ -87,26 +98,20 @@ export default class Posts extends Component {
           </Item.Group>
           <Divider />
           <Comment.Group>
-            <Comment>
-              <Comment.Avatar as='a' src='https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png' />
+            {commentByPostId.map(data => {
+            return <Comment key={data._id}>
+              <Comment.Avatar src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto} />
               <Comment.Content>
-                <Comment.Author>Stevie Feliciano</Comment.Author>
-                <Comment.Metadata>
-                  <div>2 days ago</div>
-                  <div>
-                    <Icon name='star' />
-                    5 Faves
-                  </div>
-                </Comment.Metadata>
+                <Comment.Author>{data.username}</Comment.Author>
                 <Comment.Text>
-                  Hey guys, I hope this example comment is helping you read this documentation.
+                  {data.comment}
                 </Comment.Text>
               </Comment.Content>
             </Comment>
+            })}
             <Comment.Action>
             <Divider hidden/>
             <Form onSubmit={this.handleSubmit}>
-            <input name="id_posts" onChange={this.handleChange} hidden/>
             <Input name="comment" style={{bottom: 10, position: "fixed", zIndex: 99, padding: 10, margin: 5, width: "85%" }} size="large" transparent placeholder='komentari ...' icon='paper plane outline' onChange={this.handleChange}/>
             </Form>
             </Comment.Action>
