@@ -12,7 +12,9 @@ import {
   Modal,
   Button,
   Header,
-  Label
+  Label,
+  Comment,
+  Form
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -32,7 +34,8 @@ export default class MyPost extends Component {
       waktu: [],
       thanks: 0,
       kode: 0,
-      modal: false
+      modal: false,
+      modalDiscuss: false
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.givethanks = this.givethanks.bind(this);
@@ -174,6 +177,10 @@ export default class MyPost extends Component {
     );
   }
 
+  discuss(value) {
+    window.location = '#/posts?id='+ value + '' 
+  }
+
   render() {
     
     const { posting, isLoading } = this.state;
@@ -280,9 +287,10 @@ export default class MyPost extends Component {
                             </List.Header>
                             <br />
                             <List.Description>
+                            
                               <b>{data.content}</b>
                               <br />
-                              <br />
+                              <hr />
                                 <Popup trigger={
                                 <Icon
                                   name="handshake outline"
@@ -293,6 +301,9 @@ export default class MyPost extends Component {
                               <small>
                                 <i>{data.thanks} Thanks </i>
                               </small>
+                              <br/>
+                              <br/>
+                              <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
                               <small style={{ float: "right" }}>
                                 <i>
                                   {data.jam} {data.menit} {data.date}
