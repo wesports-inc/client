@@ -149,6 +149,10 @@ export default class MyPost extends Component {
     );
   }
 
+  discuss(value) {
+    window.location = '#/posts?id='+ value + '' 
+  }
+
   render() {
     const { posting } = this.state;
     const { thankpost } = this.state;
@@ -263,6 +267,9 @@ export default class MyPost extends Component {
                               <small>
                                 <i>{data.thanks} Thanks </i>
                               </small>
+                              <br/>
+                              <br/>
+                              <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
                               <small style={{ float: "right" }}>
                                 <i>
                                   {data.jam} {data.menit} {data.date}
