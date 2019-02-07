@@ -155,7 +155,7 @@ export default class AccountSetting extends Component {
           <Modal
             trigger={
               <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
-                <Button.Content hidden onClick={this.handleOpen}><lebel>Self Destroy</lebel></Button.Content>
+                <Button.Content hidden onClick={this.handleOpen}><label>Self Destroy</label></Button.Content>
                 <Button.Content visible>
                   <Icon name='user delete' />
                 </Button.Content>
@@ -181,7 +181,7 @@ export default class AccountSetting extends Component {
             </Modal.Actions>
           </Modal>
             <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
-                <Button.Content hidden onClick={this.logout.bind(this)}><lebel>Loguot</lebel></Button.Content>
+                <Button.Content hidden onClick={this.logout.bind(this)}><label>Loguot</label></Button.Content>
                 <Button.Content visible>
                   <Icon name='log out' />
                 </Button.Content>
