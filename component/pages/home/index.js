@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MenuProfile from '../profile/MenuProfile';
 import Content from "./content";
-import { Dimmer, Loader, Image,Segment, Container } from "semantic-ui-react";
+import { Dimmer, Loader, Image, Segment, Container } from "semantic-ui-react";
 
 export default class Index extends Component {
     constructor(props) {
@@ -54,16 +54,14 @@ export default class Index extends Component {
 
     loading() {
         return (
-            <Container>
-                <Segment>
-                <Dimmer active inverted size='large'>
-                    <Loader inverted >Loading</Loader>
+            <div>
+               
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
                 </Dimmer>
-
-                <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png'
-                />
-                </Segment>
-            </Container>
+               
+            </div>
+            
             
         );
     }
