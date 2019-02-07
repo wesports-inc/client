@@ -15,6 +15,7 @@ import Notifications from "./component/pages/category/notification/"
 import Statistic from "./component/pages/category/statistic/"
 import TagsPost from "./component/pages/posts/"
 import Message from "./component/pages/message/"
+import NewMessage from "./component/pages/newmessage/"
 import MessagePrivate from "./component/pages/MessagePrivate/"
 //people
 import UserProfile from "./component/pages/people-profile/"
@@ -40,6 +41,7 @@ ReactDOM.render(
       <Route path="/statistic" component={Statistic} />
       <Route path="/tagspost/:tag" component={TagsPost} />
       <Route path="/dm" component={MessagePrivate} />
+      <Route path="/newdm" component={NewMessage} />
     </div>
   </HashRouter>,
   document.getElementById("root")

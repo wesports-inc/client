@@ -11,8 +11,8 @@ export default class Index extends Component {
     this.state = {
       email: localStorage.getItem("email").slice(1, -1),
       datas: [],
-      username_send: "",
-      username_received: "",
+      username_user1: "",
+      username_user2: "",
       isLogin: "",
       data_message: "",
       isLoading: true
@@ -33,6 +33,18 @@ export default class Index extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ datas: result.data }));
+    
+    axios({
+      method: "post",
+      url: "/api/profile",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ username_user1: result.data.username}));
     this.setState({
       isLogin: localStorage.getItem("auth")
     });
@@ -53,11 +65,14 @@ export default class Index extends Component {
     }
   }
 
-  message(send,received) {
+  message(Value) {
     event.preventDefault();
-    localStorage.setItem("username_received", this.state.username_received);
-    this.setState({username_send : send, username_received : received})
-    window.location = "#/dm?username=" + send
+    window.location = "#/dm?username=" + Value
+  }
+
+  newmessage() {
+    event.preventDefault();
+    window.location = "#/newdm"
   }
 
   generateSkeleton() {
@@ -143,26 +158,25 @@ export default class Index extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={2} key={data._id}>
+                <Grid columns={2} key={data}>
+                {data === this.state.username_user1 ? null :  
                   <Grid.Column>
-                    <List verticalAlign="middle" onClick={() => {this.message(data.username_send, data.username_received)}}>
+                    <List verticalAlign="middle" onClick={() => {this.message(data)}}>
                       <List.Item>
                         <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
-                          <List.Header>{data.name_send}</List.Header>
-                          <i>{data.message}</i>
+                          <List.Header>{data}</List.Header>
                         </List.Content>
                       </List.Item>
                     </List>
                   </Grid.Column>
-                  <Grid.Column verticalAlign="middle">
-                  </Grid.Column>
+                }
                 </Grid>
               );
             })}
           </Container>
         )}
-        <Button style={{float: "right"}}>+</Button>
+        <Button style={{float: "right",zIndex: 2,position: "fixed",bottom: 50,right: -0 }} onClick={() => {this.newmessage()}}>+</Button>
         <MenuProfile />
       </div>
     );

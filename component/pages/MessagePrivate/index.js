@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Statistic, Label } from "semantic-ui-react";
+import { Container, Grid, Divider, Image, List, Header, Statistic, Label, TextArea, Button, Input } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderMessagePrivate from "./HeaderMessagePrivate";
-import SendMessage from "./SendMessage";
 import axios from "axios";
 
 export default class Index extends Component {
@@ -11,15 +10,17 @@ export default class Index extends Component {
     this.state = {
       email: localStorage.getItem("email").slice(1, -1),
       datas: [],
-      username : window.location.href.split('=')[1],
-      username_send: "",
-      username_received: "",
+      username_user1 : window.location.href.split('=')[1],
+      username_user2: "",
       isLogin: "",
+      pesan: "",
       data_message: "",
-      isLoading: true
+      isLoading: true,
+      kode: 0
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
+    this.handlePost = this.handlePost.bind(this);
   }
 
   componentWillMount() {
@@ -32,7 +33,7 @@ export default class Index extends Component {
       },
       data: {
         email: this.state.email,
-        username_send: this.state.username
+        username_user1: this.state.username_user1
       }
     }).then(result => this.setState({ datas: result.data }));
     this.setState({
@@ -42,6 +43,58 @@ export default class Index extends Component {
 
   componentDidMount() {
   }
+
+  shouldComponentUpdate(newProps, newState) {
+    if (newState) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.kode == 1) {
+      axios({
+        method: "post",
+        url: "/api/detail/message",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        data: {
+          email: this.state.email,
+          username_user1: this.state.username_user1
+        }
+      }).then(result => this.setState({ datas: result.data, kode: 0,pesan:"" }));
+    }
+  }
+
+  handlePost(event) {
+    let target = event.target;
+    let value = target.value;
+    let name = target.name;
+    this.setState({
+      [name]: value
+    })
+    console.log(this.state.pesan)
+  }
+
+  message() {
+    axios({
+      method: "post",
+      url: "/api/send/message",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        username_user2: this.state.username_user1,
+        message: this.state.pesan
+      }
+    }).then( () => this.setState({kode: 1}) );
+  }
+
   generateSkeleton() {
     const { datas } = this.state;
     return (
@@ -117,7 +170,7 @@ export default class Index extends Component {
         ) : (
           <Container>
             <Divider hidden />
-              <Header as="h4" textAlign="center">{this.state.username}</Header>
+              <Header as="h4" textAlign="center">{this.state.username_user1}</Header>
             <Divider />
             {datas.map(data => {
               console.log(data)
@@ -125,13 +178,13 @@ export default class Index extends Component {
                 <Grid columns={1} key={data._id}>
                   <Grid.Column>
                     <List verticalAlign="middle">
-                      {data.username_send === this.state.username ?
+                      {data.username_user1 === this.state.username_user1 ?
                       <List.Item style={{float: "left"}}>
                         <List.Content>
-                          <List.Header><Label size="small" style={{ backgroundColor: "transparent"}}><b><Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />{data.name_send}</b></Label></List.Header>
+                          <List.Header><Label size="small" style={{ backgroundColor: "transparent"}}><b><Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />{data.name_user1}</b></Label></List.Header>
                           <Label size="large" className="ui black label" pointing="left">
                             {data.message}
-                          </Label><Label size="small" style={{ backgroundColor: "transparent"}}>{data.date}</Label>
+                          </Label><Label size="small" style={{ backgroundColor: "transparent"}}>{data.status}{" "}{data.date}</Label>
                         </List.Content>
                       </List.Item>
                       : 
@@ -147,9 +200,12 @@ export default class Index extends Component {
                 </Grid>
               );
             })}
+            
           </Container>
         )}
-        <SendMessage />
+        <TextArea value={this.state.pesan} style={{ width:"90%",zIndex: 2,position: "fixed",bottom: 0 }} name="pesan" onChange={this.handlePost} placeholder='Ketik Pesan...' />
+        <Input name="focus" hidden style={{ width:"90%",zIndex: -2,position: "fixed",bottom: 0 }}/>
+        <Button onClick={this.message.bind(this)} style={{ backgroundColor: "transparent",zIndex: 2,position: "fixed",bottom: 0,right: -0 }}  icon="paper plane outline"></Button>
       </div>
     );
   }

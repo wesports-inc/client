@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Button, Input, Icon } from "semantic-ui-react";
+import { Menu, Button, Input, Icon, TextArea } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
 
@@ -17,12 +17,14 @@ export default class SendMessage extends Component {
       tags: "",
       options: [],
       value: "null",
+      pesan: "",
       seen: null,
       tag: 0,
       post: 0
     };
-    
+    this.handlePost = this.handlePost.bind(this);  
   }
+  
 
   componentWillMount() {
     
@@ -32,6 +34,16 @@ export default class SendMessage extends Component {
     if(this.state.email){
       this.setState({ isLoading: false });
     }
+  }
+
+  handlePost(event) {
+    let target = event.target;
+    let value = target.value;
+    let name = target.name;
+    this.setState({
+      [name]: value
+    })
+    console.log(this.state.pesan)
   }
 
   generateSkeleton() {
@@ -58,23 +70,8 @@ export default class SendMessage extends Component {
   render () {
     return (
       <div>
-        {this.state.isLoading ? (
-          this.generateSkeleton()
-        ) : (
-            <Menu
-              fluid
-                widths={1}
-                style={{
-                zIndex: 2,
-                position: "fixed",
-                bottom: 0
-              }}
-            >
-              <Menu.Item>
-                <Input fluid icon='paper plane outline' placeholder='Ketik Pesan' />
-              </Menu.Item>
-            </Menu>
-          )}
+        <TextArea autoHeight style={{ width:"90%",zIndex: 2,position: "fixed",bottom: 0 }} name="pesan" onChange={this.handlePost} placeholder='Ketik Pesan...' />
+        <Button style={{ backgroundColor: "transparent",zIndex: 2,position: "fixed",bottom: 0,right: -0 }}  icon="paper plane outline"></Button>
       </div>
     );
   }
