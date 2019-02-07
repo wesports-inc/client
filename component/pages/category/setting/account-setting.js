@@ -7,7 +7,8 @@ import {
   Button,
   Modal,
   Icon,
-  Input
+  Input,
+  
 } from "semantic-ui-react";
 
 export default class AccountSetting extends Component {
@@ -154,13 +155,14 @@ export default class AccountSetting extends Component {
           
           <Modal
             trigger={
-              <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
-                <Button.Content hidden onClick={this.handleOpen}><lebel>Self Destroy</lebel></Button.Content>
-                <Button.Content visible>
-                  <Icon name='user delete' />
-                </Button.Content>
-              </Button>
-            
+              <div>
+                <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
+                  <Button.Content hidden onClick={this.handleOpen}><lebel>Self Destroy</lebel></Button.Content>
+                  <Button.Content visible>
+                    <Icon name='user delete' />
+                  </Button.Content>
+                </Button>
+              </div>
             }
             open={this.state.modalOpen}
             onClose={this.handleClose}
@@ -172,20 +174,22 @@ export default class AccountSetting extends Component {
               <p>Are You Sure?</p>
             </Modal.Content>
             <Modal.Actions>
-              <Button color="red" onClick={this.handleClose} inverted>
-                <Icon name="remove" /> No
+              <Button onClick={this.handleClose} inverted>
+                <Icon name="remove"  color="red" /> No
               </Button>
-              <Button color="yellow" inverted onClick={this.delete.bind(this)}>
-                <Icon name="checkmark" /> Yes
+              <Button inverted onClick={this.delete.bind(this)}>
+                <Icon name="checkmark" color="green" /> Yes
               </Button>
             </Modal.Actions>
           </Modal>
+            <div>
             <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
                 <Button.Content hidden onClick={this.logout.bind(this)}><lebel>Loguot</lebel></Button.Content>
                 <Button.Content visible>
                   <Icon name='log out' />
                 </Button.Content>
               </Button>
+            </div>
           <Divider hidden />
         </Container>
       </div>

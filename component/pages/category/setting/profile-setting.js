@@ -13,7 +13,8 @@ import {
   Button,
   Modal,
   Reveal,
-  Icon
+  Icon,
+  label
 } from "semantic-ui-react";
 import "./Account.css";
 import axios from "axios";
@@ -191,16 +192,6 @@ export default class ProfileSetting extends Component {
     this.setState({ value: event.target.value });
   };
 
-  // updateNumber = (e) => {
-  //   const val = e.target.value;
-  //   // If the current value passes the validity test then apply that to state
-  //   if (e.target.validity.valid) this.setState({message: e.target.value});
-  //   // If the current val is just the negation sign, or it's been provided an empty string,
-  //   // then apply that value to state - we still have to validate this input before processing
-  //   // it to some other component or data structure, but it frees up our input the way a user
-  //   // would expect to interact with this component
-  //   else if (val === '' || val === '-') this.setState({message: val});
-  // }
 
   render() {
     const {
@@ -226,18 +217,17 @@ export default class ProfileSetting extends Component {
           <Grid verticalAlign="middle" columns={2} centered>
             <GridColumn>
               <Image
-                size="big"
+                bordered
+                size="large"
                 src={
                   "http://localhost:3000/src/web-api/public/avatar/" +
                   this.state.avatar
                 }
                 circular
               />
-            {/* </GridColumn>
-            <GridColumn> */}
+            
               <Form style={{marginTop: "-30px", float: "right"}}>
                 <Form.Field>
-                  {/* <label style={{ textAlign: "center", color: "white" }}>Your Avatar</label> */}
                   <div className="input-file-container">
                     <input
                       className="input-file"
@@ -245,15 +235,11 @@ export default class ProfileSetting extends Component {
                       type="file"
                       onChange={this.fileHandler}
                     />
-                    {/* <label
-                      htmlFor="my-file"
-                      className="input-file-trigger"
-                      style={{ textAlign: "center", color: "#555" }}
-                    >
-                      Choose Picture
-                    </label> */}
+                    
                     
                     <Icon
+                      bordered
+                      circular
                       name='camera'
                       size='big'
                       htmlFor="my-file"
