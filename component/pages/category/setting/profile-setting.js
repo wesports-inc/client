@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 import React, { Component } from "react";
 import {
   Header,
@@ -10,7 +11,10 @@ import {
   Select,
   Dropdown,
   Button,
-  Modal
+  Modal,
+  Reveal,
+  Icon,
+  label
 } from "semantic-ui-react";
 import "./Account.css";
 import axios from "axios";
@@ -188,16 +192,6 @@ export default class ProfileSetting extends Component {
     this.setState({ value: event.target.value });
   };
 
-  // updateNumber = (e) => {
-  //   const val = e.target.value;
-  //   // If the current value passes the validity test then apply that to state
-  //   if (e.target.validity.valid) this.setState({message: e.target.value});
-  //   // If the current val is just the negation sign, or it's been provided an empty string,
-  //   // then apply that value to state - we still have to validate this input before processing
-  //   // it to some other component or data structure, but it frees up our input the way a user
-  //   // would expect to interact with this component
-  //   else if (val === '' || val === '-') this.setState({message: val});
-  // }
 
   render() {
     const {
@@ -210,31 +204,30 @@ export default class ProfileSetting extends Component {
       gender
     } = this.state;
     const option_gender = [
-      { text: "Laki-laki", value: "Laki-laki" },
-      { text: "Perempuan", value: "Perempuan" }
+      {icon: "mars", text: "Male", value: "Laki-laki" },
+      {icon: "venus", text: "Female", value: "Perempuan" }
     ];
     return (
       <div >
-        <Header as="h3" style={{color: "white"}} dividing>
+        <Header as="h3" dividing>
           Profile Setting
         </Header>
         <Container>
-          <Divider hidden />
-          <Grid verticalAlign="middle" columns={2}>
+            
+          <Grid verticalAlign="middle" columns={2} centered>
             <GridColumn>
               <Image
-                size="small"
+                bordered
+                size="large"
                 src={
                   "http://localhost:3000/src/web-api/public/avatar/" +
                   this.state.avatar
                 }
                 circular
               />
-            </GridColumn>
-            <GridColumn>
-              <Form>
+            
+              <Form style={{marginTop: "-30px", float: "right"}}>
                 <Form.Field>
-                  <label style={{ textAlign: "center", color: "white" }}>Your Avatar</label>
                   <div className="input-file-container">
                     <input
                       className="input-file"
@@ -242,26 +235,27 @@ export default class ProfileSetting extends Component {
                       type="file"
                       onChange={this.fileHandler}
                     />
-                    <label
+                    
+                    
+                    <Icon
+                      bordered
+                      circular
+                      name='camera'
+                      size='big'
                       htmlFor="my-file"
-                      className="input-file-trigger"
-                      style={{ textAlign: "center", color: "#555" }}
-                    >
-                      Choose Picture
-                    </label>
-                    <br />
-                    <br />
-                    <br />
+                      // className="input-file-trigger"
+                    />
+
                   </div>
                   <p className="file-return" />
                 </Form.Field>
               </Form>
             </GridColumn>
-          </Grid>
+          </Grid> 
           <Divider hidden />
           <Form>
             <Form.Field>
-              <label style={{color: "white"}}>First Name</label>
+              <label>First Name</label>
               <input
                 placeholder="first name"
                 name="first_name"
@@ -269,7 +263,7 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
               <Divider hidden />
-              <label style={{color: "white"}}>Last Name</label>
+              <label>Last Name</label>
               <input
                 placeholder="last name"
                 name="last_name"
@@ -277,7 +271,7 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
               <Divider hidden />
-              <label style={{color: "white"}}>Phone Number</label>
+              <label>Phone Number</label>
               <input
                 type="number" 
                 pattern="[0-9]*" 
@@ -287,7 +281,7 @@ export default class ProfileSetting extends Component {
                 onChange={this.handlePost.bind(this)}
               />
             <Divider hidden />
-            <label style={{color: "white"}}>Gender</label>
+            <label>Gender</label>
             <Dropdown
               placeholder="Gender"
               style={{ position: "relative", display: "block" }}
@@ -298,10 +292,10 @@ export default class ProfileSetting extends Component {
               value={gender}
             />
             <Divider hidden />
-            <label style={{color: "white"}}>Choosen Tags :</label>
+            <label>Choosen Tags :</label>
             <br />
 
-            <b style={{color: "white"}}><i>{tags}</i></b>
+            <b><i>{tags}</i></b>
             <Divider hidden />
             <Dropdown
               placeholder="tags"

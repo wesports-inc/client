@@ -7,7 +7,8 @@ import {
   Button,
   Modal,
   Icon,
-  Input
+  Input,
+  
 } from "semantic-ui-react";
 
 export default class AccountSetting extends Component {
@@ -35,6 +36,13 @@ export default class AccountSetting extends Component {
   handleChange() {
 
   }
+
+  logout() {
+    localStorage.removeItem('email')
+    localStorage.removeItem('auth')
+    localStorage.removeItem('menu')
+    window.location='#/login';
+}
 
   delete() {
     event.preventDefault();
@@ -86,7 +94,7 @@ export default class AccountSetting extends Component {
       marginRight: "2%"
     };
     return (
-      <div style={{color: "white"}}>
+      <div style={{color: "white", marginTop:"-50px"}}>
         <Header as="h3"  style={{color: "white"}} dividing>
           Account Setting
         </Header>
@@ -94,16 +102,16 @@ export default class AccountSetting extends Component {
           <Divider hidden />
           <Form>
             <Form.Field>
-              <label style={{color: "white"}}>Your Email</label>
+              <label>Your Email</label>
               <input defaultValue={this.state.email} disabled />
             </Form.Field>
             <Form.Field>
-              <label style={{color: "white"}}>Username</label>
+              <label>Username</label>
               <input defaultValue={this.state.username} disabled />
             </Form.Field>
 
             <Modal
-              trigger={<a onClick={this.handleOpenPassword} style={{color: "white"}}><i>Change Password</i></a>}
+              trigger={<a onClick={this.handleOpenPassword} ><i>Change Password</i></a>}
               open={this.state.modalOpenPassword}
               onClose={this.handleClosePassword}
               basic
@@ -144,8 +152,18 @@ export default class AccountSetting extends Component {
             </Modal>
           </Form>
           <br />
+          
           <Modal
-            trigger={<a onClick={this.handleOpen} style={{color: "white"}}><i>Self Destroy</i></a>}
+            trigger={
+              <div>
+                <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
+                  <Button.Content hidden onClick={this.handleOpen}><lebel>Self Destroy</lebel></Button.Content>
+                  <Button.Content visible>
+                    <Icon name='user delete' />
+                  </Button.Content>
+                </Button>
+              </div>
+            }
             open={this.state.modalOpen}
             onClose={this.handleClose}
             basic
@@ -156,14 +174,22 @@ export default class AccountSetting extends Component {
               <p>Are You Sure?</p>
             </Modal.Content>
             <Modal.Actions>
-              <Button color="red" onClick={this.handleClose} inverted>
-                <Icon name="remove" /> No
+              <Button onClick={this.handleClose} inverted>
+                <Icon name="remove"  color="red" /> No
               </Button>
-              <Button color="yellow" inverted onClick={this.delete.bind(this)}>
-                <Icon name="checkmark" /> Yes
+              <Button inverted onClick={this.delete.bind(this)}>
+                <Icon name="checkmark" color="green" /> Yes
               </Button>
             </Modal.Actions>
           </Modal>
+            <div>
+            <Button animated='vertical' style={{float: "right", width: '110px', heigth: '25px'}}>
+                <Button.Content hidden onClick={this.logout.bind(this)}><lebel>Loguot</lebel></Button.Content>
+                <Button.Content visible>
+                  <Icon name='log out' />
+                </Button.Content>
+              </Button>
+            </div>
           <Divider hidden />
         </Container>
       </div>
