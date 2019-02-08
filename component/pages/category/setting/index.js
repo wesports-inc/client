@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import {Container, Divider, Grid, GridColumn, Menu} from 'semantic-ui-react';
+import {Dimmer, Loader, Container, Divider, Grid, GridColumn, Menu} from 'semantic-ui-react';
 import HeaderMenu from './header-menu-setting'
 import MenuProfile from '../../profile/MenuProfile';
 
@@ -12,8 +12,10 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: ''
+            email: '',
+            loading: true
         };
+        
     }
 
     componentWillMount() {
@@ -29,6 +31,12 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
+        console.log('first ', this.state.loading)
+        setTimeout(() => {
+            if(this.state.loading == true){
+                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+            }
+        }, 500)
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -53,27 +61,43 @@ export default class Index extends Component {
         window.location='#/login';
     }
 
-    render () {
+    loading() {
         return (
             <div>
-            <HeaderMenu/>
-            <Divider hidden/>
-            <Divider hidden/>
-            <Divider hidden/>
-            <Container>
-            <Divider hidden />
-                <Grid columns={1}>
-                    <GridColumn>
-                        <ProfileSetting/>
-                        <AccountSetting/>
-                        <br />
-                        <br />
-                        <br />
-                        
-                    </GridColumn>
-                </Grid>
-            </Container>
-            <MenuProfile/>
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
+                </Dimmer>
+            </div>        
+        );
+    }
+
+
+    render () {
+        const { loading } = this.state;
+        return (
+            <div>
+                {loading ? (this.loading()
+                    ) : (
+                        <div>
+                            <HeaderMenu/>
+                            <Divider hidden/>
+                            <Divider hidden/>
+                            <Divider hidden/>
+                            <Container>
+                            <Divider hidden />
+                                <Grid columns={1}>
+                                    <GridColumn>
+                                        <ProfileSetting/>
+                                        <AccountSetting/>
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </GridColumn>
+                                </Grid>
+                            </Container>
+                            <MenuProfile/>
+                        </div>
+                    )}
             </div>
         );
     }

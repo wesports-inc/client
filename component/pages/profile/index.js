@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Dimmer, Loader, Image, Segment, Container } from "semantic-ui-react";
 import MenuProfile from './MenuProfile';
 import HeaderProfile from './HeaderProfile';
 import MyPost from './MyPost';
@@ -10,7 +11,8 @@ export default class Index extends Component {
         super(props);
         this.state = {
             isLogin: '',
-            email: ''
+            email: '',
+            loading: true,
         };
     }
 
@@ -27,6 +29,12 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
+        console.log('first ', this.state.loading)
+        setTimeout(() => {
+            if(this.state.loading == true){
+                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+            }
+        }, 500)
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -41,13 +49,29 @@ export default class Index extends Component {
         nextState.isLogin === "false" ? window.location = '#/login' : '';
     }
 
+    loading() {
+        return (
+            <div>
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
+                </Dimmer>
+            </div>        
+        );
+    }
+
     render () {
+        const { loading } = this.state;
         return (
         <div>
-            <HeaderProfile />
-            <MoreCategory />
-            <MyPost />
-            <MenuProfile />
+            {loading ? (this.loading()
+                ) : (
+                    <div>
+                        <HeaderProfile />
+                        <MoreCategory />
+                        <MyPost />
+                        <MenuProfile />
+                    </div>
+                )}
         </div>
         );
     }
