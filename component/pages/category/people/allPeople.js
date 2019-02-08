@@ -148,8 +148,8 @@ export default class allPeople extends Component {
                             <List.Item>
                                 <Image avatar src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto} />
                                 <List.Content>
-                                    <List.Header style={{color: "#f2f2f2"}}>{ data.first_name } {data.last_name}</List.Header>
-                                    <p style={{color: "#f2f2f2"}}>@{ data.username }</p>
+                                    <List.Header>{ data.first_name } {data.last_name}</List.Header>
+                                    <p>@{ data.username }</p>
                                 </List.Content>
                             </List.Item>
                         </List>
