@@ -6,8 +6,7 @@ import {
   Grid,
   Divider,
   Header,
-  Label,
-  Flag,
+  Icon,
   Segment,
   Message
 } from "semantic-ui-react";
@@ -22,10 +21,13 @@ export default class Register extends Component {
       password: "",
       isLogin: false,
       token: "",
+      type: "password",
+      kode: 0,
       warning: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.ShowHide = this.ShowHide.bind(this);
   }
 
   // eslint-disable-next-line react/no-deprecated
@@ -69,7 +71,7 @@ export default class Register extends Component {
   }
 
   shouldComponentUpdate(newProps, newState) {
-    if (newState.isLogin || newState.warning) {
+    if (newState.isLogin || newState.warning || newState.kode) {
       return true;
     } else {
       return false;
@@ -82,6 +84,8 @@ export default class Register extends Component {
       localStorage.setItem("email", JSON.stringify(this.state.email));
       localStorage.setItem("auth", JSON.stringify(this.state.isLogin));
       window.location = "#/profile";
+    }else if(this.state.kode == 1){
+      this.setState({ kode: 0})
     }
   }
 
@@ -92,6 +96,16 @@ export default class Register extends Component {
     this.setState({
       [name]: value
     });
+  }
+
+  ShowHide(event){
+    event.preventDefault();
+    event.stopPropagation();
+    if(this.state.type == "password"){
+      this.setState({ type: "input", kode: 1})
+    }else{
+      this.setState({ type: "password", kode: 1})
+    }  
   }
 
   handleSubmit(event) {
@@ -160,10 +174,12 @@ export default class Register extends Component {
                     icon="lock"
                     iconPosition="left"
                     placeholder="Password"
-                    type="password"
+                    type={this.state.type}
                     name="password"
                     onChange={this.handleChange}
-                  />
+                    action={{ icon:"eye", onClick:this.ShowHide}}
+                    />
+                  
                   <Button color="blue" fluid size="large">
                     Log In
                   </Button>
