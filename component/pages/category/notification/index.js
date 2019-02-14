@@ -155,16 +155,11 @@ export default class Index extends Component {
                       <List.Item>
                         <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
-                          <List.Header>{data.username}</List.Header>
-                          <p>{data.name}</p>
+                          <List.Header>{data.name}</List.Header>
+                          <i>{"Influenced by you"}</i>
                         </List.Content>
                       </List.Item>
                     </List>
-                  </Grid.Column>
-                  <Grid.Column verticalAlign="middle">
-                    <Label style={{ width: "100px", float: "right", textAlign: "center" }} size="small">
-                      influenced
-                    </Label>
                   </Grid.Column>
                 </Grid>
               );

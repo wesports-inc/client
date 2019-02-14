@@ -33,13 +33,13 @@ export default class HeaderProfile extends Component {
         <div>
             <Segment.Group horizontal style={{textAlign: "center"}}>
                 <Segment>
-                    <Icon name='phone' />
+                    <Icon name='compose' />
                 </Segment>
                 <Segment>
-                    <Icon name='envelope' />
+                    <Icon name='user' />
                 </Segment>
                 <Segment>
-                    <Icon name='images' />
+                    <Icon name='eye' />
                 </Segment>
                 <Segment>
                     <Icon name='trophy' />
