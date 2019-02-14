@@ -32,7 +32,7 @@ export default class Index extends Component {
             if(this.state.loading == true){
                 this.setState({loading: false}, () => console.log('end: ', this.state.loading))
             }
-        }, 1500)
+        }, 500)
         
     }
 
@@ -55,14 +55,10 @@ export default class Index extends Component {
     loading() {
         return (
             <div>
-               
                 <Dimmer active inverted>
                     <Loader size='large'>Plase Wait</Loader>
                 </Dimmer>
-               
-            </div>
-            
-            
+            </div>        
         );
     }
 

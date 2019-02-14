@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
+import { Dimmer, Loader, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderNotification from "./HeaderNotification";
 import MenuProfile from "../../profile/MenuProfile";
@@ -12,7 +12,8 @@ export default class Index extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       datas: [],
       isLogin: "",
-      isLoading: true
+      isLoading: true,
+      loading: true
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
@@ -41,6 +42,12 @@ export default class Index extends Component {
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
+    console.log('first ', this.state.loading)
+        setTimeout(() => {
+            if(this.state.loading == true){
+                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+            }
+        }, 500)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -115,8 +122,18 @@ export default class Index extends Component {
     );
   }
 
+  loading() {
+    return (
+        <div>
+            <Dimmer active inverted>
+                <Loader size='large'>Plase Wait</Loader>
+            </Dimmer>
+        </div>        
+    );
+}
+
   render() {
-    const { datas, isLoading } = this.state;
+    const { datas, isLoading, loading } = this.state;
     return (
       <div style={{ marginBottom: 45 }}>
         <HeaderNotification />
@@ -124,7 +141,7 @@ export default class Index extends Component {
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
-        {datas.length === 0 ? (
+        {loading ? (this.loading()) : datas.length === 0 ? (
           this.generateZeroData()
         ) : isLoading ? (
           this.generateSkeleton()

@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
+import { Dimmer, Loader, Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
 import Skeleton from 'react-skeleton-loader';
 import HeaderStatistic from './HeaderStatistic';
 import MenuProfile from '../../profile/MenuProfile';
@@ -12,6 +12,7 @@ export default class Index extends Component {
             email: '',
             datas: [],
             isLogin: '',
+            loading: true,
             friend_email: localStorage.getItem('email').slice(1, -1),
         };
     }
@@ -28,6 +29,12 @@ export default class Index extends Component {
         }
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
+        console.log('first ', this.state.loading)
+        setTimeout(() => {
+            if(this.state.loading == true){
+                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+            }
+        }, 500)
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -48,23 +55,38 @@ export default class Index extends Component {
         }
     }
 
+    loading() {
+        return (
+            <div>
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
+                </Dimmer>
+            </div>        
+        );
+    }
+
     render() {
         const {datas} = this.state;
-        const {isLoading} = this.state;
+        const {isLoading, loading} = this.state;
         return (
             <div style={{marginBottom: 45}}>
-            <HeaderStatistic/>
-            <Container>
-                <Grid columns={2}>
-                    <Grid.Column>
-                        
-                    </Grid.Column>
-                    <Grid.Column verticalAlign="middle">
-                   
-                    </Grid.Column>
-                </Grid>
-            </Container>
-            <MenuProfile/>
+                {loading ? (this.loading()
+                    ) : (
+                        <div>
+                            <HeaderStatistic/>
+                            <Container>
+                                <Grid columns={2}>
+                                    <Grid.Column>
+                                        
+                                    </Grid.Column>
+                                    <Grid.Column verticalAlign="middle">
+                                
+                                    </Grid.Column>
+                                </Grid>
+                            </Container>
+                            <MenuProfile/>
+                        </div>
+                    )}
             </div>
         );
     }

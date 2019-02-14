@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Statistic, Button, Modal } from "semantic-ui-react";
+import { Container, Grid, Divider, Image, List, Header, Statistic, Button, Modal, Dimmer, Loader, Segment, } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderMessage from "./HeaderMessage";
 import MenuProfile from "../profile/MenuProfile";
 import axios from "axios";
+
 
 export default class Index extends Component {
   constructor(props) {
@@ -15,11 +16,13 @@ export default class Index extends Component {
       username_user2: "",
       isLogin: "",
       data_message: "",
-      isLoading: true
+      isLoading: true,
+      loading: true
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
   }
+
 
   componentWillMount() {
     axios({
@@ -50,12 +53,19 @@ export default class Index extends Component {
     });
   }
 
+
   componentDidMount() {
     if (this.state.datas) {
         this.setState({ isLoading: false });
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
+    console.log('first ', this.state.loading)
+        setTimeout(() => {
+            if(this.state.loading == true){
+                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+            }
+        }, 500)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -102,8 +112,8 @@ export default class Index extends Component {
                     </List.Item>
                   </List>
                 </Grid.Column>
-
-                <Grid.Column verticalAlign="middle">
+      
+    <Grid.Column verticalAlign="middle">
                   <Skeleton />
                 </Grid.Column>
               </Grid>
@@ -113,6 +123,17 @@ export default class Index extends Component {
       </div>
     );
   }
+
+
+    loading() {
+        return (
+            <div>
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
+                </Dimmer>
+            </div>        
+        );
+    }
 
   generateZeroData() {
     const divConten = {
@@ -142,7 +163,7 @@ export default class Index extends Component {
   }
 
   render() {
-    const { datas, isLoading } = this.state;
+    const { datas, isLoading, loading } = this.state;
     return (
       <div style={{ marginBottom: 45 }}>
         <HeaderMessage />
@@ -150,7 +171,7 @@ export default class Index extends Component {
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
-        {datas.length === 0 ? (
+        {loading ? (this.loading()) : datas.length === 0 ? (
           this.generateZeroData()
         ) : isLoading ? (
           this.generateSkeleton()
