@@ -1,30 +1,39 @@
 import React, { Component } from "react";
 import MenuProfile from '../profile/MenuProfile';
 import Content from "./content";
+import { Dimmer, Loader, Image, Segment, Container } from "semantic-ui-react";
 
 export default class Index extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             isLogin: '',
-            email: ''
+            email: '',
+            loading: true,
         };
+        this.loading = this.loading.bind(this)
     }
 
     componentWillMount() {
-        const email = JSON.parse(localStorage.getItem('email'))
-        const auth = JSON.parse(localStorage.getItem('auth'))
-        this.setState({
-            email,
-            isLogin: auth
-        })
-    }
+            const email = JSON.parse(localStorage.getItem('email'))
+            const auth = JSON.parse(localStorage.getItem('auth'))
+            this.setState({
+                email,
+                isLogin: auth
+            })
+        }
 
     componentDidMount() {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
+        console.log('first ', this.state.loading)
+        setTimeout(() => {
+            if(this.state.loading == true){
+                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+            }
+        }, 1500)
+        
     }
 
     shouldComponentUpdate(newProps, newState){
@@ -43,11 +52,31 @@ export default class Index extends Component {
         
     }
 
-    render () {
+    loading() {
         return (
-        <div>
-            <Content />
-            <MenuProfile />
+            <div>
+               
+                <Dimmer active inverted>
+                    <Loader size='large'>Plase Wait</Loader>
+                </Dimmer>
+               
+            </div>
+            
+            
+        );
+    }
+
+    render () {
+        const { loading } = this.state;
+        return (
+        <div> 
+            {loading ? (this.loading()
+            ) : (
+                <Container>
+                    <Content />
+                    <MenuProfile />
+                </Container>
+                )}
         </div>
         );
     }
