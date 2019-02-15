@@ -159,7 +159,7 @@ export default class MoreCategory extends Component {
               this.OpenDimmer()
             ) : null}
             <Divider hidden />
-            <Segment>
+            <Segment basic>
               <Grid columns={4} style={coloring}>
                 <GridColumn>
                   <p style={this.noSpacing} onClick={() => this.handleMenu("statistic")}>
@@ -187,7 +187,7 @@ export default class MoreCategory extends Component {
                 </GridColumn>
               </Grid>
             </Segment>
-            <Divider />
+            <Divider hidden/>
           </Container>
         )}
       </div>
