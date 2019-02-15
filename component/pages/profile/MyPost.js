@@ -268,20 +268,20 @@ export default class MyPost extends Component {
                                   <i style={textMargin}>{data.tags}</i>
                                 </small>
                                 <Modal
-                                  trigger={<Label onClick={this.handleOpen} style={{color: "Red", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate"/></Label>}
+                                  trigger={<Label onClick={this.handleOpen} style={{color: "black", border: "1", background: "white", float: "right", marginRight: "-4%"}}><Icon name="trash alternate outline"/></Label>}
                                   open={this.state.modal}
                                   onClose={this.handleClose}
                                   basic
                                 >
-                                  <Header icon="trash" content="Delete Posting!" />
+                                  <Header icon="trash alternate outline" content="Delete Posting!" />
                                   <Modal.Content>
                                     <p>Are You Sure?</p>
                                   </Modal.Content>
                                   <Modal.Actions>
-                                  <Button color="red" onClick={this.handleClose} inverted>
+                                  <Button onClick={this.handleClose} inverted>
                                     <Icon name="remove" /> No
                                   </Button>
-                                  <Button color="yellow" inverted onClick={() => this.delete(data._id)}>
+                                  <Button inverted onClick={() => this.delete(data._id)}>
                                     <Icon name="checkmark" /> Yes
                                   </Button>
                                   </Modal.Actions>
@@ -292,7 +292,7 @@ export default class MyPost extends Component {
                               
                                 <b>{data.content}</b>
                                 <br />
-                                <hr />
+                                <br />
                                   <Popup trigger={
                                   <Icon
                                     name="handshake outline"
