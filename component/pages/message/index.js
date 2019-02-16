@@ -17,7 +17,7 @@ export default class Index extends Component {
       isLogin: "",
       data_message: "",
       isLoading: true,
-      loading: true
+      loading: true,
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
