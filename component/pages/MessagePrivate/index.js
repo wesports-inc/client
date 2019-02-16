@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Statistic, Label, TextArea, Button, Input } from "semantic-ui-react";
+import { Container, Grid, Divider, List, Icon, Header, Statistic, Label, TextArea, Button, Input, Image } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderMessagePrivate from "./HeaderMessagePrivate";
 import axios from "axios";
@@ -10,6 +10,7 @@ export default class Index extends Component {
     this.state = {
       email: localStorage.getItem("email").slice(1, -1),
       datas: [],
+      data_name: [],
       username_user1 : window.location.href.split('=')[1],
       username_user2: "",
       isLogin: "",
@@ -39,6 +40,31 @@ export default class Index extends Component {
     this.setState({
       isLogin: localStorage.getItem("auth")
     });
+
+    axios({
+      method: "post",
+      url: "/api/read/message",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email,
+        username_user1: this.state.username_user1
+      }
+    })
+
+    axios({
+      method: "post",
+      url: "/api/message/head",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        username: this.state.username_user1
+      }
+    }).then(result => this.setState({ data_name: result.data }));
   }
 
   componentDidMount() {
@@ -76,7 +102,6 @@ export default class Index extends Component {
     this.setState({
       [name]: value
     })
-    console.log(this.state.pesan)
   }
 
   message() {
@@ -163,17 +188,19 @@ export default class Index extends Component {
         <HeaderMessagePrivate />
         <Divider hidden />
         <Divider hidden />
-        <Divider hidden />
-        <Divider hidden />
         {datas.length === 0 ? (
           this.generateZeroData()
         ) : (
           <Container>
             <Divider hidden />
-              <Header as="h4" textAlign="center">{this.state.username_user1}</Header>
+              <Header as="h4" textAlign="center"><Image size="tiny"
+                  circular
+                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.data_name.foto}
+                  style={{width:"15%"}}></Image><Icon></Icon>{this.state.data_name.first_name + " " + this.state.data_name.last_name}
+              <br />
+              <Label size="small" style={{ backgroundColor: "transparent" }}><i>{"@" + this.state.data_name.username}</i></Label></Header>
             <Divider />
             {datas.map(data => {
-              console.log(data)
               return (
                 <Grid columns={1} key={data._id}>
                   <Grid.Column>
@@ -181,18 +208,21 @@ export default class Index extends Component {
                       {data.username_user1 === this.state.username_user1 ?
                       <List.Item style={{float: "left"}}>
                         <List.Content>
-                          <List.Header><Label size="small" style={{ backgroundColor: "transparent"}}><b><Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />{data.name_user1}</b></Label></List.Header>
-                          <Label size="large" className="ui black label" pointing="left">
+                          <Label size="large" style={{ backgroundColor: "#DD4B39", color: "#f7f7f7",fontWeight: "100"}} circular>
                             {data.message}
-                          </Label><Label size="small" style={{ backgroundColor: "transparent"}}>{data.status}{" "}{data.date}</Label>
+                          </Label>
+                          <br />
+                          <Label size="small" style={{ backgroundColor: "transparent",float: "left"}}>{data.date.slice(1, 10)}</Label>
                         </List.Content>
                       </List.Item>
                       : 
                       <List.Item style={{float: "right"}}>
                         <List.Content style={{float: "right"}}>
-                        <Label size="small" style={{ backgroundColor: "transparent"}}>{data.date}</Label><Label size="large" className="ui grey label" pointing="right">
+                        <Label size="small" style={{ backgroundColor: "transparent"}}></Label><Label style={{float: "right",backgroundColor: "#00ACEE", color: "#f7f7f7",fontWeight: "100"}} size="large" circular>
                             {data.message}
                           </Label>
+                          <br />
+                          { data.status === "Send" ? <Label size="small" style={{ backgroundColor: "transparent",float: "right"}}>{data.date.slice(1, 10)}<Icon /><Icon name="envelope open outline"/><i>{data.status}</i></Label> : <Label size="small" style={{ backgroundColor: "transparent",float: "right"}}>{data.date.slice(1, 10)}<Icon /><Icon name="envelope open outline" color="blue"/><i>{data.status}</i></Label> }
                         </List.Content>
                       </List.Item>}
                     </List>

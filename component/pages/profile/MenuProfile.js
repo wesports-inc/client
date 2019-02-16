@@ -19,6 +19,7 @@ export default class MenuProfile extends Component {
       options: [],
       value: "null",
       seen: null,
+      notif: "",
       tag: 0,
       post: 0
     };
@@ -52,6 +53,18 @@ export default class MenuProfile extends Component {
         email: this.state.email // This is the body part
       }
     }).then(result => this.setState({ seen: result.data }));
+
+    axios({
+      method: "post",
+      url: "/api/notif/message",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ message: result.data}));
 
     axios({
       method: "get",
@@ -227,11 +240,11 @@ export default class MenuProfile extends Component {
               </Menu.Item>
 
               <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
-                {menu === "message" ? (
-                  <Icon name="comment alternate" style={{ color: "#ED6A5E" }} size="large" />
-                ) : (
-                    <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />
-                  )}
+                {this.state.message === 0 && menu === "message" ? (<Icon name="comment alternate" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu === "message" ? <Icon name="comment alternate" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                    {this.state.message}
+                  </Label></Icon> : this.state.message === 0 && menu !== "message" ? (<Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu !== "message" ? <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                    {this.state.message}
+                  </Label></Icon> : null }
               </Menu.Item>
 
               <Menu.Item name="post" onClick={this.show("blurring")}>
