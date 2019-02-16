@@ -185,6 +185,7 @@ export default class MyPost extends Component {
   render() {
     
     const { posting, isLoading } = this.state;
+    const nopost = posting.length;
     const gridMargin = {
       marginBottom: "40px"
     };
@@ -195,6 +196,22 @@ export default class MyPost extends Component {
       <div>
         {isLoading ? (
           this.generateSkeleton()
+        ) : nopost == 0 ? (
+          <Container>
+            <Header as="h2" icon textAlign="center">
+              <Icon name="wordpress forms" />
+              No Post
+              <Header.Subheader>
+                <i>You Have No Post Yet, Make It Now!</i>
+              </Header.Subheader>
+            </Header>
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
+            <Divider hidden />
+          </Container>
         ) : (
           <Container>
             <Segment basic>
