@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimmer, Loader, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
+import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderNotification from "./HeaderNotification";
 import MenuProfile from "../../profile/MenuProfile";
@@ -97,24 +97,18 @@ export default class Index extends Component {
 
   generateZeroData() {
     const divConten = {
-      marginTop: "40%",
-      marginBottom: "60%"
+      marginTop: "50%",
+      marginBottom: "50%"
     };
     return (
       <div style={divConten}>
-        <Header as="h2" icon textAlign="center">
-          <Image
-            centered
-            size="large"
-            src="https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png"
-          />
+        <Header as="h5" icon textAlign="center">
+        <Icon name="bell slash outline" />
           <Header.Content>
             <Statistic>
-              <Statistic.Value text>Hell Yeah,</Statistic.Value>
               <Statistic.Label>
-                <i>0 Million</i>
+                <i>You Have No Notification</i>
               </Statistic.Label>
-              <Statistic.Label>Notification</Statistic.Label>
             </Statistic>
           </Header.Content>
         </Header>
