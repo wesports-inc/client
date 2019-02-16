@@ -18,6 +18,12 @@ export default class Index extends Component {
     }
 
     componentWillMount() {
+        if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+            // this.setState({loading: false})
+            setTimeout(() =>  {
+                this.setState({loading: false})
+            }, 100)
+        }
        
     }
 
@@ -29,12 +35,12 @@ export default class Index extends Component {
         }
         const {isLogin} = this.state
         isLogin === "false" ? window.location = '#/login' : ''
-        console.log('first ', this.state.loading)
-        setTimeout(() => {
-            if(this.state.loading == true){
-                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-            }
-        }, 500)
+        // console.log('first ', this.state.loading)
+        // setTimeout(() => {
+        //     if(this.state.loading == true){
+        //         this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+        //     }
+        // }, 500)
     }
 
     shouldComponentUpdate(newProps, newState){

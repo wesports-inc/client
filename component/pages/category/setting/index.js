@@ -19,6 +19,12 @@ export default class Index extends Component {
     }
 
     componentWillMount() {
+        if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+            // this.setState({loading: false})
+            setTimeout(() =>  {
+                this.setState({loading: false})
+            }, 100)
+        }
         const email = JSON.parse(localStorage.getItem('email'))
         const auth = JSON.parse(localStorage.getItem('auth'))
         this.setState({
@@ -31,12 +37,6 @@ export default class Index extends Component {
         if(this.state.isLogin != true){
             window.location='#/login';
         }
-        console.log('first ', this.state.loading)
-        setTimeout(() => {
-            if(this.state.loading == true){
-                this.setState({loading: false}, () => console.log('end: ', this.state.loading))
-            }
-        }, 500)
     }
 
     shouldComponentUpdate(newProps, newState){
