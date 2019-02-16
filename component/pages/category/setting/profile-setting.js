@@ -39,6 +39,7 @@ export default class ProfileSetting extends Component {
       option: [],
       value: [],
       tags: [],
+      tags2: [],
       option_gender: [],
       modalNotification: false,
       kode: 0,
@@ -81,6 +82,7 @@ export default class ProfileSetting extends Component {
           last_name: result.data.last_name,
           phone_number: result.data.phone_number,
           gender: result.data.jenis_kelamin,
+          tags2: result.data.tags,
           first_name2: result.data.first_name,
           last_name2: result.data.last_name,
           phone_number2: result.data.phone_number,
@@ -151,7 +153,7 @@ export default class ProfileSetting extends Component {
     }else{
       this.setState({kode: 0})
     }
-    if(this.state.first_name != this.state.first_name2 || this.state.last_name != this.state.last_name2 || this.state.phone_number != this.state.phone_number2 || this.state.gender != this.state.gender2){
+    if(this.state.first_name != this.state.first_name2 || this.state.last_name != this.state.last_name2 || this.state.phone_number != this.state.phone_number2 || this.state.gender != this.state.gender2 || this.state.tags == this.state.tags2){
       fetch("/api/user/tags", {
         method: "PUT",
         headers: {
