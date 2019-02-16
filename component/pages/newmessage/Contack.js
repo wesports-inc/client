@@ -70,7 +70,6 @@ export default class Contack extends Component {
       [name]: value,
       kode: 1
     })
-    console.log(this.state.cari)
   }
 
   generateZeroData() {
