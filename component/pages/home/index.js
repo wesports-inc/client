@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MenuProfile from '../profile/MenuProfile';
 import Content from "./content";
+import Navbar from "./Navbar";
 import { Dimmer, Loader, Image, Segment, Container } from "semantic-ui-react";
 
 export default class Index extends Component {
@@ -68,10 +69,13 @@ export default class Index extends Component {
         <div> 
             {loading ? (this.loading()
             ) : (
-                <Container>
+                <div>
+                    <Navbar /> 
+                    <br/>
+                    <br/>
                     <Content />
                     <MenuProfile />
-                </Container>
+                </div>
                 )}
         </div>
         );

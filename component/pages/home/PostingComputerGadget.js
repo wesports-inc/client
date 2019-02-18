@@ -8,7 +8,8 @@ import {
   GridColumn,
   List,
   Image,
-  Popup
+  Popup,
+  GridRow
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -150,7 +151,7 @@ export default class PostingOther extends Component {
     
     const { posting, isLoading } = this.state;
     const gridMargin = {
-      marginBottom: "-70px"
+      marginBottom: "40px"
     };
     const textMargin = {
       marginLeft: "2%"
@@ -161,12 +162,13 @@ export default class PostingOther extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
+          <Segment basic>
             {posting.map((data, index) => {
               return (
                 <Grid columns={1} key={data._id}>
-                  <GridColumn style={gridMargin}>
-                    <Segment>
-                      <List>
+                  <GridColumn>
+                    <GridRow>
+                      <List style={gridMargin}>
                         <List.Item>
                           <List.Content>
                             <List.Header as="a">
@@ -250,21 +252,19 @@ export default class PostingOther extends Component {
                                 <i>
                                   {data.jam} {data.menit} {data.date}
                                 </i>
-                              </small>
-                            </List.Description>
-                          </List.Content>
-                        </List.Item>
-                      </List>
-                    </Segment>
-                    <Divider hidden />
-                  </GridColumn>
-                  <Divider hidden />
-                </Grid>
-              );
-            })}
-            <Divider hidden />
-            <Divider hidden />
-            <Divider hidden />
+                                </small>
+                              </List.Description>
+                            </List.Content>
+                          </List.Item>
+                        </List>
+                        <Divider fitted />
+                      </GridRow>
+                    </GridColumn>
+                  </Grid>
+                );
+              })}
+              <Divider hidden/>
+            </Segment>
           </Container>
         )}
       </div>
