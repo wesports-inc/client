@@ -89,6 +89,18 @@ export default class allPeople extends Component {
                 email: value
             }, // This is the body part
           }).then(result => this.setState({fotos: result.data})))
+
+          axios({
+            method: 'post',
+            url: '/api/user',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            data: {
+                email: value
+            }, // This is the body part
+          }).then(result => this.setState({friendship: result.data}))
     }
 
     generateSkeleton() {
@@ -172,7 +184,7 @@ export default class allPeople extends Component {
         );
       }
 
-    close = () => this.setState({ open: false, email_friend: '' }, () => sessionStorage.removeItem('username'))
+    close = () => this.setState({ open: false, email_friend: '', friendship: [] }, () => sessionStorage.removeItem('username'))
     
     render() {
         const { datas, isLoading, friendship, open, dimmer, fotos, allfoto } = this.state
