@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
 import { Grid, Container, Segment, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
-
 import axios from "axios";
 
 export default class HeaderProfile extends Component {
@@ -202,6 +201,7 @@ export default class HeaderProfile extends Component {
                         bordered
                       />
                     }
+
                     position='top center'
                     style={popupStyle}>
                     {first_name} {last_name}

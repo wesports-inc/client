@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-no-undef */
+
 import React, { Component } from "react";
 import {
   Header,
@@ -47,6 +48,8 @@ export default class ProfileSetting extends Component {
     };
     this.handleTags = this.handleTags.bind(this);
   }
+
+  
 
   handleOpenNotification = () => this.setState({ modalNotification: true });
 
@@ -226,6 +229,8 @@ export default class ProfileSetting extends Component {
                   this.state.avatar
                 }
                 circular
+                centered
+                style={{height: "120px", width: "120px"}}
               />
             
               <Form style={{marginTop: "-30px", float: "right"}}>
@@ -237,7 +242,6 @@ export default class ProfileSetting extends Component {
                       type="file"
                       onChange={this.fileHandler}
                     />
-                    
                     
                     <Icon
                       bordered
@@ -254,7 +258,7 @@ export default class ProfileSetting extends Component {
               </Form>
             </GridColumn>
           </Grid> 
-          <Divider hidden />
+          
           <Form>
             <Form.Field>
               <label>First Name</label>
@@ -264,7 +268,7 @@ export default class ProfileSetting extends Component {
                 defaultValue={first_name}
                 onChange={this.handlePost.bind(this)}
               />
-              <Divider hidden />
+              <Divider hidden/>
               <label>Last Name</label>
               <input
                 placeholder="last name"
@@ -295,13 +299,12 @@ export default class ProfileSetting extends Component {
             />
             <Divider hidden />
             <label>Choosen Tags :</label>
-            <br />
-
-            <b><i>{tags}</i></b>
+            <b style={{color: "blue"}}><i>&emsp;{tags}</i></b>
+            
             <Divider hidden />
             <Dropdown
               placeholder="tags"
-              style={{ position: "relative", display: "block" }}
+              style={{ position: "relative", display: "block", marginTop: "10px" }}
               onChange={this.setValue.bind(this)}
               fluid
               multiple
@@ -309,17 +312,14 @@ export default class ProfileSetting extends Component {
               options={option}
               value={value}
             />
-            <Divider hidden />
+           
             <Modal
               trigger={
                 <Button
                   fluid
-                  icon="checkmark"
-                  labelPosition="right"
-                  content="Update Profile"
-                  style={{backround: "white", color: "#555"}}
-                  onClick={this.update.bind(this)}
-                />
+                  style={{background: "#575757", color: "white", marginTop: "10px"}}
+                  size="tiny"
+                  onClick={this.update.bind(this)}>Update Profile</Button>
               }
               open={this.state.modalOpenNotification}
               onClose={this.handleCloseNotification}
@@ -330,9 +330,6 @@ export default class ProfileSetting extends Component {
             </Modal>
             </Form.Field>
           </Form>
-          <Divider hidden />
-          <Divider hidden />
-          <Divider hidden />
         </Container>
         <Divider hidden />
         <Divider hidden />

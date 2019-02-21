@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, Route } from "react-router-dom";
 import App from "./App";
+import "./index.css";
+
 
 //user personality
 import Login from "./component/pages/form-user/login";
