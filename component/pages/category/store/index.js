@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import { Dimmer, Loader, Container, Grid, Divider, Image, List, Header, Button, Icon } from 'semantic-ui-react';
-import Skeleton from 'react-skeleton-loader';
-import HeaderStatistic from './HeaderStatistic';
+import HeaderStore from './HeaderStore';
 import MenuProfile from '../../profile/MenuProfile';
-import axios from 'axios';
 
 export default class Index extends Component {
     constructor(props) {
@@ -79,7 +77,7 @@ export default class Index extends Component {
                 {loading ? (this.loading()
                     ) : (
                         <div>
-                            <HeaderStatistic/>
+                            <HeaderStore/>
                             <Container>
                                 <Grid columns={2}>
                                     <Grid.Column>

@@ -134,7 +134,7 @@ export default class MoreCategory extends Component {
     const settingIcon = "../../../../assets/images/icon/setting.png";
     const peopleIcon = "../../../../assets/images/icon/group.png";
     const photoIcon = "../../../../assets/images/icon/reputation.png";
-    const statisticIcon = "../../../../assets/images/icon/statistic.png";
+    const storeIcon = "../../../../assets/images/icon/wallet.png";
     const coloring = {
       color: "#555"
     };
@@ -146,8 +146,8 @@ export default class MoreCategory extends Component {
       window.location = "#/people";
     } else if (this.state.isCategory === "reputation") {
       return null;
-    } else if (this.state.isCategory === "statistic") {
-      window.location = "#/statistic";
+    } else if (this.state.isCategory === "store") {
+      window.location = "#/store";
     }
     return (
       <div style={{ marginBottom: 10 }}>
@@ -162,10 +162,10 @@ export default class MoreCategory extends Component {
             <Segment basic>
               <Grid columns={4} style={coloring}>
                 <GridColumn>
-                  <p style={this.noSpacing} onClick={() => this.handleMenu("statistic")}>
-                    <Image src={statisticIcon} avatar />
+                  <p style={this.noSpacing} onClick={() => this.handleMenu("store")}>
+                    <Image src={storeIcon} avatar />
                   </p>
-                  <p style={this.smallFontCenter}>Statistic</p>
+                  <p style={this.smallFontCenter}>Store</p>
                 </GridColumn>
                 <GridColumn>
                   <p style={this.noSpacing} onClick={() => this.setState({ dimmers: true })}>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {Icon, Menu, Header} from 'semantic-ui-react';
 
-export default class HeaderStatistic extends Component {
+export default class HeaderStore extends Component {
 
     logout() {
         localStorage.removeItem('email')
@@ -21,7 +21,7 @@ export default class HeaderStatistic extends Component {
             </Menu.Item>
             <Menu.Menu position='right'>
               <Menu.Item name='help'>
-                <Header as="h5">Statistic</Header>
+                <Header as="h5">Store</Header>
               </Menu.Item>
             </Menu.Menu>
           </Menu>

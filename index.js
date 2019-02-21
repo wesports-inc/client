@@ -12,7 +12,7 @@ import Profile from "./component/pages/profile/";
 import Setting from "./component/pages/category/setting/";
 import People from "./component/pages/category/people/";
 import Notifications from "./component/pages/category/notification/"
-import Statistic from "./component/pages/category/statistic/"
+import Store from "./component/pages/category/store/"
 import TagsPost from "./component/pages/posts/"
 import Message from "./component/pages/message/"
 import NewMessage from "./component/pages/newmessage/"
@@ -39,7 +39,7 @@ ReactDOM.render(
       <Route path="/people" component={People} />
       <Route path="/setting" component={Setting} />
       <Route path="/notification" component={Notifications} />
-      <Route path="/statistic" component={Statistic} />
+      <Route path="/store" component={Store} />
       <Route path="/tagspost/:tag" component={TagsPost} />
       <Route path="/dm" component={MessagePrivate} />
       <Route path="/newdm" component={NewMessage} />
