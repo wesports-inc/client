@@ -13,7 +13,6 @@ export default class HeaderProfile extends Component {
       rank: null,
       temp_total: null
     };
-    this.gotoInfluenceList = this.gotoInfluenceList.bind(this);
   }
 
   componentWillMount() {
@@ -44,6 +43,8 @@ export default class HeaderProfile extends Component {
         }).then(result => this.setState({ status: result.data }));
       })
     );
+    
+    
     axios({
       method: "post",
       url: "/api/people/profile/get",
@@ -116,93 +117,45 @@ export default class HeaderProfile extends Component {
     }).then(result => this.setState({ status: result.data.status, temp_total: this.state.temp_total - 1 }));
   }
 
-  gotoInfluenceList() {
-    window.location = "#/user/influence/list";
-  }
-
   render() {
-    const { profile, status, temp_total } = this.state;
-    var ranking = this.state.rank ;
-    //simple css styling
-    const smallFont = {
-      fontSize: 10
-    };
-    const toRight = {
-      float: "right"
-    };
+    const {profile} = this.state
     return (
-      <div style={{ marginBottom: 15, background: "#f5f5f5" }}>
+      <div style={{ marginBottom: 15 }}>
         <Container>
           {profile.map(data => {
             return (
-              <Grid columns={2} key={data._id}>
-                <Grid.Row stretched>
+              <Grid columns={1} key={data._id}>
+                <Grid.Row style={{background: 'linear-gradient(to bottom, #f7f8f9, #889998)'}}>
                   <Grid.Column>
-                    <Segment textAlign="center">
+                    <Segment basic textAlign="center">
                       <Image
                         src={"http://localhost:3000/src/web-api/public/avatar/" + data.foto}
                         size="medium"
                         circular
+                        centered
                         bordered
-                      />
+                        style={{height: "150px", width: "150px" }} />
                       <br />@{data.username}
                       <br />
                       {data.first_name} {data.last_name}
-                      <Divider />
+                      <Divider hidden/>
                       {status === "followed" ? (
                         <Button
                           content="unfollow"
                           size="tiny"
-                          primary
                           fluid
+                          style={{background: "#6497c0", fontSize: "14px", color: "white"}}
                           onClick={() => this.handleUnfollow(data.email)}
                         />
                       ) : (
                         <Button
                           content="follow"
                           size="tiny"
-                          primary
+                          style={{background: "#6497c9", fontSize: "14px", color: "white"}}
                           fluid
                           onClick={() => this.handleFollow(data.email)}
                         />
                       )}
-                    </Segment>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Segment textAlign="center">
-                      <Statistic color="yellow">
-                        <Statistic.Label>User Rank</Statistic.Label>
-                        <Statistic.Value>{ranking}</Statistic.Value>
-                      </Statistic>
-                    </Segment>
-                    <Segment>
-                      <p style={smallFont}>
-                        Posts <span style={toRight}>{data.total_posts}</span>
-                      </p>
-                      <p style={smallFont}>
-                        Influencing{" "}
-                        <a onClick={this.gotoInfluenceList} style={toRight}>
-                          <u style={{ color: "blue" }}>{temp_total} person</u>
-                        </a>
-                      </p>
-                      <p style={smallFont}>
-                        Awards{" "}
-                        <span style={toRight}>
-                          <u style={{ color: "blue" }}>{data.awards}</u>
-                        </span>
-                      </p>
-                      <p style={smallFont}>
-                        Tags{" "}
-                        <span style={toRight}>
-                          <u style={{ color: "blue" }}>{data.tags}</u>
-                        </span>
-                      </p>
-                      <p style={smallFont}>
-                        Join Date{" "}
-                        <span style={toRight}>
-                          <i>{data.join_date}</i>
-                        </span>
-                      </p>
                     </Segment>
                   </Grid.Column>
                 </Grid.Row>

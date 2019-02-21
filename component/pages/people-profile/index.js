@@ -50,7 +50,7 @@ export default class Index extends Component {
         if(this.state.loading == true){
             this.setState({loading: false}, () => console.log('end: ', this.state.loading))
         }
-    }, 1500)
+    }, 100)
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -84,13 +84,12 @@ export default class Index extends Component {
     return (
       <div style={{ marginBottom: 45 }}>
         {loading ? (this.loading()) : ( <div>
-          <HeaderPeople />
+        <HeaderPeople />
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
         <HeaderProfile />
         <Action />
-        <Posts />
         </div>
         )}
         
