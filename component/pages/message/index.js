@@ -185,19 +185,27 @@ export default class Index extends Component {
           <Container>
             {datas.map(data => {
               return (
-                <Grid columns={2} key={data}>
-                {data === this.state.username_user1 ? null :  
+                <Grid columns={2} key={data._id}>  
                   <Grid.Column>
-                    <List verticalAlign="middle" onClick={() => {this.message(data)}}>
+                    { data.username_user1 === this.state.username_user1 ? <List verticalAlign="middle" onClick={() => {this.message(data.username_user2)}}>
                       <List.Item>
                         <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
-                          <List.Header>{data}</List.Header>
+                          { data.username_user1 === this.state.username_user1 ? (<List.Header>{data.username_user2}</List.Header>) : (<List.Header>{data.username_user1}</List.Header>)}
+                          <p><i><small>{data.message}</small></i></p>
                         </List.Content>
                       </List.Item>
-                    </List>
+                    </List> : 
+                    <List verticalAlign="middle" onClick={() => {this.message(data.username_user1)}}>
+                    <List.Item>
+                      <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
+                      <List.Content>
+                        { data.username_user1 === this.state.username_user1 ? (<List.Header>{data.username_user2}</List.Header>) : (<List.Header>{data.username_user1}</List.Header>)}
+                        <p><i><small>{data.message}</small></i></p>
+                      </List.Content>
+                    </List.Item>
+                    </List> }
                   </Grid.Column>
-                }
                 </Grid>
               );
             })}
