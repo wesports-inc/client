@@ -1,10 +1,9 @@
-import React, { Component } from "react"
+import React, { Component } from "react";
 import {Dimmer, Loader, Container, Divider, Grid, GridColumn, Menu} from 'semantic-ui-react';
-import HeaderMenu from './header-menu-setting'
+import HeaderMenu from './header-menu-setting';
 import MenuProfile from '../../profile/MenuProfile';
-
-import AccountSetting from './account-setting'
-import ProfileSetting from './profile-setting'
+import AccountSetting from './account-setting';
+import ProfileSetting from './profile-setting';
 
 export default class Index extends Component {
 
