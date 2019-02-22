@@ -9,6 +9,7 @@ export default class Contack extends Component {
     super(props);
     this.state = {
       datas: [],
+      email: localStorage.getItem('email').slice(1, -1),
       cari: "",
       isLoading: false,
       kode: 0
@@ -123,12 +124,14 @@ export default class Contack extends Component {
                 <Grid columns={2} key={data._id}>  
                   <Grid.Column>
                     <List verticalAlign="middle" onClick={() => {this.message(data.username)}}>
+                      { data.email === this.state.email ? null : 
                       <List.Item>
                         <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
                           <List.Header>{data.username}</List.Header>
                         </List.Content>
                       </List.Item>
+                      }
                     </List>
                   </Grid.Column>
                 </Grid>
