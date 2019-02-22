@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import HeaderInfluence from "./HeaderInfluence";
-import Influence from "./Influence";
+import HeaderNewMessage from "./HeaderNewMessage";
+import Kontak from "./Contack";
+import MenuProfile from "../profile/MenuProfile";
 import { Divider } from "semantic-ui-react";
 
 export default class Index extends Component {
@@ -44,8 +45,15 @@ export default class Index extends Component {
   render() {
     return (
       <div style={{ marginBottom: 45 }}>
-        <HeaderInfluence />
-        <Influence />
+        <HeaderNewMessage />
+        <Divider hidden />
+        <Divider hidden />
+        <Divider hidden />
+        <Kontak />
+        <Divider hidden />
+        <Divider hidden />
+        <Divider hidden />
+        <MenuProfile />
       </div>
     );
   }

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import {Icon, Menu, Header} from 'semantic-ui-react';
+import {Icon, Menu, Header, Divider} from 'semantic-ui-react';
 
-export default class HeaderMenu extends Component {
+export default class HeaderMessage extends Component {
 
     logout() {
         localStorage.removeItem('email')
         localStorage.removeItem('auth')
-        localStorage.removeItem('menu')
         window.location='#/login';
     }
     back() {
@@ -18,13 +17,13 @@ export default class HeaderMenu extends Component {
         return (
             <Menu borderless size="huge" fixed="top">
             <Menu.Item name='back'>
-              <Icon onClick={this.back.bind(this)} name="arrow left" style={{color: "#555"}}/>
+              <Icon onClick={this.back.bind(this)} name="arrow left"/>
             </Menu.Item>
-            {/* <Menu.Menu position='right'>
+            <Menu.Menu position='right'>
               <Menu.Item name='help'>
-              <Header as="h5"><a onClick={this.logout.bind(this)} style={{color: "#ED6A5E"}}>Logout</a></Header>
+                <Header as="h5">Message Way</Header>
               </Menu.Item>
-            </Menu.Menu> */}
+            </Menu.Menu>
           </Menu>
         );
     }

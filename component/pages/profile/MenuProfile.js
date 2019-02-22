@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Menu, Icon, Label, Modal, Header, Form, TextArea, Button, Dropdown, Message } from "semantic-ui-react";
+import { Menu, Icon, Label, Modal, Header, Form, TextArea, Button, Dropdown, Message, Image } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
 
@@ -15,9 +15,11 @@ export default class MenuProfile extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       content: "",
       tags: "",
+      foto: "",
       options: [],
       value: "null",
       seen: null,
+      notif: "",
       tag: 0,
       post: 0
     };
@@ -53,6 +55,18 @@ export default class MenuProfile extends Component {
     }).then(result => this.setState({ seen: result.data }));
 
     axios({
+      method: "post",
+      url: "/api/notif/message",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ message: result.data}));
+
+    axios({
       method: "get",
       url: "/api/tags",
       headers: {
@@ -60,6 +74,19 @@ export default class MenuProfile extends Component {
         Accept: "application/json"
       }
     }).then(result => this.setState({ options: result.data }));
+
+    axios({
+      method: "post",
+      url: "/api/user/avatar",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      data: {
+        email: this.state.email // This is the body part
+      }
+    }).then(result => this.setState({ foto: result.data }));
+
   }
 
   componentDidMount() {
@@ -213,11 +240,11 @@ export default class MenuProfile extends Component {
               </Menu.Item>
 
               <Menu.Item name="message" onClick={() => this.handleMenu("message")}>
-                {menu === "message" ? (
-                  <Icon name="comment alternate" style={{ color: "#ED6A5E" }} size="large" />
-                ) : (
-                    <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />
-                  )}
+                {this.state.message === 0 && menu === "message" ? (<Icon name="comment alternate" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu === "message" ? <Icon name="comment alternate" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                    {this.state.message}
+                  </Label></Icon> : this.state.message === 0 && menu !== "message" ? (<Icon name="comment alternate outline" style={{ color: "#555" }} size="large" />) : this.state.message !== 0 && menu !== "message" ? <Icon name="comment alternate outline" style={{ color: "#555" }} size="large" ><Label circular size="tiny" color="red" key="red" style={labelNotif} attached="top" pointing="below">
+                    {this.state.message}
+                  </Label></Icon> : null }
               </Menu.Item>
 
               <Menu.Item name="post" onClick={this.show("blurring")}>
@@ -246,9 +273,19 @@ export default class MenuProfile extends Component {
 
               <Menu.Item name="profile" onClick={() => this.handleMenu("profile")}>
                 {menu === "profile" ? (
-                  <Icon name="user circle" style={{ color: "#ED6A5E" }} size="large" />
+                  <Image
+                  size="small"
+                  circular
+                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
+                  style={{width:"50%"}}
+                  />
                 ) : (
-                    <Icon name="user circle outline" style={{ color: "#555" }} size="large" />
+                  <Image
+                  size="small"
+                  circular
+                  src={"http://localhost:3000/src/web-api/public/avatar/" + this.state.foto}
+                  style={{width:"50%"}}
+                  />
                   )}
               </Menu.Item>
             </Menu>

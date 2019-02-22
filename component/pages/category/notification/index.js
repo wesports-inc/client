@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
+import { Dimmer, Loader, Icon, Container, Grid, Divider, Image, List, Header, Label, Statistic } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import HeaderNotification from "./HeaderNotification";
 import MenuProfile from "../../profile/MenuProfile";
@@ -12,13 +12,20 @@ export default class Index extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       datas: [],
       isLogin: "",
-      isLoading: true
+      isLoading: true,
+      loading: true
     };
     this.generateSkeleton = this.generateSkeleton.bind(this);
     this.generateZeroData = this.generateZeroData.bind(this);
   }
 
   componentWillMount() {
+    if(this.state.loading == true || this.setState.isLogin == '' || this.setState.email == ''){
+      // this.setState({loading: false})
+      setTimeout(() =>  {
+          this.setState({loading: false})
+      }, 100)
+  }
     axios({
       method: "post",
       url: "/api/follow/notif",
@@ -41,6 +48,12 @@ export default class Index extends Component {
     }
     const { isLogin } = this.state;
     isLogin === "false" ? (window.location = "#/login") : "";
+    // console.log('first ', this.state.loading)
+    //     setTimeout(() => {
+    //         if(this.state.loading == true){
+    //             this.setState({loading: false}, () => console.log('end: ', this.state.loading))
+    //         }
+    //     }, 250)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -90,24 +103,18 @@ export default class Index extends Component {
 
   generateZeroData() {
     const divConten = {
-      marginTop: "40%",
-      marginBottom: "60%"
+      marginTop: "50%",
+      marginBottom: "50%"
     };
     return (
       <div style={divConten}>
-        <Header as="h2" icon textAlign="center">
-          <Image
-            centered
-            size="large"
-            src="https://image.spreadshirtmedia.com/image-server/v1/mp/designs/12346806,width=178,height=178/cute-devil.png"
-          />
+        <Header as="h5" icon textAlign="center">
+        <Icon name="bell slash outline" />
           <Header.Content>
             <Statistic>
-              <Statistic.Value text>Hell Yeah,</Statistic.Value>
               <Statistic.Label>
-                <i>0 Million</i>
+                <i>You Have No Notification</i>
               </Statistic.Label>
-              <Statistic.Label>Notification</Statistic.Label>
             </Statistic>
           </Header.Content>
         </Header>
@@ -115,8 +122,18 @@ export default class Index extends Component {
     );
   }
 
+  loading() {
+    return (
+        <div>
+            <Dimmer active inverted>
+                <Loader size='large'>Plase Wait</Loader>
+            </Dimmer>
+        </div>        
+    );
+}
+
   render() {
-    const { datas, isLoading } = this.state;
+    const { datas, isLoading, loading } = this.state;
     return (
       <div style={{ marginBottom: 45 }}>
         <HeaderNotification />
@@ -124,7 +141,8 @@ export default class Index extends Component {
         <Divider hidden />
         <Divider hidden />
         <Divider hidden />
-        {datas.length === 0 ? (
+        { loading ? (this.loading()
+        ) : datas.length === 0 ? (
           this.generateZeroData()
         ) : isLoading ? (
           this.generateSkeleton()
@@ -138,16 +156,11 @@ export default class Index extends Component {
                       <List.Item>
                         <Image avatar src="https://react.semantic-ui.com/images/avatar/small/tom.jpg" />
                         <List.Content>
-                          <List.Header>{data.username}</List.Header>
-                          <p>{data.name}</p>
+                          <List.Header>{data.name}</List.Header>
+                          <i>{"Influenced by you"}</i>
                         </List.Content>
                       </List.Item>
                     </List>
-                  </Grid.Column>
-                  <Grid.Column verticalAlign="middle">
-                    <Label style={{ width: "100px", float: "right", textAlign: "center" }} size="small">
-                      influenced
-                    </Label>
                   </Grid.Column>
                 </Grid>
               );

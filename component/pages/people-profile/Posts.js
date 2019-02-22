@@ -10,7 +10,8 @@ import {
   Dimmer,
   Header,
   Image,
-  Popup
+  Popup,
+  GridRow
 } from "semantic-ui-react";
 import Skeleton from "react-skeleton-loader";
 import axios from "axios";
@@ -149,13 +150,20 @@ export default class MyPost extends Component {
     );
   }
 
+  discuss(value) {
+    window.location = '#/posts?id='+ value + '' 
+  }
+
   render() {
     const { posting } = this.state;
     const { thankpost } = this.state;
     const nopost = posting.length;
     const { isLoading } = this.state;
+    const listMargin = {
+      marginBottom: "20px"
+    };
     const gridMargin = {
-      marginBottom: "-70px"
+      marginBottom: "-80px"
     };
     const textMargin = {
       marginLeft: "2%"
@@ -177,111 +185,115 @@ export default class MyPost extends Component {
           </Container>
         ) : (
           <Container>
-            {posting.map((data, index) => {
-              return (
-                <Grid columns={1} key={data._id}>
-                  <GridColumn style={gridMargin}>
-                    <Segment>
-                      <List>
-                        <List.Item>
-                          <List.Content>
-                            <List.Header as="a">
-                              <small>
-                                {data.tags === "null" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/pilihkategori.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "computer-gadget" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/komputergadget.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "family-love" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/keluargaasmara.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fact-rumour" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/faktarumor.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "business-work" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/bisnispekerjaan.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "fashion-lifestyle" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/fashion.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "quotes" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/quotes.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "other" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/lainnya.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : data.tags === "riddles" ? (
-                                  <Image
-                                    src="http://192.168.1.14/assets/icons/tags/riddle.png"
-                                    width="7%"
-                                    style={{ float: "left" }}
-                                  />
-                                ) : null}
-                              </small>
-                              <small>
-                                <i style={textMargin}>{data.tags}</i>
-                              </small>
-                            </List.Header>
-                            <br />
-                            <List.Description>
-                              <b>{data.content}</b>
+            <Segment basic>
+              {posting.map((data, index) => {
+                return (
+                  <Grid columns={1} key={data._id} style={gridMargin}>
+                    <GridColumn>
+                      <GridRow>
+                        <List style={listMargin}>
+                          <List.Item>
+                            <List.Content>
+                              <List.Header as="a">
+                                <small>
+                                  {data.tags === "null" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/pilihkategori.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "computer-gadget" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/komputergadget.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "family-love" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/keluargaasmara.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "fact-rumour" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/faktarumor.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "business-work" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/bisnispekerjaan.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "fashion-lifestyle" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/fashion.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "quotes" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/quotes.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "other" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/lainnya.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : data.tags === "riddles" ? (
+                                    <Image
+                                      src="http://192.168.1.14/assets/icons/tags/riddle.png"
+                                      width="7%"
+                                      style={{ float: "left" }}
+                                    />
+                                  ) : null}
+                                </small>
+                                <small>
+                                  <i style={textMargin}>{data.tags}</i>
+                                </small>
+                              </List.Header>
                               <br />
-                              <br />
-                              <Popup 
-                                trigger={
-                                <Icon
-                                  name="handshake outline"
-                                  onClick={() => this.givethanks(data._id)}
-                                />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
-                                    : "Anda Telah UnThanks"}
-                                </Popup>
-                              <small>
-                                <i>{data.thanks} Thanks </i>
-                              </small>
-                              <small style={{ float: "right" }}>
-                                <i>
-                                  {data.jam} {data.menit} {data.date}
-                                </i>
-                              </small>
-                              </List.Description>
-                          </List.Content>
-                        </List.Item>
-                      </List>
-                    </Segment>
+                              <List.Description>
+                                <b>{data.content}</b>
+                                <br />
+                                <br />
+                                <Popup 
+                                  trigger={
+                                  <Icon
+                                    name="handshake outline"
+                                    onClick={() => this.givethanks(data._id)}
+                                  />}>{this.state.kode == 1 ? "Anda Telah Thanks" 
+                                      : "Anda Telah UnThanks"}
+                                  </Popup>
+                                <small>
+                                  <i>{data.thanks} Thanks </i>
+                                </small>
+                                <br/>
+                                <br/>
+                                <a onClick= {() => this.discuss(data.id_posts)}>comment</a>
+                                <small style={{ float: "right" }}>
+                                  <i>
+                                    {data.jam} {data.menit} {data.date}
+                                  </i>
+                                </small>
+                                </List.Description>
+                            </List.Content>
+                          </List.Item>
+                        </List>
+                        <Divider fitted />
+                      </GridRow>
+                      <Divider hidden />
+                    </GridColumn>
                     <Divider hidden />
-                  </GridColumn>
-                  <Divider hidden />
-                </Grid>
-              );
-            })}
-            <Divider hidden />
-            <Divider hidden />
-            <Divider hidden />
+                  </Grid>
+                );
+              })}
+              <Divider hidden />
+            </Segment>
           </Container>
         )}
       </div>

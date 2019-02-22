@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Skeleton from "react-skeleton-loader";
 import { Grid, Container, Segment, Divider, Image, Icon, Header, Modal, Button, Popup } from "semantic-ui-react";
-
 import axios from "axios";
 
 export default class HeaderProfile extends Component {
@@ -188,7 +187,7 @@ export default class HeaderProfile extends Component {
           this.generateSkeleton()
         ) : (
           <Container>
-            <Grid columns={2} style={{ backgroundImage: `url(${background})` }}>
+            <Grid columns={1} style={{ background: "#393939" }}>
               <Divider hidden />
               <Grid.Row>
                 <Grid.Column>
@@ -202,17 +201,18 @@ export default class HeaderProfile extends Component {
                         bordered
                       />
                     }
+
                     position='top center'
                     style={popupStyle}>
                     {first_name} {last_name}
                   </Popup>
-                  <Header as="p" style={{ marginTop: "7px", color: this.state.coloring }}>
+                  <Header as="p" style={{ marginTop: "7px", color: "#f7f7f7" }}>
                     @{username}
                   </Header>
                   </Segment>
                 </Grid.Column>
-                <Grid.Column style={{ opacity: 0.8 }}>
-                  <Segment style={{backgroundImage: "linear-gradient(to bottom right, #ED6A5A, #FFE1A8, #FFBA49)", borderRadius: "6%"}}>
+                <Grid.Column>
+                  <Segment>
                     <p style={smallFont}>
                       Posts <span style={toRight}>{total_posts}</span>
                     </p>
