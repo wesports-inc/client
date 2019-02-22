@@ -3,6 +3,8 @@ import { Tab, Menu } from "semantic-ui-react"
 import axios from 'axios'
 import Posts from "./Posts";
 import DetailProfile from "./DetailProfile"
+import InfluenceList from "./influence-list/"
+import Trophy from "./Trophy"
 
 export default class Action extends Component {
   constructor(props) {
@@ -34,13 +36,13 @@ export default class Action extends Component {
       ), render: () => <Tab.Pane attached={false} basic><Posts/></Tab.Pane> },
       {menuItem: (
         <Menu.Item key='user' icon='user' style={{width: "25%"}}/>
-      ), render: () => <Tab.Pane attached={false} basic>siapa yang gua follow</Tab.Pane> },
+      ), render: () => <Tab.Pane attached={false} basic><InfluenceList/></Tab.Pane> },
       {menuItem: (
         <Menu.Item key='eye' icon='eye' style={{width: "25%"}}/>
       ), render: () => <Tab.Pane attached={false} basic><DetailProfile/></Tab.Pane> },
       {menuItem: (
         <Menu.Item key='trophy' icon='trophy' style={{width: "25%"}}/>
-      ), render: () => <Tab.Pane attached={false} basic>Content trophy</Tab.Pane> },
+      ), render: () => <Tab.Pane attached={false} basic><Trophy/></Tab.Pane> },
     ]
 
     return (
