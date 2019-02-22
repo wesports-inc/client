@@ -9,9 +9,7 @@ export default class HeaderProfile extends Component {
       email: localStorage.getItem("email").slice(1, -1),
       username: sessionStorage.getItem("username"),
       status: "",
-      profile: [],
-      rank: null,
-      temp_total: null
+      profile: []
     };
   }
 
@@ -43,34 +41,6 @@ export default class HeaderProfile extends Component {
         }).then(result => this.setState({ status: result.data }));
       })
     );
-    
-    
-    axios({
-      method: "post",
-      url: "/api/people/profile/get",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      data: {
-        username: this.state.username // This is the body part
-      }
-    }).then(result =>
-      this.setState({ profile: result.data, temp_total: result.data[0].total_friends }, () => {
-        let stat = {
-          email: this.state.profile[0].email
-        };
-        axios({
-          method: "post",
-          url: "/api/user/rank",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          data: stat
-        }).then(result => this.setState( {rank : result.data[0].rank+1}));
-      })
-    );
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -80,10 +50,6 @@ export default class HeaderProfile extends Component {
       return false;
     }
   }
-
-  componentWillUpdate(nextProps, nextState) {}
-
-  componentDidUpdate(prevProps, prevState) {}
 
   handleFollow(value) {
     let add = {
@@ -98,7 +64,7 @@ export default class HeaderProfile extends Component {
         Accept: "application/json"
       },
       data: add
-    }).then(result => this.setState({ status: result.data.status, temp_total: this.state.temp_total + 1 }));
+    }).then(result => this.setState({ status: result.data.status }));
   }
 
   handleUnfollow(value) {
@@ -114,11 +80,11 @@ export default class HeaderProfile extends Component {
         Accept: "application/json"
       },
       data: unfoll
-    }).then(result => this.setState({ status: result.data.status, temp_total: this.state.temp_total - 1 }));
+    }).then(result => this.setState({ status: result.data.status }));
   }
 
   render() {
-    const {profile} = this.state
+    const {profile, status} = this.state
     return (
       <div style={{ marginBottom: 15 }}>
         <Container>
