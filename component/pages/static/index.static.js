@@ -13,7 +13,7 @@ import {
 
 export const Navbar = () => {
   return (
-    <div>
+    <div style={{marginBottom: 50}}>
       <Sticky>
         <Menu inverted>
           <Container>
