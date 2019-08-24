@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Grid, Divider } from "semantic-ui-react";
-import AvailablePlayer from "./subheader_player/available.subheader_playe";
+import AvailablePlayer from "./subheader_player/available.subheader_player";
 
 const HeaderPlayer = () => {
   return (
