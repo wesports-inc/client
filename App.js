@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import { Navbar, Footer } from "./component/pages/static/index.static";
+import Headers from "./component/pages/home/header/index.header.home";
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -9,13 +10,9 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Link to="/home">My Profile</Link>
-        <br />
-        <Link to="/login">Login</Link>
-        <br />
-        <Link to="/register">Register</Link>
-        <br />
-        <Link to="/test">Test Pages</Link>
+        <Navbar />
+        <Headers />
+        <Footer />
       </div>
     );
   }
