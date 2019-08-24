@@ -48,7 +48,7 @@ const Headers = () => {
           />
         </Grid.Column>
         <Grid.Column width={3}>
-          <h3>Wall Info</h3>
+          <h3>Wall Information</h3>
           <Divider />
           <Tournament />
         </Grid.Column>
