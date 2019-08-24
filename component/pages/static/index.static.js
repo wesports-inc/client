@@ -13,9 +13,9 @@ import {
 
 export const Navbar = () => {
   return (
-    <div style={{marginBottom: 50}}>
-      <Sticky>
-        <Menu inverted>
+    <div>
+      
+        <Menu inverted fixed='top'>
           <Container>
             <Menu.Item as="a" header>
               <Image
@@ -30,7 +30,7 @@ export const Navbar = () => {
             </Menu.Item>
           </Container>
         </Menu>
-      </Sticky>
+      
     </div>
   );
 };
