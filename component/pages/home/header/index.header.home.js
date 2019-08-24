@@ -12,7 +12,7 @@ import Tournament from "./subheader/tournament.subheader";
 
 const Headers = () => {
   return (
-    <Container style={{ marginTop: '7em' }}>
+    <Container style={{ marginTop: "7em" }}>
       <Grid>
         <Grid.Column width={4}>
           <h3>Top 5 Team This Week</h3>
@@ -36,7 +36,7 @@ const Headers = () => {
             users="hafidh ghifar"
             team="PSG RRQ"
             image={"https://img.icons8.com/plasticine/2x/user.png"}
-            summary="Teday joined to EVOS TEAM as support role on Mobile Legends"
+            summary="hafidh ghifar joined to RRQ as tanker role on AOV"
           />
           <Activity
             status={4}
