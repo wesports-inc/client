@@ -12,7 +12,7 @@ import Tournament from "./subheader/tournament.subheader";
 
 const Headers = () => {
   return (
-    <Container>
+    <Container style={{ marginTop: '7em' }}>
       <Grid>
         <Grid.Column width={4}>
           <h3>Top 5 Team This Week</h3>
