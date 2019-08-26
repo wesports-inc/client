@@ -1,36 +1,20 @@
 import React from "react";
-import {
-  Menu,
-  Sticky,
-  Segment,
-  Container,
-  Grid,
-  Header,
-  Image,
-  List,
-  Divider
-} from "semantic-ui-react";
+import { Menu, Sticky, Segment, Container, Grid, Header, Image, List, Divider } from "semantic-ui-react";
 
 export const Navbar = () => {
   return (
     <div>
-      
-        <Menu inverted fixed='top'>
-          <Container>
-            <Menu.Item as="a" header>
-              <Image
-                size="mini"
-                src="https://cdn.worldvectorlogo.com/logos/react.svg"
-                style={{ marginRight: "1.5em" }}
-              />
-              WESPORTS
-            </Menu.Item>
-            <Menu.Item as="a" position="right">
-              Sign In
-            </Menu.Item>
-          </Container>
-        </Menu>
-      
+      <Menu inverted fixed="top">
+        <Container>
+          <Menu.Item as="a" header>
+            <Image size="mini" src="https://cdn.worldvectorlogo.com/logos/react.svg" style={{ marginRight: "1.5em" }} />
+            WESPORTS
+          </Menu.Item>
+          <Menu.Item as="a" position="right">
+            Sign In
+          </Menu.Item>
+        </Container>
+      </Menu>
     </div>
   );
 };
@@ -38,11 +22,7 @@ export const Navbar = () => {
 export const Footer = () => {
   return (
     <div>
-      <Segment
-        inverted
-        vertical
-        style={{ margin: "5em 0em 0em", padding: "5em 0em", bottom: 0 }}
-      >
+      <Segment inverted vertical style={{ margin: "2em 0em 0em", padding: "5em 0em", bottom: 0 }}>
         <Container textAlign="center">
           <Grid divided inverted stackable>
             <Grid.Column width={3}>
@@ -74,10 +54,7 @@ export const Footer = () => {
             </Grid.Column>
             <Grid.Column width={7}>
               <Header inverted as="h4" content="Footer Header" />
-              <p>
-                Extra space for a call to action inside the footer that could
-                help re-engage users.
-              </p>
+              <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
             </Grid.Column>
           </Grid>
           <Divider inverted section />
