@@ -1,0 +1,26 @@
+.landing.segment {
+  padding: 0em 0em;
+  max-width: 100%;
+}
+.transbg {
+  background: #fff;
+  height: 65px;
+  padding: 5px;
+  margin: 0px;
+  box-shadow: 2px 5px 5px 5px #f7f7f7;
+}
+.menu {
+  border: 0px !important;
+}
+.burgerMenu {
+  padding: 10px 35px;
+}
+.searchBar {
+  max-width: 140px;
+}
+.popup-nav {
+  height: 80px;
+}
+.menu-center {
+  margin-top: 15px;
+}

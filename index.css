@@ -1,9 +1,9 @@
-@fontface {
-  font-family: "Poppins", sans-serif;
-  src: url("https://fonts.googleapis.com/css?family=Poppins");
+/* @fontface {
+  font-family: "Tahoma", sans-serif;
+  src: url("https://fonts.googleapis.com/css?family=Tahoma");
 }
 
 body,
-div {
-  font-family: "Poppins", sans-serif;
-}
+html {
+  font-family: "Tahoma";
+} */

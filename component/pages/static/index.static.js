@@ -1,80 +1,73 @@
-import React from "react";
-import { Menu, Sticky, Segment, Container, Grid, Header, Image, List, Divider } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Menu, Sidebar, Icon, Input, Segment, Select, Button, Sticky, Container } from "semantic-ui-react";
+import "./index.static.css";
 
 export const Navbar = () => {
+  const [visible, setVisible] = useState(false);
+
+  const handleSideBar = () => {
+    setVisible(!visible);
+  };
+
+  const options = [
+    { key: "all", text: "All", value: "all" },
+    { key: "player", text: "Player", value: "player" },
+    { key: "team", text: "Team", value: "team" }
+  ];
+
   return (
     <div>
-      <Menu inverted fixed="top">
-        <Container>
-          <Menu.Item as="a" header>
-            <Image size="mini" src="https://cdn.worldvectorlogo.com/logos/react.svg" style={{ marginRight: "1.5em" }} />
-            WESPORTS
+      <Sidebar
+        as={Menu}
+        icon="labeled"
+        vertical
+        direction="bottom"
+        className="container"
+        visible={visible}
+        animation="overlay"
+        className="sidebar-menu"
+      >
+        <Menu size="large" className="popup-nav">
+          <Menu.Item as="a" position="left" className="menu-center">
+            <Icon name="arrow alternate circle left outline" />
+            Back
           </Menu.Item>
-          <Menu.Item as="a" position="right">
+          <Menu.Item as="a" position="right" className="menu-center">
+            <Icon name="ticket alternate" />
+            Games Event
+          </Menu.Item>
+          <Menu.Item as="a" className="menu-center">
+            <Icon name="sitemap" />
+            Leaderboard
+          </Menu.Item>
+          <Menu.Item as="a" className="menu-center">
+            <Icon name="user circle outline" />
             Sign In
           </Menu.Item>
-        </Container>
-      </Menu>
-    </div>
-  );
-};
-
-export const Footer = () => {
-  return (
-    <div>
-      <Segment inverted vertical style={{ margin: "2em 0em 0em", padding: "5em 0em", bottom: 0 }}>
-        <Container textAlign="center">
-          <Grid divided inverted stackable>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 1" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 2" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Group 3" />
-              <List link inverted>
-                <List.Item as="a">Link One</List.Item>
-                <List.Item as="a">Link Two</List.Item>
-                <List.Item as="a">Link Three</List.Item>
-                <List.Item as="a">Link Four</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <Header inverted as="h4" content="Footer Header" />
-              <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
-            </Grid.Column>
-          </Grid>
-          <Divider inverted section />
-          <Image centered size="mini" src="https://cdn.worldvectorlogo.com/logos/react.svg" />
-          <List horizontal inverted divided link size="small">
-            <List.Item as="a" href="#">
-              Site Map
-            </List.Item>
-            <List.Item as="a" href="#">
-              Contact Us
-            </List.Item>
-            <List.Item as="a" href="#">
-              Terms and Conditions
-            </List.Item>
-            <List.Item as="a" href="#">
-              Privacy Policy
-            </List.Item>
-          </List>
-        </Container>
-      </Segment>
+        </Menu>
+      </Sidebar>
+      <Sidebar.Pusher>
+        <Segment className="landing" inverted>
+          <div className="transbg">
+            <Container>
+              <Menu inverted secondary size="large">
+                <Menu.Item as="a" position="left">
+                  <Input size="mini" type="text" placeholder="Search..." action>
+                    <input />
+                    <Select options={options} compact defaultValue="player" />
+                    <Button type="submit" size="small">
+                      <Icon name="search" />
+                    </Button>
+                  </Input>
+                </Menu.Item>
+                <Menu.Item as="a" onClick={handleSideBar} position="right">
+                  <Icon name="bars" size="large" color="grey" style={{ marginLeft: -20 }} />
+                </Menu.Item>
+              </Menu>
+            </Container>
+          </div>
+        </Segment>
+      </Sidebar.Pusher>
     </div>
   );
 };

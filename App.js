@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import { Navbar, Footer } from "./component/pages/static/index.static";
-import Headers from "./component/pages/home/header/index.header.home";
-import Available from "./component/pages/home/available/index.available.home";
+import { Navbar } from "./component/pages/static/index.static";
+import { NewTeam } from "./component/pages/team/new.team";
+import { FeaturedTeam } from "./component/pages/team/featured.team";
+import { NewPlayer } from "./component/pages/player/new.player";
+import { MonthlyTournament } from "./component/pages/tournament/monthly.tournament";
+import { Divider } from "semantic-ui-react";
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -11,13 +14,12 @@ export default class App extends Component {
     return (
       <div>
         <Navbar />
-        <div style={{ marginBottom: 40 }}>
-          <Headers />
-        </div>
-        <div style={{ marginTop: 40, background: "#f7f7f7" }}>
-          <Available />
-        </div>
-        <Footer />
+        <NewTeam />
+        <NewPlayer />
+        <FeaturedTeam />
+        <MonthlyTournament />
+        <Divider hidden />
+        <Divider hidden />
       </div>
     );
   }
